@@ -18,7 +18,7 @@ $HEADER=array(
 		'html_echo' => ''	// html header, tail 삽입(tail은 파일 마지막에 echo $SITE['tail'])
 	);
 require("{$_SERVER['DOCUMENT_ROOT']}/sin/header.php");
-page_security("", $HTTP_HOST);
+page_security("", $_SERVER['HTTP_HOST']);
 
 //=======================================================
 // Ready.. . (변수 초기화 및 넘어온값 필터링)

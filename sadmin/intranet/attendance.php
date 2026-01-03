@@ -59,7 +59,7 @@ $total_worktime['totalhours'] = $total_worktime['dayhours'] + $total_worktime['o
 	
 <table width="600" border=0 cellpadding='<?=$pageinfo['table_cellpadding']?>' cellspacing='<?=$pageinfo['table_cellspacing']?>' bgcolor='<?=$pageinfo['table_linecolor']?>'>
 	<tr> 
-	<form method=get action="<?=$PHP_SELF?>">
+	<form method=get action="<?php echo $_SERVER['PHP_SELF'];?>">
 		<td align="center" bgcolor='<?=$pageinfo['table_titlecolor']?>'><b> 
 		<?=$SITE['company']?>
 		개인별 출근부 (직원명 : 

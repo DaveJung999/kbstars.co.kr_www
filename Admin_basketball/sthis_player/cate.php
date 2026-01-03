@@ -8,6 +8,7 @@
 // -------- ------ --------------------------------------
 // 02/08/10 박선민 마지막 수정
 // 03/12/16 박선민 소스 개선
+// 2025-01-XX PHP 업그레이드: $PHP_SELF, $QUERY_STRING를 $_SERVER 변수로 교체
 //=======================================================
 $HEADER=array(
 		'priv'		=> "운영자,뉴스관리자", // 인증유무 (0:모두에게 허용, 숫자가 높을 수록 레벨업)
@@ -171,7 +172,7 @@ for($i=0; $i<$total; $i++){
 	$href['catereply']="{$PHP_SELP}?db={$db}&cateuid={$list['uid']}";
 	$href['catemodify']="{$PHP_SELP}?db={$db}&mode=catemodify&cateuid={$list['uid']}";
 	$href['catesort']="./catesort.php?db={$db}&cateuid={$list['uid']}";
-	$href['catedirectmodify']="/admin/myadmin224/tbl_change.php?table={$table_cate}&pos=0&session_max_rows=30&disp_direction=horizontal&repeat_cells=100&dontlimitchars=&primary_key=+%60uid%60+%3D+%27{$list['uid']}%27&goto=" . urlencode($PHP_SELF . "?" . $QUERY_STRING);
+	$href['catedirectmodify']="/admin/myadmin224/tbl_change.php?table={$table_cate}&pos=0&session_max_rows=30&disp_direction=horizontal&repeat_cells=100&dontlimitchars=&primary_key=+%60uid%60+%3D+%27{$list['uid']}%27&goto=" . urlencode($_SERVER['PHP_SELF'] . "?" . $_SERVER['QUERY_STRING']);
 	$href['catedelete']="./cateok.php?db={$db}&mode=catedelete&cateuid={$list['uid']}";
 	$href["list"]="/sboard/list.php?db={$db}&cateuid={$list['uid']}";
 ?>

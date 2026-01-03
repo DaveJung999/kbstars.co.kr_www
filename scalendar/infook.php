@@ -17,7 +17,7 @@ $HEADER = array(
 
 );
 require($_SERVER['DOCUMENT_ROOT'].'/sinc/header.php');
-page_security("", $HTTP_HOST);
+page_security("", $_SERVER['HTTP_HOST']);
 
 //=======================================================
 // Ready... (변수 초기화 및 넘어온값 필터링)

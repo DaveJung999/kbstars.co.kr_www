@@ -66,17 +66,17 @@ if (!empty($set['counter_limit'])) {
 	$limit -= $set['counter_limit'];
 	if ($limit > 0) {
 		$query = "SELECT no FROM nalog3_counter_" . $counter_val . " ORDER BY no LIMIT 1";
-		$result_min = mysql_query($query);
-		$min = mysql_fetch_array($result_min);
+		$result_min = mysqli_query($connect, $query);
+		$min = mysqli_fetch_array($result_min);
 		$min = $min['no'];
 
 		$query = "SELECT no FROM nalog3_counter_" . $counter_val . " ORDER BY no LIMIT $limit,1";
-		$result_max = mysql_query($query);
-		$max = mysql_fetch_array($result_max);
+		$result_max = mysqli_query($connect, $query);
+		$max = mysqli_fetch_array($result_max);
 		$max = $max['no'] - 1;
 
 		$query = "DELETE FROM nalog3_counter_" . $counter_val . " WHERE no BETWEEN $min AND $max";
-		@mysql_query($query);
+		@mysqli_query($connect, $query);
 	}
 }
 
@@ -88,17 +88,17 @@ if (!empty($set['log_limit'])) {
 		$limit2 -= $set['log_limit'];
 		if ($limit2 > 0) {
 			$query = "SELECT time FROM {$table_prefix}{$counter_val} WHERE bookmark='0' ORDER BY time LIMIT 1";
-			$result_min = mysql_query($query);
-			$min = mysql_fetch_array($result_min);
+			$result_min = mysqli_query($connect, $query);
+			$min = mysqli_fetch_array($result_min);
 			$min = $min['time'];
 
 			$query = "SELECT time FROM {$table_prefix}{$counter_val} WHERE bookmark='0' ORDER BY time LIMIT $limit2,1";
-			$result_max = mysql_query($query);
-			$max_temp = mysql_fetch_array($result_max);
+			$result_max = mysqli_query($connect, $query);
+			$max_temp = mysqli_fetch_array($result_max);
 			$max = ($max_temp['time'] ?? 0) - 1;
 
 			$query = "DELETE FROM {$table_prefix}{$counter_val} WHERE time BETWEEN $min AND $max";
-			@mysql_query($query);
+			@mysqli_query($connect, $query);
 		}
 	}
 }

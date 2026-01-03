@@ -40,7 +40,8 @@ require($_SERVER['DOCUMENT_ROOT'].'/sinc/header.php');
 				KEY cartegory (category)
 			)
 		";
-	@mysql_query($sql);
+	// PHP 7+에서는 mysql_* 함수가 제거되었으므로 db_* 함수 사용
+	@db_query($sql);
 
 	// 넘오온값필터링
 	$url		=trim($url);
@@ -298,7 +299,8 @@ function mysql_table_create($table,$createtable) {
 	$rs=db_query("select sql FROM {$SITE['th']}admin_tableinfo where table_name='$table'");
 	if(db_count()) {
 		$sql="CREATE TABLE $createtable (" . db_result($rs,0,"sql") . ")";
-		if(@mysql_query($sql))
+		// PHP 7+에서는 mysql_* 함수가 제거되었으므로 db_* 함수 사용
+		if(@db_query($sql))
 			return 1;
 		else // 아마 해당 데이터베이스가 존재할 경우겠지.. 생성하다가 실패했으니..
 			return -1; // -1로 리턴함..
@@ -317,8 +319,8 @@ function user_geturls($url) {
 		$tmp=explode("http",$value);
 		foreach($tmp as $tmp_key => $tmp_value) {
 			if($tmp_key) $tmp_value="http".$tmp_value;
-			if(eregi("(http|https):\/\/[a-z0-9_\-]+\.[][a-zA-Z0-9:;&#@=_~%\?\/\.\,\+\-]+", $tmp_value,$search)) {
-				if(!eregi("\.yahoo\.co",$search[0]))	$all_urls[] = $search[0];
+			if(preg_match("/(http|https):\/\/[a-z0-9_\-]+\.[][a-zA-Z0-9:;&#@=_~%\?\/\.\,\+\-]+/i", $tmp_value,$search)) {
+				if(!preg_match("/\.yahoo\.co/i",$search[0]))	$all_urls[] = $search[0];
 			}
 		} // end foreach
 	} // end foreach

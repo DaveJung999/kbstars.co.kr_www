@@ -10,6 +10,7 @@
 // 03.11.03 박선민 추가 수정
 // 04.03.10 박선민 추가 수정
 // 24.05.18 Gemini	PHP 7 마이그레이션
+// 2025-01-XX PHP 업그레이드: 사용하지 않는 global $DOCUMENT_ROOT 선언 제거
 //=======================================================
 /*
 사용법은 thumbnail(파일명,x사이즈,y사이즈) 입니다.
@@ -104,7 +105,8 @@ function thumbnail($filepath,$width="",$height=""){
 // tagthumbnail(상대파일이름, 가로, 세로)
 // return <img src="dir/filename.gif" width=?? height=?? >!!
 function tagthumbnail($path,$filename,$width="",$height=""){
-	global $DOCUMENT_ROOT;
+	// PHP 7+에서는 $DOCUMENT_ROOT 변수가 제거되었으므로 $_SERVER['DOCUMENT_ROOT'] 직접 사용
+	// global $DOCUMENT_ROOT; // 제거됨 - 실제 사용하지 않음
 	
 	$new_width = $width;
 	$new_height = $height;

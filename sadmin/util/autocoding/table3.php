@@ -14,7 +14,7 @@ $HEADER=array(
 		useCheck=>1, // check_value()
 	);
 require("{$_SERVER['DOCUMENT_ROOT']}/sinc/header.php");
-//page_security("", $HTTP_HOST);
+//page_security("", $_SERVER['HTTP_HOST']);
 //=======================================================
 // Ready... (변수 초기화 및 넘어온값 필터링)
 //=======================================================
@@ -32,7 +32,7 @@ foreach($tables as $value) {
 }
 if(!$_GET['key']) $_GET['key']="uid";
 ?>
-<form method=get action=<?=$PHP_SELF?>>
+<form method=get action="<?php echo $_SERVER['PHP_SELF'];?>">
 <input type=hidden name=mode value='ok'>
 테이블이름:<select name=table><?=$tablelist?></select><br>
 PRIMARY KEY:<input type=text size=20 name=key value="<?=$_GET['key']?>">
@@ -85,7 +85,7 @@ $HEADER=array(
 		useApp	=>1, // remote_addr()
 	);
 require("{$_SERVER['DOCUMENT_ROOT']}/sinc/header.php");
-page_security("", $HTTP_HOST);
+page_security("", $_SERVER['HTTP_HOST']);
 
 //=======================================================
 // Ready... (변수 초기화 및 넘어온값 필터링)
@@ -295,7 +295,7 @@ $HEADER=array(
 		useApp	=>1, // remote_addr()
 	);
 require($_SERVER['DOCUMENT_ROOT'].'/sinc/header.php');
-page_security("", $HTTP_HOST);
+page_security("", $_SERVER['HTTP_HOST']);
 
 //=======================================================
 // Ready... (변수 초기화 및 넘어온값 필터링)
@@ -323,12 +323,15 @@ function userTablelist($database="",$table) {
 
 	$aColumn = array();
 
-	$fields		= mysql_list_fields($database, $table);
+	// PHP 7+에서는 mysql_list_fields()가 제거되었으므로 SHOW COLUMNS 쿼리 사용
+	$sql = "SHOW COLUMNS FROM `{$table}`";
+	$fields = db_query($sql);
 	if(!$fields) return false;
 
-	$columns	= mysql_num_fields($fields); 
+	$columns	= db_count($fields); 
 	for ($i = 0; $i < $columns; $i++) { 
-	   $aColumn[] = mysql_field_name($fields, $i);
+		$row = db_array($fields);
+		$aColumn[] = $row['Field'];
 	}
 
 	return $aColumn;
@@ -336,14 +339,15 @@ function userTablelist($database="",$table) {
 
 
 function userInputfield2($table,$list="php") {
-	$table_def = mysql_query("SHOW FIELDS FROM {$table}");
-	$fields_cnt	 = mysql_num_rows($table_def);
+	// PHP 7+에서는 mysql_* 함수가 제거되었으므로 db_* 함수 사용
+	$table_def = db_query("SHOW FIELDS FROM {$table}");
+	$fields_cnt	 = db_count($table_def);
 	for ($i = 0; $i < $fields_cnt; $i++) {
-		$row_table_def   = mysql_fetch_array($table_def);
+		$row_table_def   = db_array($table_def);
 		$field		   = $row_table_def['Field'];
-		$type	= ereg_replace('\\(.*', '', $row_table_def['Type']);
-		if(eregi("char|int",$type)) {
-			$len	= ereg_replace('.*\\(([0-9]+)\\).*', "\\1", $row_table_def['Type']);
+		$type	= preg_replace('/\\(.*/', '', $row_table_def['Type']);
+		if(preg_match("/char|int/i",$type)) {
+			$len	= preg_replace('/.*\\(([0-9]+)\\).*/', "\\1", $row_table_def['Type']);
 			if(is_array($list)) {
 				$data	= htmlspecialchars($list[$field]);
 			}

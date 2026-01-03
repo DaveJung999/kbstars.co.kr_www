@@ -440,7 +440,7 @@ if($mode == "transferconfirm"){
 				to_money =>  "post,trim,notnull=" . urlencode("이체 금액을 입력하시기바랍니다."),
 		);
 	$qs=check_value($qs);
-	$qs['to_accountno']=eregi_replace("[^0-9]","",$qs['to_accountno']);
+	$qs['to_accountno']=preg_replace("/[^0-9]/","",$qs['to_accountno']);
 
 	if(!is_array($accountinfo)){
 		back("계좌 정보 불려오기에 실패하였습니다.\\n계좌번호를 확인 바랍니다.");

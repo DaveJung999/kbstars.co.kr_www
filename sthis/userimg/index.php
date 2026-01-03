@@ -27,5 +27,5 @@ require($_SERVER['DOCUMENT_ROOT'].'/sinc/header.php');
 $sql = "select priv from {$table_logon} where userid='{$_GET['useird']}'";
 $priv=db_resultone($sql,0,'priv');
 
-if(ereg('운영자',$priv)) go_url('saler.jpg');
+if(preg_match('/운영자/',$priv)) go_url('saler.jpg');
 else go_url('user.jpg'); ?>

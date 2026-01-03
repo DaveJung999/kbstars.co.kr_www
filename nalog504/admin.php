@@ -24,8 +24,8 @@ $total=count($tables);
 ####################################################################################
 //					테이블 옵티마이징
 ####################################################################################
-mysql_query("OPTIMIZE TABLE nalog3_os") or die(mysql_error());
-mysql_query("OPTIMIZE TABLE nalog3_data") or die(mysql_error());
+mysqli_query($connect, "OPTIMIZE TABLE nalog3_os") or die(mysqli_error($connect));
+mysqli_query($connect, "OPTIMIZE TABLE nalog3_data") or die(mysqli_error($connect));
 
 ####################################################################################
 //					카운터수
@@ -116,8 +116,8 @@ if(!chk.new_board.value){alert('n@log error : \n\n<?=$lang['counter_manager_erro
 		$dd=date('d'); // date() 인자 수정
 
 		$query="select * from nalog3_data where counter='$board_name' and yy=$yy and mm=$mm and dd=$dd"; 
-		$result_today=mysql_query($query);
-		$counter_today_temp=mysql_fetch_array($result_today); 
+		$result_today=mysqli_query($connect, $query);
+		$counter_today_temp=mysqli_fetch_array($result_today); 
 		$counter_today=$counter_today_temp['hit']; // 배열 접근 수정
 
 		$set=nalog_config("$board_name");
@@ -125,8 +125,8 @@ if(!chk.new_board.value){alert('n@log error : \n\n<?=$lang['counter_manager_erro
 		$counter_total=$set['total']; // 배열 접근 수정
 
 		$query="select max(hit) from nalog3_data where counter='$board_name'"; 
-		$result_today_peak=mysql_query($query);
-		$counter_today_peak=mysql_fetch_array($result_today_peak); 
+		$result_today_peak=mysqli_query($connect, $query);
+		$counter_today_peak=mysqli_fetch_array($result_today_peak); 
 		$counter_today_peak=$counter_today_peak[0];
 				
 
@@ -150,11 +150,11 @@ if(!chk.new_board.value){alert('n@log error : \n\n<?=$lang['counter_manager_erro
 		####################################################################################
 		//					테이블 옵티마이징
 		####################################################################################
-		mysql_query("OPTIMIZE TABLE nalog3_counter_$board_name") or die(mysql_error());
-		mysql_query("OPTIMIZE TABLE nalog3_config_$board_name") or die(mysql_error());
-		mysql_query("OPTIMIZE TABLE nalog3_log_$board_name") or die(mysql_error());
-		mysql_query("OPTIMIZE TABLE nalog3_dlog_$board_name") or die(mysql_error());
-		mysql_query("OPTIMIZE TABLE nalog3_now_$board_name") or die(mysql_error());
+		mysqli_query($connect, "OPTIMIZE TABLE nalog3_counter_$board_name") or die(mysqli_error($connect));
+		mysqli_query($connect, "OPTIMIZE TABLE nalog3_config_$board_name") or die(mysqli_error($connect));
+		mysqli_query($connect, "OPTIMIZE TABLE nalog3_log_$board_name") or die(mysqli_error($connect));
+		mysqli_query($connect, "OPTIMIZE TABLE nalog3_dlog_$board_name") or die(mysqli_error($connect));
+		mysqli_query($connect, "OPTIMIZE TABLE nalog3_now_$board_name") or die(mysqli_error($connect));
 		}
 
 		####################################################################################
@@ -180,4 +180,4 @@ if(!chk.new_board.value){alert('n@log error : \n\n<?=$lang['counter_manager_erro
 </table>
 </body>
 </html>
-<?php @mysql_close($connect);?>
+<?php @mysqli_close($connect);?>

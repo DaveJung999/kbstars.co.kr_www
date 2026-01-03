@@ -41,7 +41,8 @@ require($_SERVER['DOCUMENT_ROOT'].'/sinc/header.php');
 				KEY cartegory (category)
 			)
 		";
-	@mysql_query($sql);
+	// PHP 7+에서는 mysql_* 함수가 제거되었으므로 db_* 함수 사용
+	@db_query($sql);
 
 	// 넘오온값필터링
 	$url		=trim($url);
@@ -200,7 +201,7 @@ if($mode == "extract"){
 			echo str_repeat(" ",300); flush();
 			$site = file($url);
 			foreach($site as $line_num=>$line){	// 메일 추출
-				if(eregi("[a-z0-9_-]+@[a-z0-9-]+\.[a-z0-9-]+\.[a-z0-9-]+",$line,$reg_line) || eregi("[_a-z0-9_-]+@[a-z0-9-]+\.[a-z0-9-]+",$line,$reg_line)){
+				if(preg_match("/[a-z0-9_-]+@[a-z0-9-]+\.[a-z0-9-]+\.[a-z0-9-]+/i",$line,$reg_line) || preg_match("/[_a-z0-9_-]+@[a-z0-9-]+\.[a-z0-9-]+/i",$line,$reg_line)){
 					$all_email .= "%".$reg_line[0];
 				}
 			} // end foreach
@@ -209,7 +210,7 @@ if($mode == "extract"){
 	else{
 		$site = file($url);
 		foreach($site as $line_num=>$line){	// 메일 추출
-			if(eregi("[a-z0-9_-]+@[a-z0-9-]+\.[a-z0-9-]+\.[a-z0-9-]+",$line,$reg_line) || eregi("[a-z0-9_-]+@[a-z0-9-]+\.[a-z0-9-]+",$line,$reg_line)){
+			if(preg_match("/[a-z0-9_-]+@[a-z0-9-]+\.[a-z0-9-]+\.[a-z0-9-]+/i",$line,$reg_line) || preg_match("/[a-z0-9_-]+@[a-z0-9-]+\.[a-z0-9-]+/i",$line,$reg_line)){
 				
 				$all_email .= "%".$reg_line[0];
 			}
@@ -344,11 +345,12 @@ elseif($mode=="emailtodb") {
 		if(!db_count()){
 			db_query("INSERT INTO $table(userid,email,category,rdate) VALUES('{$_SESSION['seUserid']}','{$all_email_arr[$i]}','{$category}',{$rdate})");	
 		}
-		mysql_free_result($result);
+		// PHP 7+에서는 mysql_free_result()가 제거되었으므로 불필요 (자동 해제됨)
+		// mysql_free_result($result);
 
 	}
 
-	go_url($PHP_SELF);
+	go_url($_SERVER['PHP_SELF']);
 } // end if($mode=="emailtodb") {
 
 //=======================================================
@@ -360,7 +362,8 @@ function mysql_table_create($table,$createtable) {
 	$rs=db_query("select sql from {$SITE['th']}admin_tableinfo where table_name='{$table}'");
 	if(db_count()) {
 		$sql="CREATE TABLE {$createtable} (" . db_result($rs,0,"sql") . ")";
-		if(@mysql_query($sql))
+		// PHP 7+에서는 mysql_* 함수가 제거되었으므로 db_* 함수 사용
+		if(@db_query($sql))
 			return 1;
 		else // 아마 해당 데이터베이스가 존재할 경우겠지.. 생성하다가 실패했으니..
 			return -1; // -1로 리턴함..

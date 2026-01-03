@@ -26,10 +26,10 @@ require($_SERVER['DOCUMENT_ROOT'].'/sinc/header.php');
 	if($dbinfo['enable_getinfo'] == 'Y'){
 		// skin관련
 		if($_GET['html_type'])	$dbinfo['html_type'] = $_GET['html_type'];
-		if( isset($_GET['html_skin']) and eregi('^[_a-z0-9]+$',$_GET['html_skin']) 
+		if( isset($_GET['html_skin']) and preg_match('/^[_a-z0-9]+$/i',$_GET['html_skin']) 
 			and is_file($SITE['html_path'].'index_'.$_GET['html_skin'].'.php') )	
 			$dbinfo['html_skin'] = $_GET['html_skin'];
-		if( $_GET['skin'] and eregi("^[_a-z0-9]+$",$_GET['skin']) 
+		if( $_GET['skin'] and preg_match("/^[_a-z0-9]+$/i",$_GET['skin']) 
 			and is_dir($thisPath.'/skin/'.$_GET['skin']) )
 			$dbinfo['skin']	= $_GET['skin'];
 	}

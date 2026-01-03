@@ -18,7 +18,7 @@ require("{$_SERVER['DOCUMENT_ROOT']}/sinc/header.php");
 // Ready... (변수 초기화 및 넘어온값 필터링)
 //=======================================================
 	$sql=stripslashes($sql);
-	if(!eregi("^select ",$sql))
+	if(!preg_match("/^select /i",$sql))
 		back("지원하지 않는 SQL문입니다.");
 	elseif(strpos($sql,";") === true)
 		back("지원하지 않는 SQl문입니다.");
@@ -76,13 +76,23 @@ require("{$_SERVER['DOCUMENT_ROOT']}/sinc/header.php");
    $myBarGraph->SetLineColor("ffffff");	  // This is the color all the lines and text are printed out with.
 
 // db 할당
-$rs=mysql_query($sql) or die("지원하지 않는 SQL문입니다");
-if(mysql_num_fields($rs)< 2) // 필드가 무조건 2개여야 한다.
+// PHP 7+에서는 mysql_* 함수가 제거되었으므로 db_* 함수 사용
+$rs=db_query($sql);
+if(!$rs) back("지원하지 않는 SQL문입니다.");
+// 필드 개수 확인을 위해 첫 번째 행 가져오기
+$first_row = db_array($rs);
+if(!$first_row || count($first_row) < 2) // 필드가 무조건 2개여야 한다.
 	back("지원하지 않는 SQL문입니다.");
-for($i=0;$i<mysql_affected_rows();$i++) {
+// 결과를 배열로 변환
+$rows = array();
+$rows[] = $first_row; // 첫 번째 행은 이미 가져옴
+while($row = db_array($rs)) {
+	$rows[] = $row;
+}
+for($i=0;$i<count($rows);$i++) {
 	//$myBarGraph->AddValue("A",200);  // AddValue(string label, int value)
-	$title = mysql_result($rs,$i,0);
-	$data = db_result($rs,$i,1);
+	$title = $rows[$i][0];
+	$data = $rows[$i][1];
 	$myBarGraph->AddValue($title,$data);  // AddValue(string label, int value)
 }
 

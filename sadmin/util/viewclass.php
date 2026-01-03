@@ -2,10 +2,11 @@
 
 //보고자하는 Class파일을 include 시킨다. 
 include "./class_phpBarGraph2.php"; 
+// 2025-01-XX PHP 업그레이드: each() 함수는 PHP 7.2+에서 제거되었으므로 foreach로 변경
 function print_vars( $obj ) { 
 $arr = get_object_vars ( $obj ); 
-while ( list($prop, $val) = each($arr) ) 
-echo "\t{$prop} = {$var}\n"; 
+foreach($arr as $prop => $val) 
+echo "\t{$prop} = {$val}\n"; 
 } 
 function print_methods( $obj ) { 
 $arr = get_class_methods( get_class( $obj ) ); 

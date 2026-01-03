@@ -7,6 +7,7 @@
 //	 DATE	 수정인				 수정 내용
 // -------- ------ --------------------------------------
 // 03/08/25 박선민 마지막 수정
+// 2025-01-XX PHP 업그레이드: $DOCUMENT_ROOT를 $_SERVER['DOCUMENT_ROOT']로 교체
 //=======================================================
 $HEADER=array(
 		'priv'	 => 1, // 인증유무 (0:모두에게 허용)
@@ -16,7 +17,7 @@ $HEADER=array(
 		'useBoard' => 1,
 		'html_echo'	 => 0	 // html header, tail 삽입(tail은 파일 마지막에 echo $SITE['tail'])
 	);
-require("$DOCUMENT_ROOT/sinc/header.php");
+require("{$_SERVER['DOCUMENT_ROOT']}/sinc/header.php");
 //page_security("", $HTTP_HOST);
 
 //===================================================

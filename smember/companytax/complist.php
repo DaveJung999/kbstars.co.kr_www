@@ -124,7 +124,7 @@ else{
 
 		//	Search 단어 색깔 표시
 		if($_GET['sc_string'] and $_GET['sc_column']){
-			$list[$_GET['sc_column']]	= eregi_replace($_GET['sc_string'], "<font color='darkred'>\\0</font>", $list[$_GET['sc_column']]);
+			$list[$_GET['sc_column']]	= preg_replace("/" . preg_quote($_GET['sc_string'], "/") . "/i", "<font color='darkred'>\\0</font>", $list[$_GET['sc_column']]);
 		}
 
 		// 업로드파일 처리

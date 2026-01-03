@@ -7,6 +7,7 @@
 //	DATE	수정인			수정 내용
 // -------- ------ --------------------------------------
 // 03/09/18 박선민 마지막 수정
+// 2025-01-XX PHP 업그레이드: $DOCUMENT_ROOT, $HTTP_HOST를 $_SERVER 변수로 교체
 //=======================================================
 $HEADER=array(
 		'priv' =>	"운영자,뉴스관리자", // 인증유무 (비회원,회원,운영자,서버관리자)
@@ -16,8 +17,8 @@ $HEADER=array(
 		'useApp' => 1, // remote_addr()
 		'html_echo' => ''	// html header, tail 삽입(tail은 파일 마지막에 echo $SITE['tail'])
 	);
-require("$DOCUMENT_ROOT/sinc/header.php");
-page_security("", $HTTP_HOST);
+require("{$_SERVER['DOCUMENT_ROOT']}/sinc/header.php");
+page_security("", $_SERVER['HTTP_HOST']);
 
 //=======================================================
 // Ready.. . (변수 초기화 및 넘어온값 필터링)

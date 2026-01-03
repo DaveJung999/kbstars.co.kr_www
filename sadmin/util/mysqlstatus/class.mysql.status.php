@@ -143,11 +143,13 @@ class mysql_status
   ##
   function get_mydb($db='')
   {
+	// PHP 7+에서는 mysql_* 함수가 제거되었으므로 mysqli_* 함수 사용
+	global $db_conn;
 	if($db) $sql = ' FROM '.$db;
-	if(!$result = mysql_query('SHOW TABLE STATUS'.$sql)) return 0;
+	if(!$result = mysqli_query($db_conn, 'SHOW TABLE STATUS'.$sql)) return 0;
 
 	$i = 0;
-	while($lists = mysql_fetch_assoc($result)) // associative array
+	while($lists = mysqli_fetch_assoc($result)) // associative array
 	{
 		$this->mydb[] = array(
 		'name' => $lists['Name'],
@@ -165,7 +167,7 @@ class mysql_status
 		$i++;
 	}
 
-	mysql_free_result($result);
+	mysqli_free_result($result);
 
 	$this->mydb[$i] = array(
 	'name' => '<B>SUM</B>',
@@ -185,23 +187,27 @@ class mysql_status
   ##
   function get_array($sql)
   {
-	if(!$result = mysql_query($sql)) return 0;
+	// PHP 7+에서는 mysql_* 함수가 제거되었으므로 mysqli_* 함수 사용
+	global $db_conn;
+	if(!$result = mysqli_query($db_conn, $sql)) return 0;
 
 	## get array to $vars
 	##
-	while($lists = mysql_fetch_row($result))
+	while($lists = mysqli_fetch_row($result))
 	{ $array[$lists[0]] = $lists[1]; }
 
-	mysql_free_result($result);
+	mysqli_free_result($result);
 
 	return $array;
   }
 
   function get_dbs()
   {
-	$result = mysql_list_dbs(); // 'SHOW DATABASES' same as 'mysqlshow [OPTIONS]'
-	$num = mysql_num_rows($result);
-	mysql_free_result($result);
+	// PHP 7+에서는 mysql_list_dbs()가 제거되었으므로 SHOW DATABASES 쿼리 사용
+	global $db_conn;
+	$result = mysqli_query($db_conn, "SHOW DATABASES"); // 'SHOW DATABASES' same as 'mysqlshow [OPTIONS]'
+	$num = mysqli_num_rows($result);
+	mysqli_free_result($result);
 
 	if($num < 2) $this->dbs = 'hidden';
 	else $this->dbs = $num .' or more';

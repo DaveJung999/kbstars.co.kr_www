@@ -56,5 +56,5 @@ $tpl->set_var('form_default', $form_default);
 // 오픈창으로 뜨니깐, 사이트 헤더테일 넣지 않고 바로
 // 마무리
 $val="\\1{$thisUrl}/skin/{$dbinfo['skin']}/images/";
-echo ereg_replace("([\"|\'])images/","{$val}",$tpl->process('', 'html',TPL_OPTIONAL));
+echo preg_replace("/([\"|'])images\//","{$val}",$tpl->process('', 'html',TPL_OPTIONAL));
 ?>

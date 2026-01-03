@@ -35,23 +35,25 @@ require("{$_SERVER['DOCUMENT_ROOT']}/sin/header.php");
 
 					$result=db_query($sqlList)	;	
 					
+					// PHP 7+에서는 mysql_* 함수가 제거되었으므로 db_* 함수 사용
 					if ($result == false)
 						$rcount = 0;
 					else
-						$rcount = mysql_num_rows($result);
+						$rcount = db_count($result);
 
 					If  ($rcount !=0 )
 					{
 						Do {
-							$rsList = mysql_fetch_array($result);
-							$cc_no = $rsList[0];
-							$cc_title = $rsList[1];
-							$cc_sdate = $rsList[2];
-							$cc_shour = $rsList[3];
-							$cc_smin = $rsList[4];
-							$cc_ehour = $rsList[5];
-							$cc_emin = $rsList[6];
-							$cc_desc = $rsList[7];
+							$rsList = db_array($result);
+							// db_array()는 연관 배열을 반환하므로 필드명으로 접근
+							$cc_no = $rsList['cc_no'];
+							$cc_title = $rsList['cc_title'];
+							$cc_sdate = $rsList['cc_sdate'];
+							$cc_shour = $rsList['cc_shour'];
+							$cc_smin = $rsList['cc_smin'];
+							$cc_ehour = $rsList['cc_ehour'];
+							$cc_emin = $rsList['cc_emin'];
+							$cc_desc = $rsList['cc_desc'];
 
 							$cc_title = str_replace("<","&lt;", $cc_title);
 							$cc_title = str_replace(">","&gt;", $cc_title);

@@ -8,6 +8,7 @@
 // -------- ------ --------------------------------------
 // 02/07/10 박선민 마지막 수정
 // 03/12/09 박선민 버그 및 개선
+// 2025-01-XX PHP 업그레이드: $DOCUMENT_ROOT를 $_SERVER['DOCUMENT_ROOT']로 교체
 //=======================================================
 $HEADER=array(
 		'priv' =>	"운영자,뉴스관리자", // 인증유무 (0:모두에게 허용, 숫자가 높을 수록 레벨업)
@@ -17,7 +18,7 @@ $HEADER=array(
 		'version' => 1,
 		'html_echo' => ''	// html header, tail 삽입(tail은 파일 마지막에 echo $SITE['tail'])
 	);
-require("$DOCUMENT_ROOT/sinc/header.php");
+require("{$_SERVER['DOCUMENT_ROOT']}/sinc/header.php");
 //page_security("", $HTTP_HOST);
 
 //===================================================

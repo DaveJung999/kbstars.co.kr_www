@@ -154,8 +154,8 @@ else {
 		// 검색된 회원의 메일리스트, 휴대폰리스트 모음
 		if($list['logon']['email'] and !in_array($list['logon']['email'],$list_email))
 			$list_email[] = $list['logon']['email'];
-		$list['logon'][hp]= trim(ereg_replace("[^0-9]","",$list['logon'][hp]));
-		if($list['logon'][hp] and ereg("^(010|011|016|017|018|019)[0-9]{7,}$",$list['logon'][hp]) and !in_array($list['logon'][hp],$list_hp)) 
+		$list['logon'][hp]= trim(preg_replace("/[^0-9]/","",$list['logon'][hp]));
+		if($list['logon'][hp] and preg_match("/^(010|011|016|017|018|019)[0-9]{7,}$/",$list['logon'][hp]) and !in_array($list['logon'][hp],$list_hp)) 
 			$list_hp[]	= $list['logon'][hp];
 
 		//현금영수증 발급 관련 자료 받아오기
@@ -237,7 +237,7 @@ $tpl->set_var('list_hp',implode(",",$list_hp));
 
 // 마무리
 $val='\\1'.$thisUrl.'skin/'.$dbinfo['skin'].'/images/';
-echo ereg_replace('([="\'])images/',$val,$tpl->process('', 'html',TPL_OPTIONAL));
+echo preg_replace('/([="\'])images\//',$val,$tpl->process('', 'html',TPL_OPTIONAL));
 $list_present = array_count_values($list_present);
 
 foreach($list_present as $key => $value){

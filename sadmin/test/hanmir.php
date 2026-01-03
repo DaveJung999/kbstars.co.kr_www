@@ -12,7 +12,7 @@ set_time_limit(0);
 
 switch($mode) {
 	case "directory" :
-		if(eregi("^http://",$url)) {
+		if(preg_match("/^http:\/\//i",$url)) {
 			$getHTML=file($url);
 		}
 		else echo "URL이 아님니다. http://로 시작바랍니다.<br>";
@@ -20,7 +20,7 @@ switch($mode) {
 		break;
 	case "search" :
 		$getHTMLS[]=array();
-		if(eregi("^http://",$url)) {
+		if(preg_match("/^http:\/\//i",$url)) {
 			$tmp_prs_url=parse_url($url);
 			parse_str($tmp_prs_url['query'],$tmp_query);
 			if($tmp_query['end']) {
@@ -66,7 +66,7 @@ if($mode=="directory" and $getHTML) {
 	for($i;$i<$count_getHTML;$i++) {
 		if($tmp_startTag) {
 			//<!-- hanmir_tag_end -->
-			if( eregi("<!-- hanmir_tag_end -->",$getHTML[$i]) ) {
+			if( preg_match("/<!-- hanmir_tag_end -->/i",$getHTML[$i]) ) {
 				$getData[]		= $tmp_data;
 				$tmp_startTag	= 0;
 			}
@@ -76,7 +76,7 @@ if($mode=="directory" and $getHTML) {
 		}
 		else{
 			//<!-- hanmir_tag_start0hanmir_tag_start가가네닷컴hanmir_tag_start -->
-			if( eregi("hanmir_tag_start",$getHTML[$i]) ) {
+			if( preg_match("/hanmir_tag_start/i",$getHTML[$i]) ) {
 				$tmp_data		= $getHTML[$i];
 				$tmp_startTag	= 1;
 			}
@@ -93,7 +93,7 @@ if($mode=="directory" and $getHTML) {
 		// 설명
 		$tmp_data	= substr($tmp_data,strpos($tmp_data,"</b>")+10);
 		$rs_data[$i][content]= substr($tmp_data,0,strpos($tmp_data,"</td>"));
-		$rs_data[$i][content]= trim(eregi_replace('</small>','',$rs_data[$i][content]));
+		$rs_data[$i][content]= trim(preg_replace('/<\/small>/i','',$rs_data[$i][content]));
 
 		// 전화번호, 주소
 		if( $tmp_count_small=strpos($tmp_data,"<small>") ) {
@@ -153,7 +153,7 @@ elseif( $mode=="search" and is_array($getHTMLS) ) {
 			if($tmp_start) {
 				if($tmp_startTag) {
 					//패턴끝 : </table>
-					if( eregi("</table",$getHTML[$i]) ) {
+					if( preg_match("/<\/table/i",$getHTML[$i]) ) {
 						$tmp_data		.=$getHTML[$i];
 						$getData[]		= $tmp_data;
 						$tmp_startTag	= 0;
@@ -164,19 +164,19 @@ elseif( $mode=="search" and is_array($getHTMLS) ) {
 				}
 				else{
 					//패턴시작 : <table...
-					if( eregi("<table",$getHTML[$i]) ) {
+					if( preg_match("/<table/i",$getHTML[$i]) ) {
 						$tmp_data		= $getHTML[$i];
 						$tmp_startTag	= 1;
 					}
 					// 전체 끝 : <!--검색 결과 끝-->
-					elseif( eregi("검색 결과 끝",$getHTML[$i]) ) {
+					elseif( preg_match("/검색 결과 끝/i",$getHTML[$i]) ) {
 					break; // 끝냄
 				}
 				} // end if.. else..
 			}
 			else {
 				// 전체 시작: <!--결과 갯수 보여주기 끝-->
-				if( eregi("결과 갯수 보여주기 끝",$getHTML[$i]) ) 
+				if( preg_match("/결과 갯수 보여주기 끝/i",$getHTML[$i]) ) 
 					$tmp_start	= 1;
 			} // if.. else..
 		} // end for

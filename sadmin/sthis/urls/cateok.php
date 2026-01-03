@@ -14,7 +14,7 @@ $HEADER=array(
 		useCheck=>1,
 	);
 require($_SERVER['DOCUMENT_ROOT'].'/sinc/header.php');
-page_security("", $HTTP_HOST);
+page_security("", $_SERVER['HTTP_HOST']);
 
 //=======================================================
 // Ready... (변수 초기화 및 넘어온값 필터링)
@@ -185,7 +185,8 @@ function getCateRe($table_cate, $num, $re) {
 	else
 		$sql="SELECT re, right(re,1) FROM {$table_cate} WHERE num='{$num}' AND length(re)=length('{$re}')+1 AND locate('{$re}', re)=1 ORDER BY re DESC LIMIT 1";
 
-	$row = @mysql_fetch_array(@mysql_query($sql));
+	// PHP 7+에서는 mysql_* 함수가 제거되었으므로 db_* 함수 사용
+	$row = @db_array(@db_query($sql));
 	if($row) {
 		$ord_head = substr($row[0],0,-1);
 		$ord_foot = chr(ord($row[1]) + 1);

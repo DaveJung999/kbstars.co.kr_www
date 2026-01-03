@@ -83,7 +83,7 @@ require($_SERVER['DOCUMENT_ROOT'].'/sinc/header.php');
 <?php
 
 if($mode=="input_ok"){
-	if( ereg("%",$_GET['sc_string']) ) {
+	if( preg_match('/%/',$_GET['sc_string']) ) {
 		if($_GET['sc_string']=="%" or $_GET['sc_string']=="%%") $sql_where = " 1 ";
 		$sql_where	= " (`{$_GET['sc_column']}` like '{$_GET['sc_string']}') ";
 	}
@@ -92,7 +92,8 @@ if($mode=="input_ok"){
 	$sql="SELECT * from {$table_payment} WHERE $sql_where and (from_unixtime(idate,'%Y-%m-%d')>='{$_GET['startdate']}' and from_unixtime(idate,'%Y-%m-%d')<='{$_GET['enddate']}') ORDER BY idate DESC";
 
 	$rs=db_query($sql);
-	$total=mysql_num_rows($rs);
+	// PHP 7+에서는 mysql_num_rows()가 제거되었으므로 db_count() 사용
+	$total=db_count($rs);
 	
 	echo("
 			<table border='0' >

@@ -14,7 +14,7 @@ $HEADER=array(
 		useApp	=>1,
 	);
 require($_SERVER['DOCUMENT_ROOT'].'/sinc/header.php');
-page_security("", $HTTP_HOST);
+page_security("", $_SERVER['HTTP_HOST']);
 
 //=======================================================
 // Ready... (변수 초기화 및 넘어온값 필터링)
@@ -43,7 +43,7 @@ page_security("", $HTTP_HOST);
 // Start... (DB 작업 및 display)
 //=======================================================
 if($cateuid) {
-	$cate_nevi = "<a href='$PHP_SELF?db=$db'>Top</a> > ";
+	$cate_nevi = "<a href='{$_SERVER['PHP_SELF']}?db=$db'>Top</a> > ";
 	$rs_cateinfo = db_query("SELECT * from {$table_cate} WHERE uid=$cateuid");
 	if(db_count()) {
 		$cateinfo = db_array($rs_cateinfo);
@@ -160,11 +160,11 @@ for($i=0; $i<$total; $i++){
 		$list['title']= str_repeat("&nbsp;&nbsp;", $list['rede']) . " ↘ " . $list['title']; 
 
 	// URL Link..
-	$href['catewrite']="$PHP_SELF?db=$db";
+	$href['catewrite']="{$_SERVER['PHP_SELF']}?db=$db";
 	$href['catereply']="$PHP_SELP?db=$db&cateuid=$list['uid']";
 	$href['catemodify']="$PHP_SELP?db=$db&mode=catemodify&cateuid=$list['uid']";
 	$href['catesort']="./catesort.php?db=$db&cateuid=$list['uid']";
-	$href['catedirectmodify']="/admin/myadmin224/tbl_change.php?table=$table_cate&pos=0&session_max_rows=30&disp_direction=horizontal&repeat_cells=100&dontlimitchars=&primary_key=+%60uid%60+%3D+%27{$list['uid']}%27&goto=" . urlencode($PHP_SELF . "?" . $QUERY_STRING);
+	$href['catedirectmodify']="/admin/myadmin224/tbl_change.php?table=$table_cate&pos=0&session_max_rows=30&disp_direction=horizontal&repeat_cells=100&dontlimitchars=&primary_key=+%60uid%60+%3D+%27{$list['uid']}%27&goto=" . urlencode($_SERVER['PHP_SELF'] . "?" . $_SERVER['QUERY_STRING']);
 	$href['catedelete']="./cateok.php?db=$db&mode=catedelete&cateuid=$list['uid']";
 	$href["list"]="./shop.php?db=$db&cateuid=$list['uid']";
 ?>

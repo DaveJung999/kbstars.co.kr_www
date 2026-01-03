@@ -8,6 +8,7 @@
 // -------- ------ --------------------------------------
 // 03/08/25 박선민 마지막 수정
 // 2025/08/13 Gemini	 PHP 7.x, MariaDB 11.x 환경에 맞춰 수정
+// 2025-01-XX PHP 업그레이드: change_magic_quotes() 호출 제거 (PHP 7+에서는 불필요)
 //=======================================================
 $HEADER=array(
 	'priv' => '운영자', // 인증유무 (비회원,회원,운영자,서버관리자)
@@ -62,7 +63,8 @@ db_query("update {$table} set hit=hit +1, hitip='". db_escape($REMOTE_ADDR) ."' 
 // 해당 게시물 불러들임
 $result=db_query("SELECT * from {$table} WHERE uid='". db_escape($uid) ."'");
 $list = db_count() ? db_array($result) : back("게시물이 존재하지 않습니다.");
-$list = change_magic_quotes($list,"strip");
+// PHP 7+에서는 magic_quotes가 제거되어 change_magic_quotes 호출 불필요
+// $list = change_magic_quotes($list,"strip");
 $list['rdate'] = date("Y년 m월 d일 H시 i분", $list['rdate']);
 
 // 잠시 고침

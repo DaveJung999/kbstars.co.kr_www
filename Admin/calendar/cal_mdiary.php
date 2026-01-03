@@ -4,7 +4,7 @@ $HEADER=array(
 		'html_echo'	 => 1, // html header, tail 삽입(tail은 파일 마지막에 echo $SITE['tail'])
 		'html_skin'	 => "schedule" // html header 파일(/stpl/basic/index_$HEADER['html'].php 파일을 읽음)
 	);
-require("$DOCUMENT_ROOT/sinc/header.php");
+require("{$_SERVER['DOCUMENT_ROOT']}/sinc/header.php");
 ?>
 <?php
 	@session_start();
@@ -36,12 +36,12 @@ require("$DOCUMENT_ROOT/sinc/header.php");
 					if ($result == false)
 						$rcount = 0;
 					else
-						$rcount = mysql_num_rows($result);
+						$rcount = db_count($result);
 
 					If	($rcount !=0 )
 					{
 						Do {
-							$rsList = mysql_fetch_array($result);
+							$rsList = db_array($result);
 							$cc_no = $rsList[0];
 							$cc_title = $rsList[1];
 							$cc_sdate = $rsList[2];

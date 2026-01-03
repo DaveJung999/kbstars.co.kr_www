@@ -322,13 +322,14 @@ $total_poll = db_count();
 					%)</font></div></td>
 			</tr>
 <?php
-mysql_free_result($result2);
-		mysql_free_result($result3);
-		mysql_free_result($result4);
-		mysql_free_result($result5);
-		mysql_free_result($result6);
-		mysql_free_result($result7);
-		mysql_free_result($result8);
+// PHP 7+에서는 mysql_free_result()가 제거되었으므로 db_free() 사용
+		db_free($result2);
+		db_free($result3);
+		db_free($result4);
+		db_free($result5);
+		db_free($result6);
+		db_free($result7);
+		db_free($result8);
 	} 
 
 ?>
@@ -420,10 +421,11 @@ mysql_free_result($result2);
 		$total_member[3] = db_count();
 		
 
-		mysql_free_result($result2);
-		mysql_free_result($result3);
-		mysql_free_result($result4);
-		mysql_free_result($result5);
+		// PHP 7+에서는 mysql_free_result()가 제거되었으므로 db_free() 사용
+		db_free($result2);
+		db_free($result3);
+		db_free($result4);
+		db_free($result5);
 
 		$total_value = $member_value[0] + $member_value[1] + $member_value[2] + $member_value[3];
 ?>

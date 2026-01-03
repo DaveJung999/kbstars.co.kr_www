@@ -21,7 +21,8 @@ for($i=0;$i<sizeof($get_vars_array);$i++){
 	$get_vars_string[]="$key={$_GET[$key]}";
 }
 $added_value=implode("&",$get_vars_string);
-$HTTP_REFERER=$url.$added_value;
+// 2025-01-XX PHP 업그레이드: $HTTP_REFERER 변수명을 $local_referer로 변경 (PHP 5.4+에서 제거된 전역 변수명과 충돌 방지)
+$local_referer=$url.$added_value;
 
 ####################################################################################
 //					기본설정
@@ -142,8 +143,9 @@ if($counting){
 ####################################################################################
 //					경로설정
 ####################################################################################
-		if($HTTP_REFERER=="<?={$_SERVER['HTTP_REFERER']}?>"){$HTTP_REFERER="";}
-		$dlog=$log=trim($HTTP_REFERER);
+		$http_referer_value = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : '';
+		if($local_referer == $http_referer_value){$local_referer="";}
+		$dlog=$log=trim($local_referer);
 		$log=@str_replace("http://www.","http://",$log);
 		$log=@str_replace("http://","",$log);
 		$log=@explode("/",$log);
@@ -159,7 +161,7 @@ if($counting){
 ####################################################################################
 //					기록넣기
 ####################################################################################
-		$value="'','$ip','$member_id','$time','$yy','$mm','$dd','$hh','$week','$os','$browser','$HTTP_REFERER'";
+		$value="'','$ip','$member_id','$time','$yy','$mm','$dd','$hh','$week','$os','$browser','$local_referer'";
 		$query="insert into nalog3_counter_$counter values ($value)";
 		@mysqli_query($connect,$query);
 

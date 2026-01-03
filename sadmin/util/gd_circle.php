@@ -24,7 +24,7 @@ require("{$_SERVER['DOCUMENT_ROOT']}/sinc/header.php");
 // Ready... (변수 초기화 및 넘어온값 필터링)
 //=======================================================
 	$sql=stripslashes($sql);
-	if(!eregi("^select ",$sql))
+	if(!preg_match("/^select /i",$sql))
 		back("지원하지 않는 SQL문입니다.");
 	elseif(strpos($sql,";") === true)
 		back("지원하지 않는 SQl문입니다.");
@@ -36,12 +36,21 @@ require("{$_SERVER['DOCUMENT_ROOT']}/sinc/header.php");
 	// 내용이 들어 가는 곳 입니다. 한글은 글꼴이 필요하다는 것 다들 아시지요
 	//$string=array("AAA","BBB","CCC","DDD","EEE","FFF","GGG","HHH","III","JJJ","ETC");
 
-	$rs=mysql_query($sql) or die("지원하지 않는 SQL문입니다");
-	if(mysql_num_fields($rs)< 2) // 필드가 무조건 2개여야 한다.
+	// PHP 7+에서는 mysql_* 함수가 제거되었으므로 db_* 함수 사용
+	$rs=db_query($sql);
+	if(!$rs) back("지원하지 않는 SQL문입니다.");
+	// 필드 개수 확인을 위해 첫 번째 행 가져오기
+	$first_row = db_array($rs);
+	if(!$first_row || count($first_row) < 2) // 필드가 무조건 2개여야 한다.
 		back("지원하지 않는 SQL문입니다.");
-	for($i=0;$i<mysql_affected_rows();$i++) {
-		$string[$i]		= db_result($rs,$i,0);
-		$percent[$i]	= db_result($rs,$i,1);
+	// 결과를 배열로 변환
+	$rows = array();
+	while($row = db_array($rs)) {
+		$rows[] = $row;
+	}
+	for($i=0;$i<count($rows);$i++) {
+		$string[$i]		= $rows[$i][0];
+		$percent[$i]	= $rows[$i][1];
 	}
 	// $percent 값을 100% 단위로 재 환산
 	$percent_sum = array_sum($percent);

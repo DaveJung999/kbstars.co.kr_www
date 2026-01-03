@@ -37,6 +37,10 @@ function FCKeditor_IsCompatibleBrowser()
 		$sAgent = $_SERVER['HTTP_USER_AGENT'] ;
 	}
 	else {
+		// PHP 7+에서는 $HTTP_SERVER_VARS, $HTTP_USER_AGENT가 제거되었으므로 이 코드는 실행되지 않음
+		// PHP 4 호환성을 위한 코드
+		$sAgent = '' ; // PHP 7+에서는 $_SERVER가 항상 존재하므로 여기 도달하지 않음
+		/*
 		global $HTTP_SERVER_VARS ;
 		if ( isset( $HTTP_SERVER_VARS ) ) {
 			$sAgent = $HTTP_SERVER_VARS['HTTP_USER_AGENT'] ;
@@ -45,6 +49,7 @@ function FCKeditor_IsCompatibleBrowser()
 			global $HTTP_USER_AGENT ;
 			$sAgent = $HTTP_USER_AGENT ;
 		}
+		*/
 	}
 
 	if ( strpos($sAgent, 'MSIE') !== false && strpos($sAgent, 'mac') === false && strpos($sAgent, 'Opera') === false )

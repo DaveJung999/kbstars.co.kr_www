@@ -66,5 +66,5 @@ $tpl->set_var('form_default',$form_default);
 
 // 마무리
 $val='\\1'.$thisUrl.'skin/'.$dbinfo['skin'].'/images/';
-echo ereg_replace('([="\'])images/',$val,$tpl->process('', 'html',TPL_OPTIONAL));
+echo preg_replace('/([="\'])images\//',$val,$tpl->process('', 'html',TPL_OPTIONAL));
 ?>

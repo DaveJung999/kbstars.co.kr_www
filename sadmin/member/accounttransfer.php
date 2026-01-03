@@ -58,7 +58,7 @@ $thisUrl	= './'; // 마지막이 '/'으로 끝나야함
 	$sql_table= explode('.',$_GET['msc_column']);
 	if(sizeof($sql_table)!=2 or empty($_GET['msc_string'])) go_url('msearch.php');
 	// - $sql_where
-	if( ereg('%',$_GET['msc_string']) ) {
+	if( preg_match('/%/',$_GET['msc_string']) ) {
 		if($_GET['msc_string']=='%') $_GET['msc_string'] = '%%';
 		$sql_where	= " ({$SITE['th']}{$sql_table[0]}.{$sql_table[1]} like '{$_GET['msc_string']}') ";
 	}
@@ -135,7 +135,7 @@ if($accountinfo['transfertype']=='사이트내자유이체및10000원단위타�
 $accountinfo['balance']=number_format($accountinfo['balance']);
 
 // 10-123456-12로 계좌번호를 만듬
-$accountinfo['account']=eregi_replace("^([0-9]+)([0-9]{5})([0-9][0-9])$","\\1-\\2-\\3",$accountinfo['accountno']);
+$accountinfo['account']=preg_replace("/^([0-9]+)([0-9]{5})([0-9][0-9])$/i","\\1-\\2-\\3",$accountinfo['accountno']);
 
 
 // 템플릿 할당
@@ -177,5 +177,5 @@ $tpl->set_var('form_msearch',$form_msearch);
 
 // 마무리
 $val='\\1'.$thisUrl.'skin/'.$dbinfo['skin'].'/images/';
-echo ereg_replace('([="\'])images/',$val,$tpl->process('', 'html',TPL_OPTIONAL));
+echo preg_replace('/([="\'])images\//',$val,$tpl->process('', 'html',TPL_OPTIONAL));
 ?>

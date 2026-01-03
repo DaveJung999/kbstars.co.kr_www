@@ -6,7 +6,8 @@
 // ChangeLog
 //	DATE	수정인				수정 내용
 // -------- ------ --------------------------------------
-// 03/08/22 박선민 마지막 수정 
+// 03/08/22 박선민 마지막 수정
+// 2025-01-XX PHP 업그레이드: eregi_replace 함수를 preg_replace로 교체 
 //=======================================================
 $HEADER=array(
 	'priv' => '', // 인증유무 (0:모두에게 허용, 숫자가 높을 수록 레벨업)
@@ -148,12 +149,12 @@ for($i=0; $i<$total; $i+=$dbinfo['row_pern']){
 		if($sc_string){
 			if($sc_column){
 				if($sc_column == "title") 
-					$list['cut_title'] = eregi_replace($sc_string, "<font color=darkred>\\0</font>",	$list['cut_title']);
+					$list['cut_title'] = preg_replace("/" . preg_quote($sc_string, "/") . "/i", "<font color=darkred>\\0</font>",	$list['cut_title']);
 				else
-					$list[$sc_column]	= eregi_replace($sc_string, "<font color='darkred'>\\0</font>", $list[$sc_column]);
+					$list[$sc_column]	= preg_replace("/" . preg_quote($sc_string, "/") . "/i", "<font color='darkred'>\\0</font>", $list[$sc_column]);
 			} else {
-				$list['userid']	= eregi_replace($sc_string, "<font color=darkred>\\0</font>", $list['userid']);
-				$list['cut_title']= eregi_replace($sc_string, "<font color=darkred>\\0</font>",	$list['cut_title']);
+				$list['userid']	= preg_replace("/" . preg_quote($sc_string, "/") . "/i", "<font color=darkred>\\0</font>", $list['userid']);
+				$list['cut_title']= preg_replace("/" . preg_quote($sc_string, "/") . "/i", "<font color=darkred>\\0</font>",	$list['cut_title']);
 			}
 		}
 

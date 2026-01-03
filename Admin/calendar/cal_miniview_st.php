@@ -11,7 +11,7 @@
 		if (is_array($initVal)){
 			$i=0;
 			/// list함수를 이용해 배열의 키값과 배열의 값을 얻는다. mysql_fetch_array와 같이 다음 배열의 값을 읽는다. 배열이 종료되면 널을 리턴
-			while (list($key,$val)=each($initVal)){
+			foreach($initVal as $key => $val){
 				//키값과 셀렉트값이 일치하면 $bingo변수에 selected라는 문자열 넣어준다. 
 				if ($selected) {if($key==$selected)$bingo="selected";else $bingo="";}
 				$o.="<option value='{$key}' name='{$key}' {$bingo}>{$val}</option>\n";
@@ -67,7 +67,7 @@ function onChg()
 }
 </script>
 <table width="100%" border=0 align=center cellpadding=1 cellspacing=1 bgcolor=#DBDBDB>
-<FORM name="change" METHOD=get ACTION="<?=$PHP_SELF?>">
+<FORM name="change" METHOD=get ACTION="<?=$_SERVER['PHP_SELF']?>">
 	<input type="hidden" name="cate" value="<?=$cate?>">
 	<input type="hidden" name="db" value="<?=$_GET['db']?>">
 	<input type="hidden" name="date" value="">

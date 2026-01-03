@@ -55,7 +55,7 @@ require($_SERVER['DOCUMENT_ROOT'].'/sinc/header.php');
 	// 넘오온 date값 체크
 	if(!$_GET['date']) 
 		$_GET['date'] = date("Y-m-d");
-	elseif( !ereg("[0-9]{4}-[01]?[0-9]-[0123]?[0-9]",$_GET['date']) ) {
+	elseif( !preg_match("/[0-9]{4}-[01]?[0-9]-[0123]?[0-9]/",$_GET['date']) ) {
 		back("잘못된 날짜입니다");
 	}
 	$_GET['date'] = date("Y-m-d",strtotime($_GET['date']));

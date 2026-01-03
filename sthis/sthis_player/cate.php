@@ -167,7 +167,7 @@ for($i=0; $i<$total; $i++){
 	$href['catereply']="{$_SERVER['PHP_SELF']}?db={$db}&cateuid={$list['uid']}";
 	$href['catemodify']="{$_SERVER['PHP_SELF']}?db={$db}&mode=catemodify&cateuid={$list['uid']}";
 	$href['catesort']="./catesort.php?db={$db}&cateuid={$list['uid']}";
-	$href['catedirectmodify']="/admin/myadmin224/tbl_change.php?table={$table_cate}&pos=0&session_max_rows=30&disp_direction=horizontal&repeat_cells=100&dontlimitchars=&primary_key=+%60uid%60+%3D+%27{$list['uid']}%27&goto=" . urlencode($_SERVER['PHP_SELF']	. "?" . $QUERY_STRING);
+	$href['catedirectmodify']="/admin/myadmin224/tbl_change.php?table={$table_cate}&pos=0&session_max_rows=30&disp_direction=horizontal&repeat_cells=100&dontlimitchars=&primary_key=+%60uid%60+%3D+%27{$list['uid']}%27&goto=" . urlencode($_SERVER['PHP_SELF']	. "?" . $_SERVER['QUERY_STRING']);
 	$href['catedelete']="./cateok.php?db={$db}&mode=catedelete&cateuid={$list['uid']}";
 	$href["list"]="/sboard/list.php?db={$db}&cateuid={$list['uid']}"; 
 ?>

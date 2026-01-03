@@ -162,12 +162,12 @@ else{
 			if($sc_string){
 				if($sc_column){
 					if($sc_column == "title") 
-						$list['cut_title'] = eregi_replace($sc_string, "<font color=darkred>\\0</font>",	$list['cut_title']);
+						$list['cut_title'] = preg_replace('/' . preg_quote($sc_string, '/') . '/i', "<font color=darkred>\\0</font>",	$list['cut_title']);
 					else
-						$list[$sc_column]	= eregi_replace($sc_string, "<font color='darkred'>\\0</font>", $list[$sc_column]);
+						$list[$sc_column]	= preg_replace('/' . preg_quote($sc_string, '/') . '/i', "<font color='darkred'>\\0</font>", $list[$sc_column]);
 				} else {
-					$list['userid']	= eregi_replace($sc_string, "<font color=darkred>\\0</font>", $list['userid']);
-					$list['cut_title']= eregi_replace($sc_string, "<font color=darkred>\\0</font>",	$list['cut_title']);
+					$list['userid']	= preg_replace('/' . preg_quote($sc_string, '/') . '/i', "<font color=darkred>\\0</font>", $list['userid']);
+					$list['cut_title']= preg_replace('/' . preg_quote($sc_string, '/') . '/i', "<font color=darkred>\\0</font>",	$list['cut_title']);
 				}
 			}
 

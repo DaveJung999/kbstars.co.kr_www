@@ -123,10 +123,13 @@ function userGetAppendFields($table,$skip_fields='') { // 05/02/03 박선민
 		$skip_fields = array();
 	
 	$fieldlist = array();
-	$fields = mysql_list_fields($SITE['database'], $table);
-	$columns = mysql_num_fields($fields);
+	// PHP 7+에서는 mysql_list_fields()가 제거되었으므로 SHOW COLUMNS 쿼리 사용
+	$sql = "SHOW COLUMNS FROM `{$table}`";
+	$fields = db_query($sql);
+	$columns = db_count($fields);
 	for ($i = 0; $i < $columns; $i++) {
-		$a_fields = mysql_field_name($fields, $i);
+		$row = db_array($fields);
+		$a_fields = $row['Field'];
 		
 		if(!in_array($a_fields,$skip_fields)) {
 			$fieldlist[] = $a_fields;

@@ -16,7 +16,7 @@ switch($mode) {
 		header("Location: $url");
 		break;
 	case "geturl" :
-		if(eregi("^http://",$url)) {
+		if(preg_match("/^http:\/\//i",$url)) {
 			$getHTML=file($url);
 		}
 		else echo "URL이 아님니다. http://로 시작바랍니다.<br>";
@@ -31,7 +31,7 @@ switch($mode) {
 
 		break;	
 	case "analyzeURL" :
-		if(eregi("^http://",$url)) {
+		if(preg_match("/^http:\/\//i",$url)) {
 			$urlinfo=parse_url($url);
 			if(!$urlinfo['path']) $urlinfo['path'] = "/";
 			$getHTML=file($url);
@@ -60,9 +60,9 @@ switch($mode) {
 			echo "<br><b>tag: get_images</b><br>";
 			$strings=$info->get_images();
 			for($i=0;$i<count($strings);$i++){
-				if(eregi("^http",$strings[$i][src]))
+				if(preg_match("/^http/i",$strings[$i][src]))
 					echo "<img src='{$strings[$i][src]}'>{$strings[$i][src]}<br>\n";
-				elseif(eregi("^/",$strings[$i][src]))
+				elseif(preg_match("/^\//",$strings[$i][src]))
 					echo "<img src='{$urlinfo['scheme']}://{$urlinfo['host']}{$strings[$i][src]}'>{$strings[$i][src]}<br>\n";
 				else
 					echo "<img src='{$urlinfo['scheme']}://{$urlinfo['host']}{$urlinfo['path']}{$strings[$i][src]}'>{$strings[$i][src]}<br>\n";
@@ -71,9 +71,9 @@ switch($mode) {
 			echo "<br><b>tag: get_links</b><br>";
 			$strings=$info->get_links();
 			for($i=0;$i<count($strings);$i++){
-				if(eregi("^http",$strings[$i][href]))
+				if(preg_match("/^http/i",$strings[$i][href]))
 					echo "<a href='{$strings[$i][href]}' target=_blank>{$strings[$i][href]}</a><br>\n";
-				elseif(eregi("^/",$strings[$i][href]))
+				elseif(preg_match("/^\//",$strings[$i][href]))
 					echo "<a href='{$urlinfo['scheme']}://{$urlinfo['host']}{$strings[$i][href]}' target=_blank>{$strings[$i][href]}</a><br>\n";
 				else
 					echo "<a href='{$urlinfo['scheme']}://{$urlinfo['host']}{$urlinfo['path']}{$strings[$i][href]}' target=_blank>{$strings[$i][href]}</a><br>\n";
@@ -157,7 +157,7 @@ switch($mode) {
 		echo "<br><b>base64_encode</b>:<br><pre>" . base64_encode($url) . "</pre><br>";
 		echo "<br><b>base64_decode</b>:<br><pre>" . htmlspecialchars(base64_decode($url),ENT_QUOTES) . "</pre><br>";
 		echo "<br><b>quoted-printable Decode</b>:<br><pre>" . htmlspecialchars(quoted_printable_decode($url),ENT_QUOTES) . "</pre><br>";
-		echo "<br><b>eregi_replace(해당단어를 #으로)</b>:<br>" . eregi_replace($url,"#",$a) . "<br>";
+		echo "<br><b>eregi_replace(해당단어를 #으로)</b>:<br>" . preg_replace("/" . preg_quote($url, "/") . "/i","#",$a) . "<br>";
 		break;
 } // end switch
 ?>

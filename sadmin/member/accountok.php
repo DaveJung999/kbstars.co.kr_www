@@ -63,7 +63,7 @@ function transferok($bid) {
 				passwd		 =>	"post,trim,notnull=" . urlencode("웹로그인 패스워드를 입력하시기바랍니다."),
 		);
 	$qs=check_value($qs);
-	$qs['to_accountno']=eregi_replace("[^0-9]","",$qs['to_accountno']);
+	$qs['to_accountno']=preg_replace("/[^0-9]/","",$qs['to_accountno']);
 
 	// 해당 계좌정보와 계좌 내역 마지막건의 정보를 읽음
 	$rs_accountinfo=db_query("SELECT * from {$table_accountinfo} WHERE bid={$logon['uid']} and accountno='{$qs['accountno']}'");

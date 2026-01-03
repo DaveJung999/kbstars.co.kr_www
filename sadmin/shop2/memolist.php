@@ -54,14 +54,14 @@ $thisUrl	= './'; // 마지막이 '/'으로 끝나야함
 		$aTemp = explode(',',$_GET['sc_column']);
 		$tmp = '';
 		for($i=0;$i<count($aTemp);$i++) {
-			if(!eregi('^[a-z0-9_-]+$',$aTemp[$i])) continue;
+			if(!preg_match('/^[a-z0-9_-]+$/i',$aTemp[$i])) continue;
 			if($i>0) $tmp .= ' or ';
 			switch($aTemp[$i]) {
 				case 'bid':
 				case 'uid':
 					$tmp .=' ('.$aTemp[$i].'="'.$_GET['sc_string'].'") '; break;
 				default : // bug - sc_column 장난 우려
-					$tmp .=' ('.$aTemp[$i].' like "%'.ereg_replace('([%_])','\\\\1',$_GET['sc_string']).'%") ';
+					$tmp .=' ('.$aTemp[$i].' like "%'.preg_replace('/([%_])/','\\\\1',$_GET['sc_string']).'%") ';
 				// default : back('잘못된 요청입니다.');
 			}
 		} // end for
@@ -153,8 +153,8 @@ else{
 		//	Search 단어 색깔 표시
 		if($_GET['sc_string'] and $_GET['sc_column']) {
 			if($_GET['sc_column']=='title') 
-				$list['cut_title'] = eregi_replace($_GET['sc_string'], '<font color=darkred>\\0</font>',	$list['cut_title']);
-			$list[$_GET['sc_column']]	= eregi_replace($_GET['sc_string'], '<font color=darkred>\\0</font>', $list[$_GET['sc_column']]);
+				$list['cut_title'] = preg_replace("/" . preg_quote($_GET['sc_string'], "/") . "/i", '<font color=darkred>\\0</font>',	$list['cut_title']);
+			$list[$_GET['sc_column']]	= preg_replace("/" . preg_quote($_GET['sc_string'], "/") . "/i", '<font color=darkred>\\0</font>', $list[$_GET['sc_column']]);
 		}
 		//상품 이름 가져오기
 		$qs = db_query("SELECT * FROM new21_shop2_{$_GET['db']} WHERE uid = {$list['pid']}");

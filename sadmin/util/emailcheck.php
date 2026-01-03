@@ -7,6 +7,7 @@
 //   DATE   수정인			 수정 내용
 // -------- ------ --------------------------------------
 // 02/09/26 박선민 마지막 수정
+// 2025-01-XX PHP 업그레이드: ereg 함수를 preg_match로 교체
 //=======================================================
 $HEADER=array(
 		auth	=>0, // 인증유무 (0:모두에게 허용, 숫자가 logon테이블 Level)
@@ -72,14 +73,15 @@ require($_SERVER['DOCUMENT_ROOT'].'/sinc/header.php');
 ========================================================================= */ 
 
 function SnowCheckMail($Email,$Debug=false) { 
-	global $HTTP_HOST; 
+	// PHP 7+에서는 $HTTP_HOST 변수가 제거되었으므로 $_SERVER['HTTP_HOST'] 직접 사용
+	// global $HTTP_HOST; 
 	$Return =array();  
 	// 반환용 변수 
 	// $Return[0] : [true|false] - 처리결과의 true,false 값을 저장. 
 	// $Return[1] : 처리결과에 대한 메세지 저장. 
 
 	// Email 형식 체크를 위한 정규식 표현. 많이 공개된 것이니 설명을 하지않도록 하겠습니다. 
-	if (!eregi("^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$", $Email)) { 
+	if (!preg_match("/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$/i", $Email)) { 
 		$Return=-99; 
 		return $Return; 
 	} 
@@ -89,8 +91,8 @@ function SnowCheckMail($Email,$Debug=false) {
 	// $Username : lsm 
 	// $Domain : ebeecomm.com 이 저장 
 	// list 함수 레퍼런스 : http://www.php.net/manual/en/function.list.php 
-	// split 함수 레퍼런스 : http://www.php.net/manual/en/function.split.php 
-	list ( $Username, $Domain ) = split ("@",$Email); 
+	// split 함수는 PHP 7에서 제거되었으므로 explode로 변경
+	list ( $Username, $Domain ) = explode("@",$Email); 
 
 	// 도메인에 MX(mail exchanger) 레코드가 존재하는지를 체크. 근데 영어가 맞나 모르겠네여 -_-+ 
 	// checkdnsrr 함수 레퍼런스 : http://www.php.net/manual/en/function.checkdnsrr.php 
@@ -127,11 +129,12 @@ function SnowCheckMail($Email,$Debug=false) {
 		// 접속후 문자열을 얻어와 220으로 시작해야 서비스가 준비중인 것이라 판단. 
 		// 220이 나올때까지 대기 처리를 하면 더 좋겠지요 ^^; 
 		// fgets 함수 레퍼런스 : http://www.php.net/manual/en/function.fgets.php 
-		if ( ereg ( "^220", $Out = fgets ( $Connect, 1024 ) ) ) { 
+		if ( preg_match ( "/^220/", $Out = fgets ( $Connect, 1024 ) ) ) { 
 			 
 			// 접속한 서버에게 클라이언트의 도착을 알립니다. 
-			fputs ( $Connect, "HELO $HTTP_HOST\r\n" ); 
-				if ($Debug) echo "실행 : HELO $HTTP_HOST<br>"; 
+			$http_host = isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : 'localhost';
+			fputs ( $Connect, "HELO $http_host\r\n" ); 
+				if ($Debug) echo "실행 : HELO $http_host<br>"; 
 			$Out = fgets ( $Connect, 1024 ); // 서버의 응답코드를 받아옵니다. 
 				if ($Debug) echo "결과 : $Out<br>"; 
 
@@ -157,11 +160,11 @@ function SnowCheckMail($Email,$Debug=false) {
 				// 명령어가 성공적으로 수행되지 않았다면 몬가 문제가 있는 것이겠지요. 
 				// 수신자의 주소에 대해서 서버는 자신의 메일 계정에 우편함이 있는지를 
 				// 체크해 없다면 550 코드로 반응을 합니다. 
-				if ( !ereg ( "^250", $From ) ) {
+				if ( !preg_match ( "/^250/", $From ) ) {
 					$Return=-4; 
 					return $Return; 
 				}
-				elseif ( !ereg ( "^250", $To ) ) { 
+				elseif ( !preg_match ( "/^250/", $To ) ) { 
 					$Return=0; 
 					return $Return; 
 				} 

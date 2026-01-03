@@ -151,7 +151,7 @@ $tpl->set_var('dlist.idate_date',date("Y-m-d [H:i:s]",$dlist['idate']));
 
 // 마무리
 $val='\\1'.$thisUrl.'skin/'.$dbinfo['skin'].'/images/';
-echo ereg_replace('([="\'])images/',$val,$tpl->process('', 'html',TPL_OPTIONAL));
+echo preg_replace('/([="\'])images\//',$val,$tpl->process('', 'html',TPL_OPTIONAL));
 
 //=======================================================
 // User functions... (사용자 함수 정의)

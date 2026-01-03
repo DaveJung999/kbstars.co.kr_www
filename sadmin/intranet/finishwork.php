@@ -79,7 +79,7 @@ if($mode=="finishwork") {
 <html>
 <?=$pageinfo['html_header']?>
 <body bgcolor="<?=$pageinfo['right_bgcolor']?>" background="<?=$pageinfo['right_background']?>">
-<form method=post action="<?=$PHP_SELF?>">
+<form method=post action="<?php echo $_SERVER['PHP_SELF'];?>">
 <input type="hidden" name="mode"	value="finishwork" readonly>
 <table width="500" border=0 cellpadding='<?=$pageinfo['table_cellpadding']?>' cellspacing='<?=$pageinfo['table_cellspacing']?>' bgcolor='<?=$pageinfo['table_linecolor']?>'>
 	<tr> 

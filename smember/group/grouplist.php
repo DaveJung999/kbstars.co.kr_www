@@ -61,7 +61,7 @@ if(db_count()){
 				$subNode{$varRe}=new HTML_TreeNode($rows['title'],$rows['url'],$icon);
 				$varRePrev="";
 			} else {
-				$varReTemp=eregi_replace("_[^_]*$","",$varRe);
+				$varReTemp=preg_replace("/_[^_]*$/i","",$varRe);
 				if(isset($subNode{$varReTemp}))
 					$subNode{$varReTemp}->addItem($subNode{$varRe});
 			}

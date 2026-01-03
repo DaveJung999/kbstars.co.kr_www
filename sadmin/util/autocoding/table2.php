@@ -34,7 +34,7 @@ foreach($tables as $value) {
 }
 if(!$_GET['key']) $_GET['key']="uid";
 ?>
-<form method=get action=<?=$PHP_SELF?>>
+<form method=get action="<?php echo $_SERVER['PHP_SELF'];?>">
 <input type=hidden name=mode value='ok'>
 테이블이름:<select name=table><?=$tablelist?></select><br>
 PRIMARY KEY:<input type=text size=20 name=key value="<?=$_GET['key']?>">
@@ -367,7 +367,7 @@ $tpl->set_var("form_default",	$form_default);
 
 // 마무리
 $val="\\1{$thisUrl}/skin/{$dbinfo['skin']}/images/";
-echo ereg_replace("([\"|\'])images/","{$val}",$tpl->process('', 'html',TPL_OPTIONAL));
+echo preg_replace("/([\"|'])images\//","{$val}",$tpl->process('', 'html',TPL_OPTIONAL));
 
 //=======================================================
 // User functions... (사용자 함수 정의)
@@ -382,10 +382,13 @@ function userGetAppendFields($table,$default_fields)
 		$default_fields = array();
 	
 	$fieldlist = array();
-	$fields = mysql_list_fields($SITE['database'], $table);
-	$columns = mysql_num_fields($fields);
+	// PHP 7+에서는 mysql_list_fields()가 제거되었으므로 SHOW COLUMNS 쿼리 사용
+	$sql = "SHOW COLUMNS FROM `{$table}`";
+	$fields = db_query($sql);
+	$columns = db_count($fields);
 	for ($i = 0; $i < $columns; $i++) {
-		$a_fields = mysql_field_name($fields, $i);
+		$row = db_array($fields);
+		$a_fields = $row['Field'];
 		
 		if(!in_array($a_fields,$default_fields)) {
 			$fieldlist[] = $a_fields;
@@ -399,18 +402,19 @@ function userGetAppendFields($table,$default_fields)
 // enum필드라면, $list[필드이름_options] 만들어줌
 // 04/08/17 박선민
 function  userEnumFieldsToOptionTag($table,&$list) {
-	$table_def = mysql_query("SHOW FIELDS FROM {$table}");
+	// PHP 7+에서는 mysql_* 함수가 제거되었으므로 db_* 함수 사용
+	$table_def = db_query("SHOW FIELDS FROM {$table}");
 	/**
 	 * Displays the form
 	 */
-	$fields_cnt	 = mysql_num_rows($table_def);
+	$fields_cnt	 = db_count($table_def);
 	for ($i = 0; $i < $fields_cnt; $i++) {
-		$row_table_def   = mysql_fetch_array($table_def);
+		$row_table_def   = db_array($table_def);
 		$field		   = $row_table_def['Field'];
 
 		//$len			 = @mysql_field_len($result, $i);
 
-		$row_table_def['True_Type'] = ereg_replace('\\(.*', '', $row_table_def['Type']);
+		$row_table_def['True_Type'] = preg_replace('/\\(.*/', '', $row_table_def['Type']);
 		if($row_table_def['True_Type']!='enum') continue;
 		
 		$return	= '';
@@ -418,7 +422,7 @@ function  userEnumFieldsToOptionTag($table,&$list) {
 		// The value column (depends on type)
 		// ----------------
 		$enum		= str_replace('enum(', '', $row_table_def['Type']);
-		$enum		= ereg_replace('\\)$', '', $enum);
+		$enum		= preg_replace('/\\)$/', '', $enum);
 		$enum		= explode('\',\'', substr($enum, 1, -1));
 		$enum_cnt	= count($enum);
 
@@ -468,12 +472,15 @@ function userTablelist($database="",$table) {
 
 	$aColumn = array();
 
-	$fields		= mysql_list_fields($database, $table);
+	// PHP 7+에서는 mysql_list_fields()가 제거되었으므로 SHOW COLUMNS 쿼리 사용
+	$sql = "SHOW COLUMNS FROM `{$table}`";
+	$fields = db_query($sql);
 	if(!$fields) return false;
 
-	$columns	= mysql_num_fields($fields); 
+	$columns	= db_count($fields); 
 	for ($i = 0; $i < $columns; $i++) { 
-	   $aColumn[] = mysql_field_name($fields, $i);
+		$row = db_array($fields);
+		$aColumn[] = $row['Field'];
 	}
 
 	return $aColumn;
@@ -481,14 +488,15 @@ function userTablelist($database="",$table) {
 
 
 function userInputfield2($table,$list="php") {
-	$table_def = mysql_query("SHOW FIELDS FROM {$table}");
-	$fields_cnt	 = mysql_num_rows($table_def);
+	// PHP 7+에서는 mysql_* 함수가 제거되었으므로 db_* 함수 사용
+	$table_def = db_query("SHOW FIELDS FROM {$table}");
+	$fields_cnt	 = db_count($table_def);
 	for ($i = 0; $i < $fields_cnt; $i++) {
-		$row_table_def   = mysql_fetch_array($table_def);
+		$row_table_def   = db_array($table_def);
 		$field		   = $row_table_def['Field'];
-		$type	= ereg_replace('\\(.*', '', $row_table_def['Type']);
-		if(eregi("char|int",$type)) {
-			$len	= ereg_replace('.*\\(([0-9]+)\\).*', "\\1", $row_table_def['Type']);
+		$type	= preg_replace('/\\(.*/', '', $row_table_def['Type']);
+		if(preg_match("/char|int/i",$type)) {
+			$len	= preg_replace('/.*\\(([0-9]+)\\).*/', "\\1", $row_table_def['Type']);
 			if(is_array($list)) {
 				$data	= htmlspecialchars($list[$field]);
 			}

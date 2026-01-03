@@ -21,7 +21,7 @@ require($_SERVER['DOCUMENT_ROOT'].'/sinc/header.php');
 // $seHTTP_REFERER는 어디서 링크하여 왔는지 저장하고, 로그인하면서 로그에 남기고 삭제된다.
 if( !$_SESSION['seUserid'] && !$_SESSION['seHTTP_REFERER'] && $_SERVER['HTTP_REFERER'] && strpos($_SERVER['HTTP_REFERER'],$_SERVER["HTTP_HOST"]) == false ){
 	$seHTTP_REFERER=$_SERVER['HTTP_REFERER'];
-	session_register(seHTTP_REFERER);
+	$_SESSION['seHTTP_REFERER'] = $seHTTP_REFERER;
 } 
 
 ?>

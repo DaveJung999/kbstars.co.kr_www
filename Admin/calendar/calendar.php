@@ -7,6 +7,7 @@
 //	DATE	수정인			 수정 내용
 // -------- ------ --------------------------------------
 // 04/07/19 박선민 마지막 수정
+// 2025-01-XX PHP 업그레이드: mysql_* 함수를 db_* 함수로 교체
 //=======================================================
 $HEADER=array(
 		'priv'		 => '', // 인증유무 (0:모두에게 허용, 숫자가 logon테이블 Level)
@@ -60,8 +61,9 @@ $_GET['db'] = "schedule ";
 				$calendar[$row['startdate']][kind] = $row['kind'];
 				$calendar[$row['startdate']][uid] = $row['uid'];
 			}
-*/			$res = mysql_query("select * from new21_calendar_schedule ".$where." order by startdate, starthour, startmin");
-			while($row = mysql_fetch_array($res)) {
+*/			$sql = "select * from new21_calendar_schedule ".$where." order by startdate, starthour, startmin";
+			$res = db_query($sql);
+			while($row = db_array($res)) {
 				$calendar[$row['startdate']][kind] = $row['kind'];
 				$calendar[$row['startdate']][uid] = $row['uid'];
 			}
@@ -170,8 +172,9 @@ body {
 			while($row = mysql_fetch_array($res)) {
 				$calendar[$row['startdate']] = array_merge($row, array("db" => "schedule2"));
 			}
-*/			$res = mysql_query("select * from new21_calendar_schedule ".$where." order by startdate, starthour, startmin");
-			while($row = mysql_fetch_array($res)) {
+*/			$sql = "select * from new21_calendar_schedule ".$where." order by startdate, starthour, startmin";
+			$res = db_query($sql);
+			while($row = db_array($res)) {
 				$calendar[$row['startdate']] = array_merge($row, array("db" => "schedule"));
 			}
 ?>

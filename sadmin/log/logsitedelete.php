@@ -61,7 +61,7 @@ $sql_where = " rdate>={$starttime} and rdate <={$endtime} "; // init
 // 해당 IP 삭제
 $count_delete = 0; // init
 if($_GET['submit']=="삭제") {
-	if(ereg("^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$",$_GET['ip']) and $sql_where) { // 해당 ip 삭제
+	if(preg_match("/^[0-9]+\\.[0-9]+\\.[0-9]+\\.[0-9]+$/",$_GET['ip']) and $sql_where) { // 해당 ip 삭제
 		$sql = "delete from {$table_log_site} where $sql_where and ip='{$_GET['ip']}' ";
 		db_query($sql);
 		$count_delete=db_count();
@@ -101,5 +101,5 @@ $tpl->set_var('enddate', $_GET['enddate']);
 
 // 마무리
 $val="\\1{$thisUrl}/skin/{$dbinfo['skin']}/images/";
-echo ereg_replace("([\"|\'])images/","{$val}",$tpl->process('', 'html',TPL_OPTIONAL));	
+echo preg_replace("/([\"|'])images\//","{$val}",$tpl->process('', 'html',TPL_OPTIONAL));	
 ?>
