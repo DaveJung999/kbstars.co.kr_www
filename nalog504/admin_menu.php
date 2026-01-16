@@ -24,34 +24,34 @@ $is_admin = $_COOKIE['nalog_admin'] ?? false; // 쿠키 값 안전하게 확인
 <table align="center" width="100%" cellpadding="2" cellspacing="0" border="1" bordercolor="white" bgcolor="#C9F0FF">
 <tr>
 <?php if ($is_admin || !($set['auth_time'] ?? false)) { ?>
-	<td width="9%" align="center" <?=$bgcolors[1] ?? '' ?> nowrap>&nbsp;<a href="admin_counter.php?counter=<?=$counter ?>&mode=1"><?=$bs[1] ?? '' ?><?=$lang['counter_main_menu_hour'] ?? 'Hour' ?></a>&nbsp;</td>
+	<td width="9%" align="center" <?php echo $bgcolors[1] ?? ''; ?> nowrap>&nbsp;<a href="admin_counter.php?counter=<?php echo $counter; ?>&mode=1"><?php echo $bs[1] ?? ''; ?><?php echo $lang['counter_main_menu_hour'] ?? 'Hour'; ?></a>&nbsp;</td>
 <?php } ?>
 <?php if ($is_admin || !($set['auth_day'] ?? false)) { ?>
-	<td width="9%" align="center" <?=$bgcolors[2] ?? '' ?> nowrap>&nbsp;<a href="admin_counter.php?counter=<?=$counter ?>&mode=2"><?=$bs[2] ?? '' ?><?=$lang['counter_main_menu_day'] ?? 'Day' ?></a>&nbsp;</td>
+	<td width="9%" align="center" <?php echo $bgcolors[2] ?? ''; ?> nowrap>&nbsp;<a href="admin_counter.php?counter=<?php echo $counter; ?>&mode=2"><?php echo $bs[2] ?? ''; ?><?php echo $lang['counter_main_menu_day'] ?? 'Day'; ?></a>&nbsp;</td>
 <?php } ?>
 <?php if ($is_admin || !($set['auth_week'] ?? false)) { ?>
-	<td width="9%" align="center" <?=$bgcolors[3] ?? '' ?> nowrap>&nbsp;<a href="admin_counter.php?counter=<?=$counter ?>&mode=3"><?=$bs[3] ?? '' ?><?=$lang['counter_main_menu_week'] ?? 'Week' ?></a>&nbsp;</td>
+	<td width="9%" align="center" <?php echo $bgcolors[3] ?? ''; ?> nowrap>&nbsp;<a href="admin_counter.php?counter=<?php echo $counter; ?>&mode=3"><?php echo $bs[3] ?? ''; ?><?php echo $lang['counter_main_menu_week'] ?? 'Week'; ?></a>&nbsp;</td>
 <?php } ?>
 <?php if ($is_admin || !($set['auth_month'] ?? false)) { ?>
-	<td width="9%" align="center" <?=$bgcolors[4] ?? '' ?> nowrap>&nbsp;<a href="admin_counter.php?counter=<?=$counter ?>&mode=4"><?=$bs[4] ?? '' ?><?=$lang['counter_main_menu_month'] ?? 'Month' ?></a>&nbsp;</td>
+	<td width="9%" align="center" <?php echo $bgcolors[4] ?? ''; ?> nowrap>&nbsp;<a href="admin_counter.php?counter=<?php echo $counter; ?>&mode=4"><?php echo $bs[4] ?? ''; ?><?php echo $lang['counter_main_menu_month'] ?? 'Month'; ?></a>&nbsp;</td>
 <?php } ?>
 <?php if ($is_admin || !($set['auth_year'] ?? false)) { ?>
-	<td width="9%" align="center" <?=$bgcolors[5] ?? '' ?> nowrap>&nbsp;<a href="admin_counter.php?counter=<?=$counter ?>&mode=5"><?=$bs[5] ?? '' ?><?=$lang['counter_main_menu_year'] ?? 'Year' ?></a>&nbsp;</td>
+	<td width="9%" align="center" <?php echo $bgcolors[5] ?? ''; ?> nowrap>&nbsp;<a href="admin_counter.php?counter=<?php echo $counter; ?>&mode=5"><?php echo $bs[5] ?? ''; ?><?php echo $lang['counter_main_menu_year'] ?? 'Year'; ?></a>&nbsp;</td>
 <?php } ?>
 <?php if ($is_admin || !($set['auth_log'] ?? false)) { ?>
-	<td width="9%" align="center" <?=$bgcolors[6] ?? '' ?> nowrap>&nbsp;<a href="admin_counter.php?counter=<?=$counter ?>&mode=6"><?=$bs[6] ?? '' ?><?=$lang['counter_main_menu_refer'] ?? 'Referer' ?></a>&nbsp;</td>
+	<td width="9%" align="center" <?php echo $bgcolors[6] ?? ''; ?> nowrap>&nbsp;<a href="admin_counter.php?counter=<?php echo $counter; ?>&mode=6"><?php echo $bs[6] ?? ''; ?><?php echo $lang['counter_main_menu_refer'] ?? 'Referer'; ?></a>&nbsp;</td>
 <?php } ?>
 <?php if ($is_admin || !($set['auth_dlog'] ?? false)) { ?>
-	<td width="10%" align="center" <?=$bgcolors[7] ?? '' ?> nowrap>&nbsp;<a href="admin_counter.php?counter=<?=$counter ?>&mode=7"><?=$bs[7] ?? '' ?><?=$lang['counter_main_menu_refer_detail'] ?? 'Detail' ?></a>&nbsp;</td>
+	<td width="10%" align="center" <?php echo $bgcolors[7] ?? ''; ?> nowrap>&nbsp;<a href="admin_counter.php?counter=<?php echo $counter; ?>&mode=7"><?php echo $bs[7] ?? ''; ?><?php echo $lang['counter_main_menu_refer_detail'] ?? 'Detail'; ?></a>&nbsp;</td>
 <?php } ?>
 <?php if ($is_admin || !($set['auth_os'] ?? false)) { ?>
-	<td width="9%" align="center" <?=$bgcolors[8] ?? '' ?> nowrap>&nbsp;<a href="admin_counter.php?counter=<?=$counter ?>&mode=8"><?=$bs[8] ?? '' ?><?=$lang['counter_main_menu_os'] ?? 'OS' ?></a>&nbsp;</td>
+	<td width="9%" align="center" <?php echo $bgcolors[8] ?? ''; ?> nowrap>&nbsp;<a href="admin_counter.php?counter=<?php echo $counter; ?>&mode=8"><?php echo $bs[8] ?? ''; ?><?php echo $lang['counter_main_menu_os'] ?? 'OS'; ?></a>&nbsp;</td>
 <?php } ?>
 <?php if ($is_admin || !($set['auth_member'] ?? false)) { ?>
-	<td width="9%" align="center" <?=$bgcolors[9] ?? '' ?> nowrap>&nbsp;<a href="admin_counter.php?counter=<?=$counter ?>&mode=9"><?=$bs[9] ?? '' ?><?=$lang['counter_main_menu_visitor'] ?? 'Visitor' ?></a>&nbsp;</td>
+	<td width="9%" align="center" <?php echo $bgcolors[9] ?? ''; ?> nowrap>&nbsp;<a href="admin_counter.php?counter=<?php echo $counter; ?>&mode=9"><?php echo $bs[9] ?? ''; ?><?php echo $lang['counter_main_menu_visitor'] ?? 'Visitor'; ?></a>&nbsp;</td>
 <?php } ?>
 <?php if ($is_admin) { ?>
-	<td width="9%" align="center" <?=$bgcolors[10] ?? '' ?> nowrap>&nbsp;<a href="admin_counter.php?counter=<?=$counter ?>&mode=10"><?=$bs[10] ?? '' ?><?=$lang['counter_main_menu_config'] ?? 'Config' ?></a>&nbsp;</td>
+	<td width="9%" align="center" <?php echo $bgcolors[10] ?? ''; ?> nowrap>&nbsp;<a href="admin_counter.php?counter=<?php echo $counter; ?>&mode=10"><?php echo $bs[10] ?? ''; ?><?php echo $lang['counter_main_menu_config'] ?? 'Config'; ?></a>&nbsp;</td>
 <?php } ?>
 </tr>
 </table>
@@ -81,10 +81,10 @@ if ($number) {
 	<table align="center" width="100%" cellpadding="2" cellspacing="0" border="1" bordercolor="white" bgcolor="white">
 	<tr>
 	<form name="plugins" action="admin_counter.php">
-	<input type="hidden" name="counter" value="<?=$counter ?>">
+	<input type="hidden" name="counter" value="<?php echo $counter; ?>">
 	<td width="1%" nowrap>
 	<select name="id" onchange="plugins.submit()">
-	<option value=''><?=$lang['counter_main_plug_in'] ?? 'Plug In' ?></option>
+	<option value=''><?php echo $lang['counter_main_plug_in'] ?? 'Plug In'; ?></option>
 	<option value=''></option>
 	<?php
 	if ($handle) { // opendir 결과를 다시 사용

@@ -20,19 +20,19 @@ echo $lang['head'];
 function on(){login.id.focus();}
 function chk(){
 	if(!login.id.value){
-		alert('n@log error : \n\n<?=$lang['login_error_id']?>');
+		alert('n@log error : \n\n<?php echo $lang['login_error_id']; ?>');
 		login.id.focus();
 		return false;
 	}
 	if(!login.pass.value){
-		alert('n@log error : \n\n<?=$lang['login_error_pass']?>');
+		alert('n@log error : \n\n<?php echo $lang['login_error_pass']; ?>');
 		login.pass.focus();
 		return false;
 	}
 }
 function auto_log(){
 	if(login.auto.checked){
-		result = confirm('n@log warning : \n\n<?=$lang['login_warning_auto']?>');
+		result = confirm('n@log warning : \n\n<?php echo $lang['login_warning_auto']; ?>');
 		if(!result){return false;}
 	}
 }

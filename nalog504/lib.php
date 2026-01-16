@@ -12,9 +12,10 @@
 ####################################################################################
 if ($_GET) { extract($_GET); }
 if ($_POST) { extract($_POST); }
-$PHP_SELF = $_SERVER['PHP_SELF'];
-$HTTP_REFERER = $_SERVER['HTTP_REFERER'] ?? '';
-$REMOTE_ADDR = $_SERVER['REMOTE_ADDR'] ?? '';
+// 25/01/XX Auto Deprecated 변수 제거 (직접 $_SERVER 사용)
+// $PHP_SELF = $_SERVER['PHP_SELF'];
+// $HTTP_REFERER = $_SERVER['HTTP_REFERER'] ?? '';
+// $REMOTE_ADDR = $_SERVER['REMOTE_ADDR'] ?? '';
 
 ####################################################################################
 //					버튼지정
@@ -109,8 +110,8 @@ function nalog_admin_check4()
 //					인덱스
 ####################################################################################
 function nalog_index() {
-	global $PHP_SELF, $pagegroup, $pagestart, $pageend, $pageviewsu, $send, $pagenum, $pagesu, $total;
-	$file_name = $PHP_SELF;
+	global $pagegroup, $pagestart, $pageend, $pageviewsu, $send, $pagenum, $pagesu, $total;
+	$file_name = $_SERVER['PHP_SELF'];
 	if ($pagegroup > 1) {
 		$prev = $pagestart - $pageviewsu - 1; // 이전목록그룹의 시작페이지결정
 		echo "<a href=\"$file_name?${send}pagenum=$prev\"><span style=font-size:6pt>&#9664;&#9664;</span></a> ";

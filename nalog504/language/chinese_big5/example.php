@@ -6,7 +6,7 @@
 	</tr>
 	<tr>
 	<td>
-		<span style='font-size:12pt'><b>n@log analyzer <?=$nalog_info[version]?> 춑셕씁ⓒΞㅸ챞폻ⓕ</b></span>
+		<span style='font-size:12pt'><b>n@log analyzer <?php echo $nalog_info[version]; ?> 춑셕씁ⓒΞㅸ챞폻ⓕ</b></span>
 	</td>
 	<td align=right>
 		ㅵ?쩍캘좬<a href="http://kiddiken.net" target=_blank>톡そ(kiddiken)</a>
@@ -20,7 +20,7 @@
 <table width=600 cellpadding=3 cellspacing=0 border=0 align=center>
 	<tr>
 	<td colspan=2>
-		콄쨢퇱┬?쫆ヘ?㉲귑Ξ짦??쫁쩾 <b><?=$counter?></b> ず춑셕씁좧<br>
+		콄쨢퇱┬?쫆ヘ?㉲귑Ξ짦??쫁쩾 <b><?php echo $counter; ?></b> ず춑셕씁좧<br>
 		빨ⁿㅵ??쩑쿽?춑셕씁ず?쯹ⓖ쪿콄먈컥춑셕씁ずⓒΞㅸ챞폻ⓕ좧<br><br>
 	</td>
 	</tr>
@@ -33,7 +33,7 @@
 	<tr><td colspan=2>
 	<table border=0 width=100% cellpadding=5 cellspacing=0>
 		<tr>
-		<td width=1% nowrap valign=top><img src='<?=$test_gd?>'></td>
+		<td width=1% nowrap valign=top><img src='<?php echo $test_gd; ?>'></td>
 		<td width=99% valign=top>
 			싻ллⅹㅸず믿읠좧쫜찱쿽?믿읠촑??뗏╈ず?ㅸ㎺좥┱맸?┳??Φ╈ず띔㎺ず멎좥㉩퀿ろ?콄ず쩊업ㅴ누 GD 소꾐??좧쿽셧룻콄ⓒΞ n@log ⓖ톈?춑셕씁믿읠짼そ촑뺨┱¹?좮콄쪀떱쫇??곰?쩑짾쿽? IMG 퍈챞좥룻??뫘짫?좥?─첢?쫇콄ず n@log 멸?㎤╀걺ヘ?⒡쁨ず믿읠좧
 		</td>
@@ -47,7 +47,7 @@
 	?쫇㏀?뮐먼갱덜콄ず n@log ?쯹?좥킡メ쫇짾?ずㅵ쫞?맸켔 IMG 퍈챞펓쩧ⓖ좥퉈콄ㄳΞ앵ㅯ퍈챞머ョ샀펓좧쫜찱콄?О쿽㉶퍈챞끽?폯킠?ず멎좥콄첢쩳쩑⑾ㅯ켔쿽㉶퍈챞싣퍀メ턐쨁콄ず??맸좧<br><br>
 
 <textarea class=input cols=80 rows=3 onclick=select() readonly style='font-family:꾄ⁿ톱,MingLiU;padding:4px'>
-&lt;img src="http://<?php echo $_SERVER['HTTP_HOST'] . preg_replace('/example\.php$/i', '/nalogd.php', $_SERVER['PHP_SELF']); ?>?counter=<?=$counter?>&url=<?=$_SERVER['HTTP_REFERER']?>" width=0 height=0></textarea>
+&lt;img src="http://<?php echo $_SERVER['HTTP_HOST'] . preg_replace('/example\.php$/i', '/nalogd.php', $_SERVER['PHP_SELF']); ?>?counter=<?php echo $counter; ?>&url=<?php echo $_SERVER['HTTP_REFERER']; ?>" width=0 height=0></textarea>
 
 	<br><br>
 	쫜찱콄쫇??ⓒΞ짦쿽?퍈챞좥룻??뫘짫?좥춑셕씁첢???툫?좥?촑춑셕씁?Þ촑즛쩠?ⓖず좧<br>
@@ -79,7 +79,7 @@
 	<span style='font-family:꾄ⁿ톱,MingLiU'>
 		&lt;?<br>
 		$path = "<font color=#045C8A><b>nalog5</b></font>";<br>
-		$counter = "<font color=#045C8A><b><?=$counter?></b></font>";<br>
+		$counter = "<font color=#045C8A><b><?php echo $counter; ?></b></font>";<br>
 		include "$path/nalog.php";<br>
 		?&gt;<br>
 	</span>
@@ -90,44 +90,44 @@
 	춏쫇??쨁톈?춑셕씁좥콄쁨춏Ξ⑥ PHP ず echo ①셕 ( &lt;?=$variable?&gt; ) ⓖ⑬쬤욥쩧좧쩑짾쪪쩧 n@log ?─?쯹ず쿽㉶텝셕쫁붙좬<br><br>
 	죍쩑ㅵ쫞톈?죎<br><br>
 	<span style='font-family:꾄ⁿ톱,MingLiU'>&lt;?=$today_text?&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</span>
-		ㅅㅡ(튘╁Ω첿)ず혉퀸짩┯ [ㅵ쫞] ⊇ <font color='#666666'><?=$today_text?></font><br>
+		ㅅㅡ(튘╁Ω첿)ず혉퀸짩┯ [ㅵ쫞] ⊇ <font color='#666666'><?php echo $today_text; ?></font><br>
 	<span style='font-family:꾄ⁿ톱,MingLiU'>&lt;?=$yester_text?&gt;&nbsp;&nbsp;&nbsp;&nbsp;:</span>
-		촓ㅡず혉퀸짩┯ [ㅵ쫞] ⊇ <font color='#666666'><?=$yester_text?></font><br>
+		촓ㅡず혉퀸짩┯ [ㅵ쫞] ⊇ <font color='#666666'><?php echo $yester_text; ?></font><br>
 	<span style='font-family:꾄ⁿ톱,MingLiU'>&lt;?=$total_text?&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</span>
-		?춑혉퀸짩┯ [ㅵ쫞] ⊇ <font color='#666666'><?=$total_text?></font><br>
+		?춑혉퀸짩┯ [ㅵ쫞] ⊇ <font color='#666666'><?php echo $total_text; ?></font><br>
 	<span style='font-family:꾄ⁿ톱,MingLiU'>&lt;?=$now_text?&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</span>
-		Ω첿퐑쨁짩셕 [ㅵ쫞] ⊇ <font color='#666666'><?=$now_text?></font><br>
+		Ω첿퐑쨁짩셕 [ㅵ쫞] ⊇ <font color='#666666'><?php echo $now_text; ?></font><br>
 	<span style='font-family:꾄ⁿ톱,MingLiU'>&lt;?=$peak_text?&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</span>
-		쪷?쫇퐑값췴(쪷?퀂퐑ず짩┯췴?) [ㅵ쫞] ⊇ <font color='#666666'><?=$peak_text?></font><br>
+		쪷?쫇퐑값췴(쪷?퀂퐑ず짩┯췴?) [ㅵ쫞] ⊇ <font color='#666666'><?php echo $peak_text; ?></font><br>
 	<span style='font-family:꾄ⁿ톱,MingLiU'>&lt;?=$day_peak_text?&gt;&nbsp;&nbsp;:</span>
-		ㅹ혉퀸짩┯값췴(쫇쪷?ㅡ캯웡켹넋값혉퀸짩┯) [ㅵ쫞] ⊇ <font color='#666666'><?=$day_peak_text?></font><br>
+		ㅹ혉퀸짩┯값췴(쫇쪷?ㅡ캯웡켹넋값혉퀸짩┯) [ㅵ쫞] ⊇ <font color='#666666'><?php echo $day_peak_text; ?></font><br>
 	<br>
 	죍쩑믿㎺톈?죎<br><br>
 	<span style='font-family:꾄ⁿ톱,MingLiU'>&lt;?=$today_image?&gt;&nbsp;&nbsp;&nbsp;&nbsp;:</span>
-		ㅅㅡ(튘╁Ω첿)ず혉퀸짩┯ [믿㎺] ⊇ <?=$today_image?><br>
+		ㅅㅡ(튘╁Ω첿)ず혉퀸짩┯ [믿㎺] ⊇ <?php echo $today_image; ?><br>
 	<span style='font-family:꾄ⁿ톱,MingLiU'>&lt;?=$yester_image?&gt;&nbsp;&nbsp;&nbsp;:</span>
-		촓ㅡず혉퀸짩┯ [믿㎺] ⊇ <?=$yester_image?><br>
+		촓ㅡず혉퀸짩┯ [믿㎺] ⊇ <?php echo $yester_image; ?><br>
 	<span style='font-family:꾄ⁿ톱,MingLiU'>&lt;?=$total_image?&gt;&nbsp;&nbsp;&nbsp;&nbsp;:</span>
-		?춑혉퀸짩┯ [믿㎺] ⊇ <?=$total_image?><br>
+		?춑혉퀸짩┯ [믿㎺] ⊇ <?php echo $total_image; ?><br>
 	<span style='font-family:꾄ⁿ톱,MingLiU'>&lt;?=$now_image?&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</span>
-		Ω첿퐑쨁짩셕 [믿㎺] ⊇ <?=$now_image?><br>
+		Ω첿퐑쨁짩셕 [믿㎺] ⊇ <?php echo $now_image; ?><br>
 	<span style='font-family:꾄ⁿ톱,MingLiU'>&lt;?=$peak_image?&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</span>
-		쪷?쫇퐑값췴(쪷?퀂퐑ず짩┯췴?) [믿㎺] ⊇ <?=$peak_image?><br>
+		쪷?쫇퐑값췴(쪷?퀂퐑ず짩┯췴?) [믿㎺] ⊇ <?php echo $peak_image; ?><br>
 	<span style='font-family:꾄ⁿ톱,MingLiU'>&lt;?=$day_peak_image?&gt;&nbsp;:</span>
-		ㅹ혉퀸짩┯값췴(쫇쪷?ㅡ캯웡켹넋값혉퀸짩┯) [믿㎺] ⊇ <?=$day_peak_image?><br>
+		ㅹ혉퀸짩┯값췴(쫇쪷?ㅡ캯웡켹넋값혉퀸짩┯) [믿㎺] ⊇ <?php echo $day_peak_image; ?><br>
 	<br>
 	죍쩑?찿믿셧톈?죎<br><br>
 	<span style='font-family:꾄ⁿ톱,MingLiU'>&lt;?=$nalog_result?&gt;&nbsp;&nbsp;&nbsp;:</span>
 		쬞Ξ퉥??춑쫚ず?찿믿셧ⓖ톈?콄ㅯΩㄴず춑셕씁?─믿읠좧<br>
 	<br>
-	<?=$nalog_result?><br>(싻겉┮?찿멸?㎤맸?ず skin.php 읠?ⓖ╀춒콄텿춏ず?─)<br><br><br>
+	<?php echo $nalog_result; ?><br>(싻겉┮?찿멸?㎤맸?ず skin.php 읠?ⓖ╀춒콄텿춏ず?─)<br><br><br>
 	nalog.php 쿽?읠?ずΞ?촑캯웡빌?촽턲멸?쯑욥쩧뎡찱ず좧<br><br>
 	킡┱좥갛쵿콄ⓒΞ n@log ずΩず쪀촑Ξⓖ춑뷜Ω첿퐑쨁짩셕좥┱쮁┳쾩?⒡┳츙⒀빌?촽턲⒝ⓖ렘빌?데ず멸?좥ヘ캐콄ⓒΞ nalog_viewer.php ⓖ쩘느 nalog.php좥쿽셧쩳쩑댈ㅦ빌몰멸렘ず톖?좧<br>
 	<br>
 	<span style='font-family:꾄ⁿ톱,MingLiU'>
 		&lt;?<br>
 		$path = "<font color=#045C8A><b>nalog5</b></font>";<br>
-		$counter = "<font color=#045C8A><b><?=$counter?></b></font>";<br>
+		$counter = "<font color=#045C8A><b><?php echo $counter; ?></b></font>";<br>
 		include "$path/nalog_viewer.php";<br>
 		?&gt;<br>
 	</span>
@@ -142,7 +142,7 @@
 
 <table width=600 cellpadding=0 cellspacing=0 border=0 align=center>
 	<tr>
-	<td><font size=1><?=$lang[copy]?></td>
+	<td><font size=1><?php echo $lang[copy]; ?></td>
 	<td align=right>
 		<span style='font-size:6pt'>&#9654;</span>
 		?쫐멸캴⒝㎌쿙ㅴ누 [ <a href="http://kiddiken.net" target=_blank>햎톱ㄴㅵ</a> |

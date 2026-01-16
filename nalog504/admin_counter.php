@@ -193,16 +193,16 @@ $plugin_temp = $plugin;
 <tr><td colspan="2" bgcolor="white">
 <table width="100%" cellpadding="0" cellspacing="0">
 <tr>
-<td><font color="#008CD6" size="4"><b>&nbsp;<?=$title?></b></font></td>
+<td><font color="#008CD6" size="4"><b>&nbsp;<?php echo $title; ?></b></font></td>
 <td align="right">
 <?php 
 // nalog_admin 쿠키 체크는 isset을 통해 안전하게 처리
 $is_logged_in = isset($_COOKIE['nalog_admin']); 
 ?>
 <?php if (!$is_logged_in): ?>
-<font color="#008CD6" size="1"><a href="login.php?go=admin_counter.php?counter=<?=$counter_val?>">LOGIN</a></font>
+<font color="#008CD6" size="1"><a href="login.php?go=admin_counter.php?counter=<?php echo $counter_val; ?>">LOGIN</a></font>
 <?php else: ?>
-<font color="#008CD6" size="1"><a href="logout.php?go=admin_counter.php?counter=<?=$counter_val?>">LOGOUT</a></font>
+<font color="#008CD6" size="1"><a href="logout.php?go=admin_counter.php?counter=<?php echo $counter_val; ?>">LOGOUT</a></font>
 <?php endif; ?>
 </td>
 </tr>
@@ -225,7 +225,7 @@ if (!$id) {
 <form method="post" name="language">
 <tr bgcolor="white">
 <td nowrap>
-<font size="1"><?=date($lang['counter_main_date_format1'] ?? 'Y-m-d H:i:s', time() + $time_zone)?> : <?=number_format($set['total'] ?? 0)?> Visitors : Counter <b><?=$counter_val?></b></font>
+<font size="1"><?php echo date($lang['counter_main_date_format1'] ?? 'Y-m-d H:i:s', time() + $time_zone); ?> : <?php echo number_format($set['total'] ?? 0); ?> Visitors : Counter <b><?php echo $counter_val; ?></b></font>
 <br>
 <select name="set_language" onchange="language.submit()">
 <?php
@@ -255,9 +255,9 @@ if (!include "language/$language/language.php") {
 
 ?>
 </select>
-<input type="submit" class="button" value="<?=$lang['root_change_language_button'] ?? 'Change Language'?>">
+<input type="submit" class="button" value="<?php echo $lang['root_change_language_button'] ?? 'Change Language'; ?>">
 </td>
-<td align="right" valign="top" nowrap><?=$lang['copy'] ?? 'Copy'?></td>
+<td align="right" valign="top" nowrap><?php echo $lang['copy'] ?? 'Copy'; ?></td>
 </tr>
 </form>
 </table>

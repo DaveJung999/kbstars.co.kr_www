@@ -6,7 +6,7 @@
 	</tr>
 	<tr>
 	<td>
-		<font size=3><b>n@log analyzer <?=$nalog_info[version]?>긇긂깛??긖깛긵깑 : <?=$counter?></b></font>
+		<font size=3><b>n@log analyzer <?php echo $nalog_info[version]; ?>긇긂깛??긖깛긵깑 : <?php echo $counter; ?></b></font>
 	</td>
 	<td align=right>
 		written by <a href="http://navyism.com" target=_blank>navyism</a>
@@ -20,7 +20,7 @@
 <table width=600 cellpadding=3 cellspacing=0 border=0 align=center>
 	<tr>
 	<td colspan=2>
-		counter: <b><?=$counter?></b> 긇긂깛?귩띿맟궢귏궢궫갃<br><br>
+		counter: <b><?php echo $counter; ?></b> 긇긂깛?귩띿맟궢귏궢궫갃<br><br>
 	</td>
 	</tr>
 	<tr>
@@ -32,7 +32,7 @@
 	<tr><td colspan=2>
 	<table border=0 width=100% cellpadding=5 cellspacing=0>
 		<tr>
-		<td width=1% nowrap valign=top><img src='<?=$test_gd?>'></td>
+		<td width=1% nowrap valign=top><img src='<?php echo $test_gd; ?>'></td>
 		<td width=99% valign=top>
 			귖궢갂뜺궸뜒궋귽긽?긙궸뵏궋듴궕뙥궑궫귞GD궕뿕뾭뢯뿀귡긖?긫?궳궥갃<br>
 			GD궕뿕뾭뢯뿀귡긖?긫?궳궼갂렅궻귽긽?긙?긐궳듗뭁궸 n@log귩럊궑귏궥갃
@@ -47,7 +47,7 @@
 	귖궢갂뙸띪궻먠믦궳귝궚귢궽갂렅궻귽긽?긙?긐귩궩궻귏귏긓긯?궢궲럊궯궲돷궠궋갃<br><br>
 
 <textarea class=input cols=80 rows=2 onclick=select() readonly style='font-family:MS PGothic,MS P긕긘긞긏'>
-&lt;img src="http://<?php echo $_SERVER['HTTP_HOST'] . preg_replace('/example\.php$/i', '/nalogd.php', $_SERVER['PHP_SELF']); ?>?counter=<?=$counter?>&url=<?=$_SERVER['HTTP_REFERER']?>" width=0 height=0></textarea>
+&lt;img src="http://<?php echo $_SERVER['HTTP_HOST'] . preg_replace('/example\.php$/i', '/nalogd.php', $_SERVER['PHP_SELF']); ?>?counter=<?php echo $counter; ?>&url=<?php echo $_SERVER['HTTP_REFERER']; ?>" width=0 height=0></textarea>
 
 	<br><br>
 	뤵딯궻?긐귩럊궎궴갂긇긂깛?궻귒띿벍궢갂됪뽋뤵궸궼뢯쀍궢귏궧귪갃<br>
@@ -83,7 +83,7 @@
 	<span style='font-family:MS PGothic,MS P긕긘긞긏'>
 		&lt;?<br>
 		$path = "<font color=#045C8A><b>nalog5</b></font>";<br>
-		$counter = "<font color=#045C8A><b><?=$counter?></b></font>";<br>
+		$counter = "<font color=#045C8A><b><?php echo $counter; ?></b></font>";<br>
 		include "$path/nalog.php";<br>
 		?&gt;<br>
 	</span>
@@ -95,37 +95,37 @@
 	밙뾭궢궫긻?긙궸돺귖뢯쀍궧궦갂긄깋?긽긞긜?긙귖뢯궶궚귢궽갂렅궻귝궎궶긓?긤궳긇긂깛?륃뺪귩뢯쀍뢯뿀귏궥갃<br><br>
 	딈?)<br>
 	<span style='font-family:MS PGothic,MS P긕긘긞긏'>&lt;?=$today_text?&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</span>
-		뜞볷궻뻂뽦롌뢯쀍 (긡긌긚긣) 겏 <font color='#666666'><?=$today_text?></font><br>
+		뜞볷궻뻂뽦롌뢯쀍 (긡긌긚긣) 겏 <font color='#666666'><?php echo $today_text; ?></font><br>
 	<span style='font-family:MS PGothic,MS P긕긘긞긏'>&lt;?=$yester_text?&gt;&nbsp;&nbsp;&nbsp;&nbsp;:</span>
-		랅볷궻뻂뽦롌뢯쀍 (긡긌긚긣) 겏 <font color='#666666'><?=$yester_text?></font><br>
+		랅볷궻뻂뽦롌뢯쀍 (긡긌긚긣) 겏 <font color='#666666'><?php echo $yester_text; ?></font><br>
 	<span style='font-family:MS PGothic,MS P긕긘긞긏'>&lt;?=$total_text?&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</span>
-		뜃똶뻂뽦롌뢯쀍 (긡긌긚긣) 겏 <font color='#666666'><?=$total_text?></font><br>
+		뜃똶뻂뽦롌뢯쀍 (긡긌긚긣) 겏 <font color='#666666'><?php echo $total_text; ?></font><br>
 	<span style='font-family:MS PGothic,MS P긕긘긞긏'>&lt;?=$now_text?&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</span>
-		뙸띪먝뫏롌뢯쀍 (긡긌긚긣) 겏 <font color='#666666'><?=$now_text?></font><br>
+		뙸띪먝뫏롌뢯쀍 (긡긌긚긣) 겏 <font color='#666666'><?php echo $now_text; ?></font><br>
 	<span style='font-family:MS PGothic,MS P긕긘긞긏'>&lt;?=$peak_text?&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</span>
-		띍묈벏렄먝뫏롌뢯쀍 (긡긌긚긣) 겏 <font color='#666666'><?=$peak_text?></font><br>
+		띍묈벏렄먝뫏롌뢯쀍 (긡긌긚긣) 겏 <font color='#666666'><?php echo $peak_text; ?></font><br>
 	<span style='font-family:MS PGothic,MS P긕긘긞긏'>&lt;?=$day_peak_text?&gt;&nbsp;&nbsp;:</span>
-		띍묈뻂뽦롌뢯쀍 (긡긌긚긣) 겏 <font color='#666666'><?=$day_peak_text?></font><br>
+		띍묈뻂뽦롌뢯쀍 (긡긌긚긣) 겏 <font color='#666666'><?php echo $day_peak_text; ?></font><br>
 	<br>
 	먌뛨몪)<br>
 	<span style='font-family:MS PGothic,MS P긕긘긞긏'>&lt;?=$today_image?&gt;&nbsp;&nbsp;&nbsp;&nbsp;:</span>
-		뜞볷궻뻂뽦롌뢯쀍 (귽긽?긙) 겏 <?=$today_image?><br>
+		뜞볷궻뻂뽦롌뢯쀍 (귽긽?긙) 겏 <?php echo $today_image; ?><br>
 	<span style='font-family:MS PGothic,MS P긕긘긞긏'>&lt;?=$yester_image?&gt;&nbsp;&nbsp;&nbsp;:</span>
-		랅볷궻뻂뽦롌뢯쀍 (귽긽?긙) 겏 <?=$yester_image?><br>
+		랅볷궻뻂뽦롌뢯쀍 (귽긽?긙) 겏 <?php echo $yester_image; ?><br>
 	<span style='font-family:MS PGothic,MS P긕긘긞긏'>&lt;?=$total_image?&gt;&nbsp;&nbsp;&nbsp;&nbsp;:</span>
-		뜃똶뻂뽦롌뢯쀍 (귽긽?긙) 겏 <?=$total_image?><br>
+		뜃똶뻂뽦롌뢯쀍 (귽긽?긙) 겏 <?php echo $total_image; ?><br>
 	<span style='font-family:MS PGothic,MS P긕긘긞긏'>&lt;?=$now_image?&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</span>
-		뙸띪먝뫏롌뢯쀍 (귽긽?긙) 겏 <?=$now_image?><br>
+		뙸띪먝뫏롌뢯쀍 (귽긽?긙) 겏 <?php echo $now_image; ?><br>
 	<span style='font-family:MS PGothic,MS P긕긘긞긏'>&lt;?=$peak_image?&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</span>
-		띍묈벏렄먝뫏롌뢯쀍 (귽긽?긙) 겏 <?=$peak_image?><br>
+		띍묈벏렄먝뫏롌뢯쀍 (귽긽?긙) 겏 <?php echo $peak_image; ?><br>
 	<span style='font-family:MS PGothic,MS P긕긘긞긏'>&lt;?=$day_peak_image?&gt;&nbsp;:</span>
-		띍묈뻂뽦롌뢯쀍 (귽긽?긙) 겏 <?=$day_peak_image?><br>
+		띍묈뻂뽦롌뢯쀍 (귽긽?긙) 겏 <?php echo $day_peak_image; ?><br>
 	<br>
 	skin긬??깛럊뾭)<br>
 	<span style='font-family:MS PGothic,MS P긕긘긞긏'>&lt;?=$nalog_result?&gt;&nbsp;&nbsp;&nbsp;:</span>
 		긚긌깛긬??깛(skin.php)귩랷뛩궢갂귽긽?긙뢯쀍 (긚긌깛긬??깛밙뾭렄)<br>
 	<br>
-	<?=$nalog_result?><br><br>
+	<?php echo $nalog_result; ?><br><br>
 	nalog.php궼뻂뽦롌궻?긃긞긏궴벏렄궸갂뢯쀍뭠귩?딯궥귡뽴뒆귩궢궲궋귏궥갃<br><br>
 	궢궔궢갂뻂뽦롌?긃긞긏궼궧궦갂뙸띪먝뫏롌궻?긃긞긏궴뢯쀍궻귒럊궎긻?긙궳궇귢궽<br>
 	nalog_viewer.php궴궋궎긲?귽깑귩 include궢궲돷궠궋갃<br>
@@ -133,7 +133,7 @@
 	<span style='font-family:MS PGothic,MS P긕긘긞긏'>
 		&lt;?<br>
 		$path = "<font color=#045C8A><b>nalog5</b></font>";<br>
-		$counter = "<font color=#045C8A><b><?=$counter?></b></font>";<br>
+		$counter = "<font color=#045C8A><b><?php echo $counter; ?></b></font>";<br>
 		include "$path/nalog_viewer.php";<br>
 		?&gt;<br>
 	</span>
@@ -148,7 +148,7 @@
 
 <table width=600 cellpadding=0 cellspacing=0 border=0 align=center>
 	<tr>
-	<td><font size=1><?=$lang[copy]?></td>
+	<td><font size=1><?php echo $lang[copy]; ?></td>
 	<td align=right>
 		<span style='font-size:6pt'>&nbsp;&nbsp;</span>
 		<a href="http://navyism.com" target=_blank>렲뽦 땩귂 듫쁀럱뿿</a>

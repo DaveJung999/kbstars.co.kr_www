@@ -165,7 +165,7 @@ echo "<tr height=20>
 echo"
 </table><br>
 <table align=center width=100% cellpadding=2 cellspacing=1 border=0 bordercolor=white bgcolor=#C9F0FF>
-<form method=get action=$PHP_SELF>
+<form method=get action="<?php echo $_SERVER['PHP_SELF']; ?>">
 <input type=hidden name=counter value='$counter'>
 <input type=hidden name=mode value='$mode'>
 <tr><td>&nbsp;
@@ -210,7 +210,7 @@ echo"
 
 <script language=javascript>
 function view_all(){
-	location.href=\"$PHP_SELF?counter=$counter&mode=$mode&all=1\";
+	location.href=\"<?php echo $_SERVER['PHP_SELF']; ?>?counter=<?php echo $counter; ?>&mode=<?php echo $mode; ?>&all=1\";
 }
 </script>
 </form>
@@ -380,7 +380,7 @@ echo "<tr>
 echo"
 </table><br>
 <table align=center width=100% cellpadding=2 cellspacing=1 border=0 bordercolor=white bgcolor=#C9F0FF>
-<form method=get action=$PHP_SELF>
+<form method=get action="<?php echo $_SERVER['PHP_SELF']; ?>">
 <input type=hidden name=counter value='$counter'>
 <input type=hidden name=mode value='$mode'>
 <tr><td>&nbsp;
@@ -413,7 +413,7 @@ echo"
 
 <script language=javascript>
 function view_all(){
-	location.href=\"$PHP_SELF?counter=$counter&mode=$mode&all=1\";
+	location.href=\"<?php echo $_SERVER['PHP_SELF']; ?>?counter=<?php echo $counter; ?>&mode=<?php echo $mode; ?>&all=1\";
 }
 </script>
 </form>
@@ -618,7 +618,7 @@ echo "<tr height=20>
 echo"
 </table><br>
 <table align=center width=100% cellpadding=2 cellspacing=1 border=0 bordercolor=white bgcolor=#C9F0FF>
-<form method=get action=$PHP_SELF>
+<form method=get action="<?php echo $_SERVER['PHP_SELF']; ?>">
 <input type=hidden name=counter value='$counter'>
 <input type=hidden name=mode value='$mode'>
 <tr><td>&nbsp;
@@ -639,7 +639,7 @@ echo"
 
 <script language=javascript>
 function view_all(){
-	location.href=\"$PHP_SELF?counter=$counter&mode=$mode&all=1\";
+	location.href=\"<?php echo $_SERVER['PHP_SELF']; ?>?counter=<?php echo $counter; ?>&mode=<?php echo $mode; ?>&all=1\";
 }
 </script>
 </form>
@@ -747,7 +747,7 @@ if($mode==6){
 echo"
 <tr><td>
 <body onload=\"log.word.focus()\">
-<form name=log method=get action=$PHP_SELF>
+<form name=log method=get action="<?php echo $_SERVER['PHP_SELF']; ?>">
 <input type=hidden name=counter value='$counter'>
 <input type=hidden name=mode value=$mode>
 
@@ -967,7 +967,7 @@ if($mode==7){
 echo"
 <tr><td>
 <body onload=\"log.word.focus()\">
-<form name=log method=get action=$PHP_SELF>
+<form name=log method=get action="<?php echo $_SERVER['PHP_SELF']; ?>">
 <input type=hidden name=counter value='$counter'>
 <input type=hidden name=mode value=$mode>
 
@@ -1293,7 +1293,7 @@ if($mode==9){
 echo"
 <tr><td>
 <body onload=\"log.word.focus();\">
-<form name=log method=get action=$PHP_SELF>
+<form name=log method=get action="<?php echo $_SERVER['PHP_SELF']; ?>">
 <input type=hidden name=counter value='$counter'>
 <input type=hidden name=mode value=$mode>
 <input type=hidden name=day_start value=$day_start>

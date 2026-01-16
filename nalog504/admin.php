@@ -55,13 +55,13 @@ $nowpage=$pagenum+1; 
 <script language=javascript>
 
 function chk_drop(){
-if(!confirm('n@log warning : \n\n<?=$lang['counter_manager_warning_drop']?>')){return false;} // 배열 접근 수정
+if(!confirm('n@log warning : \n\n<?php echo $lang['counter_manager_warning_drop']; ?>')){return false;} // 배열 접근 수정
 }
 function chk_del(){
-if(!confirm('n@log warning : \n\n<?=$lang['counter_manager_warning_clean']?>')){return false;} // 배열 접근 수정
+if(!confirm('n@log warning : \n\n<?php echo $lang['counter_manager_warning_clean']; ?>')){return false;} // 배열 접근 수정
 }
 function chk_new(){
-if(!chk.new_board.value){alert('n@log error : \n\n<?=$lang['counter_manager_error_create']?>');chk.new_board.focus();return false;} // 배열 접근 수정
+if(!chk.new_board.value){alert('n@log error : \n\n<?php echo $lang['counter_manager_error_create']; ?>');chk.new_board.focus();return false;} // 배열 접근 수정
 }
 
 </script>
@@ -73,7 +73,7 @@ if(!chk.new_board.value){alert('n@log error : \n\n<?=$lang['counter_manager_erro
 	<tr><td colspan=2 bgcolor=white>
 		<table width=100% cellpadding=0 cellspacing=0>
 		<tr>
-		<td><font color=#008CD6 size=4><b>&nbsp;<a href=root.php><?=$lang['root_title']?></a> > <?=$lang['counter_manager_title']?></b></font></td> <td align=right><?=$logout?> <?=$help?> <?=$manual?></td>
+		<td><font color=#008CD6 size=4><b>&nbsp;<a href=root.php><?php echo $lang['root_title']; ?></a> > <?php echo $lang['counter_manager_title']; ?></b></font></td> <td align=right><?php echo $logout; ?> <?php echo $help; ?> <?php echo $manual; ?></td>
 		</tr>
 		</table>
 	</td></tr>
@@ -83,14 +83,14 @@ if(!chk.new_board.value){alert('n@log error : \n\n<?=$lang['counter_manager_erro
 		<table align=center width=98% cellpadding=0 cellspacing=0 border=0>
 		<form method=get action=admin.php>
 		<tr>
-		<td><?=$lang['counter_manager_paging1']?><b><?=$total?></b><?=$lang['counter_manager_paging2']?><b><?=$nowpage?></b><?=$lang['counter_manager_paging3']?><b><?=$pagesu?></b><?=$lang['counter_manager_paging4']?></td> <td align=right><?=$lang['counter_manager_view']?> <input type=text size=3 class=input maxlength=3 name=page value=<?=$page?> onKeyPress="if((event.keyCode>57||event.keyCode<48)) event.returnValue=false;"> <input type=submit class=button value="<?=$lang['counter_manager_view_button']?>"></td> </tr>
+		<td><?php echo $lang['counter_manager_paging1']; ?><b><?php echo $total; ?></b><?php echo $lang['counter_manager_paging2']; ?><b><?php echo $nowpage; ?></b><?php echo $lang['counter_manager_paging3']; ?><b><?php echo $pagesu; ?></b><?php echo $lang['counter_manager_paging4']; ?></td> <td align=right><?php echo $lang['counter_manager_view']; ?> <input type=text size=3 class=input maxlength=3 name=page value=<?php echo $page; ?> onKeyPress="if((event.keyCode>57||event.keyCode<48)) event.returnValue=false;"> <input type=submit class=button value="<?php echo $lang['counter_manager_view_button']; ?>"></td> </tr>
 		</form>
 		</table>
 		<table align=center width=98% cellpadding=2 cellspacing=0 border=1 bordercolor=white>
 		<form method=post action=admin_ing.php name=chk onsubmit="return chk_new()">
 		<input type=hidden name=mode value=make>
 		<tr bgcolor=#C9F0FF>
-		<td width=1% nowrap align=center><?=$lang['counter_manager_table_no']?></td> <td width=91% align=center><?=$lang['counter_manager_table_name']?></td> <td width=1% nowrap align=center><?=$lang['counter_manager_table_config']?></td> <td width=1% nowrap align=center><?=$lang['counter_manager_table_example']?></td> <td width=1% nowrap align=center><?=$lang['counter_manager_table_drop']?></td> <td width=1% nowrap align=center><?=$lang['counter_manager_table_clean']?></td> <td width=1% nowrap align=center><?=$lang['counter_manager_table_total']?></td> <td width=1% nowrap align=center><?=$lang['counter_manager_table_today']?></td> <td width=1% nowrap align=center><?=$lang['counter_manager_table_today_peak']?></td> <td width=1% nowrap align=center><?=$lang['counter_manager_table_peak']?></td> </tr>
+		<td width=1% nowrap align=center><?php echo $lang['counter_manager_table_no']; ?></td> <td width=91% align=center><?php echo $lang['counter_manager_table_name']; ?></td> <td width=1% nowrap align=center><?php echo $lang['counter_manager_table_config']; ?></td> <td width=1% nowrap align=center><?php echo $lang['counter_manager_table_example']; ?></td> <td width=1% nowrap align=center><?php echo $lang['counter_manager_table_drop']; ?></td> <td width=1% nowrap align=center><?php echo $lang['counter_manager_table_clean']; ?></td> <td width=1% nowrap align=center><?php echo $lang['counter_manager_table_total']; ?></td> <td width=1% nowrap align=center><?php echo $lang['counter_manager_table_today']; ?></td> <td width=1% nowrap align=center><?php echo $lang['counter_manager_table_today_peak']; ?></td> <td width=1% nowrap align=center><?php echo $lang['counter_manager_table_peak']; ?></td> </tr>
 		<?php
 		
 		####################################################################################

@@ -6,8 +6,8 @@
 	</tr>
 	<tr>
 	<td>
-		<span style='font-size:11pt'><b>n@log analyzer <?=$nalog_info[version]?>
-		Usage example of counter: <?=$counter?></b></span>
+		<span style='font-size:11pt'><b>n@log analyzer <?php echo $nalog_info[version]; ?>
+		Usage example of counter: <?php echo $counter; ?></b></span>
 	</td>
 	<td align=right>
 		written by <a href="http://kiddiken.net" target=_blank>kiddiken</a>
@@ -21,7 +21,7 @@
 <table width="95%" cellpadding=3 cellspacing=0 border=0 align=center>
 	<tr>
 	<td colspan=2>
-		A new counter named <b><?=$counter?></b> is created and active now.<br>
+		A new counter named <b><?php echo $counter; ?></b> is created and active now.<br>
 		I am going to briefly explain to you the usage examples based on the configuration of this counter.<br><br>
 	</td>
 	</tr>
@@ -34,7 +34,7 @@
 	<tr><td colspan=2>
 	<table border=0 width=100% cellpadding=5 cellspacing=0>
 		<tr>
-		<td width=1% nowrap valign=top><img src='<?=$test_gd?>'></td>
+		<td width=1% nowrap valign=top><img src='<?php echo $test_gd; ?>'></td>
 		<td width=99% valign=top>
 			If there is a white circle above a black square on the left image, that means your web site supports GD module. If so, you may use n@log to create counter images easily with the following IMG tag.
 		</td>
@@ -49,7 +49,7 @@
 	If you think that they seems to be correct, just copy and paste into your source code.<br><br>
 
 <textarea class=input cols=80 rows=2 onclick=select() readonly style='font-family:Courier New;font-size:9pt'>
-&lt;img src="http://<?php echo $_SERVER['HTTP_HOST'] . preg_replace('/example\.php$/i', '/nalogd.php', $_SERVER['PHP_SELF']); ?>?counter=<?=$counter?>&url=<?=$_SERVER['HTTP_REFERER']?>" width=0 height=0></textarea>
+&lt;img src="http://<?php echo $_SERVER['HTTP_HOST'] . preg_replace('/example\.php$/i', '/nalogd.php', $_SERVER['PHP_SELF']); ?>?counter=<?php echo $counter; ?>&url=<?php echo $_SERVER['HTTP_REFERER']; ?>" width=0 height=0></textarea>
 
 	<br><br>
 	If you use the above IMG tag, it will be counted when the page is loading. But the counter is hidden.<br>
@@ -81,7 +81,7 @@ DAY PEAK &lt;img src="http://<?php echo $_SERVER['HTTP_HOST'] . preg_replace('/e
 	<span style='font-family:Courier New;font-size:9pt'>
 		&lt;?<br>
 		$path = "<font color=#045C8A><b>nalog5</b></font>";<br>
-		$counter = "<font color=#045C8A><b><?=$counter?></b></font>";<br>
+		$counter = "<font color=#045C8A><b><?php echo $counter; ?></b></font>";<br>
 		include "$path/nalog.php";<br>
 		?&gt;<br>
 	</span>
@@ -92,44 +92,44 @@ DAY PEAK &lt;img src="http://<?php echo $_SERVER['HTTP_HOST'] . preg_replace('/e
 	You should make use of the PHP echo function ( &lt;?=$variable?&gt; ) to show them. Listed below are the variable names assigned by n@log for displaying counter results.<br><br>
 	Text:<br><br>
 	<span style='font-family:Courier New;font-size:9pt'>&lt;?=$today_text?&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</span>
-		The number of today's visitors (text) -> <font color='#666666'><?=$today_text?></font><br>
+		The number of today's visitors (text) -> <font color='#666666'><?php echo $today_text; ?></font><br>
 	<span style='font-family:Courier New;font-size:9pt'>&lt;?=$yester_text?&gt;&nbsp;&nbsp;&nbsp;&nbsp;:</span>
-		The number of yesterday's visitors (text) -> <font color='#666666'><?=$yester_text?></font><br>
+		The number of yesterday's visitors (text) -> <font color='#666666'><?php echo $yester_text; ?></font><br>
 	<span style='font-family:Courier New;font-size:9pt'>&lt;?=$total_text?&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</span>
-		The number of total visitors (text) -> <font color='#666666'><?=$total_text?></font><br>
+		The number of total visitors (text) -> <font color='#666666'><?php echo $total_text; ?></font><br>
 	<span style='font-family:Courier New;font-size:9pt'>&lt;?=$now_text?&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</span>
-		The number of visitors who are currently online (text) -> <font color='#666666'><?=$now_text?></font><br>
+		The number of visitors who are currently online (text) -> <font color='#666666'><?php echo $now_text; ?></font><br>
 	<span style='font-family:Courier New;font-size:9pt'>&lt;?=$peak_text?&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</span>
-		The number of maximum visitors recorded in peak period (text) -> <font color='#666666'><?=$peak_text?></font><br>
+		The number of maximum visitors recorded in peak period (text) -> <font color='#666666'><?php echo $peak_text; ?></font><br>
 	<span style='font-family:Courier New;font-size:9pt'>&lt;?=$day_peak_text?&gt;&nbsp;&nbsp;:</span>
-		The number of maximum visitors recorded in one day (text) -> <font color='#666666'><?=$day_peak_text?></font><br>
+		The number of maximum visitors recorded in one day (text) -> <font color='#666666'><?php echo $day_peak_text; ?></font><br>
 	<br>
 	Graphics:<br><br>
 	<span style='font-family:Courier New;font-size:9pt'>&lt;?=$today_image?&gt;&nbsp;&nbsp;&nbsp;&nbsp;:</span>
-		The number of today's visitors (graphics) -> <?=$today_image?><br>
+		The number of today's visitors (graphics) -> <?php echo $today_image; ?><br>
 	<span style='font-family:Courier New;font-size:9pt'>&lt;?=$yester_image?&gt;&nbsp;&nbsp;&nbsp;:</span>
-		The number of yesterday's visitors (graphics) -> <?=$yester_image?><br>
+		The number of yesterday's visitors (graphics) -> <?php echo $yester_image; ?><br>
 	<span style='font-family:Courier New;font-size:9pt'>&lt;?=$total_image?&gt;&nbsp;&nbsp;&nbsp;&nbsp;:</span>
-		The number of total visitors (graphics) -> <?=$total_image?><br>
+		The number of total visitors (graphics) -> <?php echo $total_image; ?><br>
 	<span style='font-family:Courier New;font-size:9pt'>&lt;?=$now_image?&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</span>
-		The number of visitors who are currently online (graphics) -> <?=$now_image?><br>
+		The number of visitors who are currently online (graphics) -> <?php echo $now_image; ?><br>
 	<span style='font-family:Courier New;font-size:9pt'>&lt;?=$peak_image?&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</span>
-		The number of maximum visitors recorded in peak period (graphics) -> <?=$peak_image?><br>
+		The number of maximum visitors recorded in peak period (graphics) -> <?php echo $peak_image; ?><br>
 	<span style='font-family:Courier New;font-size:9pt'>&lt;?=$day_peak_image?&gt;&nbsp;:</span>
-		The number of maximum visitors recorded in one day (graphics) -> <?=$day_peak_image?><br>
+		The number of maximum visitors recorded in one day (graphics) -> <?php echo $day_peak_image; ?><br>
 	<br>
 	Skin pattern:<br><br>
 	<span style='font-family:Courier New;font-size:9pt'>&lt;?=$nalog_result?&gt;&nbsp;&nbsp;&nbsp;:</span>
 		Use the pre-defined skin pattern to display the desired counter format.<br>
 	<br>
-	<?=$nalog_result?><br>(please refer to skin.php in the skin folder to customize your counter format)<br><br><br>
+	<?php echo $nalog_result; ?><br>(please refer to skin.php in the skin folder to customize your counter format)<br><br><br>
 	The purpose of the file nalog.php is to count and output the results.<br><br>
 	However, if you do not need to analyze the web site traffic or keep track of referrer data, but only need to count the number of visitors currently online (NOW connections), you would better to include nalog_viewer.php instead of nalog.php . This will help eliminating the unnecessary usage of network resources.<br>
 	<br>
 	<span style='font-family:Courier New;font-size:9pt'>
 		&lt;?<br>
 		$path = "<font color=#045C8A><b>nalog5</b></font>";<br>
-		$counter = "<font color=#045C8A><b><?=$counter?></b></font>";<br>
+		$counter = "<font color=#045C8A><b><?php echo $counter; ?></b></font>";<br>
 		include "$path/nalog_viewer.php";<br>
 		?&gt;<br>
 	</span>
@@ -144,7 +144,7 @@ DAY PEAK &lt;img src="http://<?php echo $_SERVER['HTTP_HOST'] . preg_replace('/e
 
 <table width="95%" cellpadding=0 cellspacing=0 border=0 align=center>
 	<tr>
-	<td><font size=1><?=$lang[copy]?></td>
+	<td><font size=1><?php echo $lang[copy]; ?></td>
 	<td align=right>
 		<span style='font-size:6pt'>&#9654;</span>
 		More information or support [ <a href="http://english.navyism.com" target=_blank>English</a> |
