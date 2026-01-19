@@ -1,40 +1,35 @@
-# ¿î¿µ È¯°æ ¼³Á¤ ÆÄÀÏ (¹Î°¨ÇÑ Á¤º¸ Æ÷ÇÔ)
-sinc/config.php
-sjoin_/config.php
-Admin/config/dbinfo.php
-Admin/member/dbinfo.php
-nalog504/nalog_connect.php
-smember/sitebank/config.php
-sthis/totalgame/config.php
-sthis/player/config.php
+# ìš´ì˜ í™˜ê²½ ì„¤ì • íŒŒì¼ (ë¯¼ê°í•œ ì •ë³´ í¬í•¨)
 
-# ¾÷·Îµå ÆÄÀÏ ¹× ÀÓ½Ã ÆÄÀÏ
+# ì—…ë¡œë“œ íŒŒì¼ ë° ì„ì‹œ íŒŒì¼
 upload/
 temp/
 *.tmp
 *.log
+.gitignore
 
-# ¿¡µğÅÍ ¼³Á¤
+# ì—ë””í„° ì„¤ì •
 .cursor/
 .ai/
+_notes
 
-# OS ÆÄÀÏ
+# OS íŒŒì¼
 .DS_Store
 Thumbs.db
 desktop.ini
+dwsync.xml
 
-# IDE ¼³Á¤
+# IDE ì„¤ì •
 .vscode/
 .idea/
 *.swp
 *.swo
 *~
 
-# ¹é¾÷ ÆÄÀÏ
+# ë°±ì—… íŒŒì¼
 *.bak
 *.backup
 *_backup/
 *_backup_*/
 
-# Ä³½Ã ÆÄÀÏ
+# ìºì‹œ íŒŒì¼
 *.cache

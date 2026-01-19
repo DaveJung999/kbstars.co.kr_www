@@ -154,7 +154,7 @@ if (!isset($HEADER['usedbLong']) || !$HEADER['usedbLong']){
 
 // 웹 보안 도구 캐슬 셋팅........davej.........
 if (!defined('__CASTLE_PHP_VERSION_BASE_DIR__')) {
-	define('__CASTLE_PHP_VERSION_BASE_DIR__', '/home/kbstars/www.kbstars.co.kr/_CASTLE_');
+	define('__CASTLE_PHP_VERSION_BASE_DIR__', '/home/kbstars/kbstars.co.kr_www/_CASTLE_');
 	include_once(__CASTLE_PHP_VERSION_BASE_DIR__ . "/castle_referee.php");
 }
 
