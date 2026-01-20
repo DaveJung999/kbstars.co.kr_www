@@ -98,6 +98,12 @@ if(isset($dbinfo['enable_getinfo']) && $dbinfo['enable_getinfo'] == 'Y'){
 //===================
 if(!$sql_where) $sql_where= " 1 ";
 
+// pid 파라미터가 있으면 필터링
+if(isset($pid) && $pid) {
+	$pid = db_escape($pid);
+	$sql_where .= " and A.pid = '{$pid}' ";
+}
+
 //============================
 // SQL문 order by..부분 만들기
 //============================

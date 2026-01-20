@@ -13,7 +13,6 @@ $dbinfo	= array(
 			'enable_getinfo' => 'Y',
 			
 			'skin'		=>'basic',
-//			'html_type'	=>'ht', 
 			'html_type'	=>'', 
 			'html_skin'	=>''
 		);

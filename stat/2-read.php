@@ -16,7 +16,7 @@
 $HEADER = array(
 	'priv' => '', // 인증유무 (비회원,회원,운영자,서버관리자)
 	'usedb2' => 1, // DB 커넥션 사용
-	'html_echo' => 0,
+	'html_echo' => 1,
 	'html_skin' => '2019_d03'
 );
 
@@ -47,22 +47,6 @@ require($_SERVER['DOCUMENT_ROOT'].'/sinc/header.php');
 
 	//경기 기본정보 가져오기
 	$tsql = " SELECT *, sid as s_id FROM {$table_game} WHERE gid='{$gid}' ";
-	print_r("<b>- [tsql] : </b>");
-	print_r("\n<br>---------------------------------------------\n<br>");
-	print_r($tsql);
-	print_r("\n<br>\n<br>");
-	
-	print_r("<b>- [gid] : </b>");
-	print_r("\n<br>---------------------------------------------\n<br>");
-	print_r($gid);
-	print_r("\n<br>\n<br>");
-	
-	print_r("<b>- [sql] : </b>");
-	print_r("\n<br>---------------------------------------------\n<br>");
-	print_r($sql);
-	print_r("\n<br>\n<br>");
-	
-	exit;
 	
 	$trs = db_query($tsql);
 	$tct = db_count($trs);
@@ -169,7 +153,7 @@ require($_SERVER['DOCUMENT_ROOT'].'/sinc/header.php');
 	$away_pre_off = $away_pre_def = $away_past = $away_pstl = $away_pgd = $away_pbs = $away_pw_ft = $away_pw_oft = $away_ptover = $away_pldf = $away_ptf = $away_pcontri = $away_pcontri1 = $away_pcontri2 = [];
 	
 	//홈팀 경기 기록 정보
-	$re_rs1 = db_query(" select * from {$table_record} where gid = '{$gid}' and tid = '{$htlist['tid']}' ");
+	$re_rs1 = db_query(" select * from {$table_record} where gid = '{$gid}' and tid = '{$htlist[tid]}' ");
 //	$re_rs1 = db_query(" select a.* from {$table_record} as a left join player as b on a.pid=b.uid where a.gid = {$gid} and a.tid = '{$htlist['tid']}' order by b.p_num");
 	$re_cnt1 = db_count($re_rs1);
 	if($re_cnt1)	{
