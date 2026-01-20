@@ -42,7 +42,7 @@ require($_SERVER['DOCUMENT_ROOT'].'/sinc/header.php');
 		back('경기 정보가 없습니다.');
 	}
 
-	$gid = db_sqlfiltering($gid);
+	$gid = db_escape($gid);
 
 	//경기 기본정보 가져오기
 

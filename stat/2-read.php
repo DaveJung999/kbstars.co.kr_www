@@ -16,7 +16,7 @@
 $HEADER = array(
 	'priv' => '', // 인증유무 (비회원,회원,운영자,서버관리자)
 	'usedb2' => 1, // DB 커넥션 사용
-	'html_echo' => 1,
+	'html_echo' => 0,
 	'html_skin' => '2019_d03'
 );
 
@@ -43,11 +43,28 @@ require($_SERVER['DOCUMENT_ROOT'].'/sinc/header.php');
 		back('경기 정보가 없습니다.');
 	}
 
-	$gid = db_sqlfiltering($gid);
+	$gid = db_escape($gid);
 
 	//경기 기본정보 가져오기
-
-	$trs = db_query(" SELECT *, sid as s_id FROM {$table_game} WHERE gid='{$gid}' ");
+	$tsql = " SELECT *, sid as s_id FROM {$table_game} WHERE gid='{$gid}' ";
+	print_r("<b>- [tsql] : </b>");
+	print_r("\n<br>---------------------------------------------\n<br>");
+	print_r($tsql);
+	print_r("\n<br>\n<br>");
+	
+	print_r("<b>- [gid] : </b>");
+	print_r("\n<br>---------------------------------------------\n<br>");
+	print_r($gid);
+	print_r("\n<br>\n<br>");
+	
+	print_r("<b>- [sql] : </b>");
+	print_r("\n<br>---------------------------------------------\n<br>");
+	print_r($sql);
+	print_r("\n<br>\n<br>");
+	
+	exit;
+	
+	$trs = db_query($tsql);
 	$tct = db_count($trs);
 	if($tct) {	
 		$tlist = db_array($trs);
