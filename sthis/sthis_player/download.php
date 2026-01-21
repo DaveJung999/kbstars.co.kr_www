@@ -71,20 +71,11 @@ require("{$_SERVER['DOCUMENT_ROOT']}/sinc/header.php");
 	include_once("./dbinfo.php"); // $dbinfo, $table 값 정의
 
 	// 업로드 디렉토리 설정
-	// 관리자(Admin_basketball/player)의 ok.php에서는
-	//   $_SERVER['DOCUMENT_ROOT']/sthis/sthis_player/upload/player/{bid}/{파일명}
-	// 구조로 저장하므로, 동일한 경로를 사용해야 이미지가 정상적으로 표시됨.
-	//
-	// 기존 코드는 $SITE['th']와 $table을 다시 붙여
-	//   .../upload/{$SITE['th']}{$table}
-	// 로 계산해서, prefix가 있는 경우 실제 저장 경로와 달라질 수 있었음.
-	//
-	// 이 다운로드 스크립트는 선수(player) 전용이므로, 여기서는
-	// 관리자 업로드와 동일한 절대 경로로 고정한다.
+	// - 관리자(Admin_basketball/sthis_player/ok.php)와 동일한 물리 경로를 사용한다.
+	// - 최종 경로: {DOCROOT}/sthis/sthis_player/upload/{bid}/{파일}
 	if (empty($dbinfo['upload_dir'])) {
-		$dbinfo['upload_dir'] = rtrim("{$_SERVER['DOCUMENT_ROOT']}/sthis/sthis_player/upload/player", "/");
+		$dbinfo['upload_dir'] = rtrim("{$_SERVER['DOCUMENT_ROOT']}/sthis/sthis_player/upload", "/");
 	} else {
-		// 이미 설정된 경우에는 추가 조합 없이 그대로 사용 (테이블명 등 재부착 금지)
 		$dbinfo['upload_dir'] = rtrim($dbinfo['upload_dir'], "/");
 	}
 

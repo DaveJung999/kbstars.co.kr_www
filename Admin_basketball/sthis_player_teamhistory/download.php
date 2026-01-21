@@ -10,6 +10,7 @@
 // 03/11/20 박선민 bugfix-imagewidth,imageheight넘어온것 정확히 처리
 // 03/12/08 박선민 hitdownload
 // 04/01/14 박선민 $mode=download 했을때만 hit증가
+// 2025/01/21 AI JPEG SOI 앞 쓰레기 바이트 제거 로직 추가 (이미지 X박스 문제 해결)
 //=======================================================
 // @param	string $mode	: [NULL|downloand|image|watermark|origin|thumbnail|allimages|mainimage|mypicture]
 //			string $db		: MUST
@@ -42,6 +43,11 @@
 //		mode=watermark	: 워터마크 처리함
 //		mode=allimages	: 이미지들을 html문서로 모두 보여줌
 //						="download.php?mode=allimages&db={$db}&uid={$uid}";
+// 이미지 모드일 때는 출력 버퍼를 먼저 시작하여 header.php의 출력을 캡처
+if (isset($_GET['mode']) && ($_GET['mode'] == 'image' || $_GET['mode'] == 'thumbnail' || $_GET['mode'] == 'watermark' || $_GET['mode'] == 'mainimage')) {
+	@ob_start();
+}
+
 $HEADER=array(
 		'priv' =>	"운영자,뉴스관리자", // 인증유무 (0:모두에게 허용, 숫자가 높을 수록 레벨업)
 		'usedb2' => 1, // DB 커넥션 사용 (0:미사용, 1:사용)
@@ -279,7 +285,36 @@ else { // 이미지 파일 요청이면
 //================================== 
 unset($dbinfo);
 unset($list);
-header('Content-type: application/octet-stream');
+
+// 이미지 전송 전에 모든 출력 버퍼를 완전히 비워야 함
+if (function_exists('ob_get_level')) {
+	while (ob_get_level() > 0) {
+		@ob_end_clean();
+	}
+}
+@ini_set('output_buffering', 'off');
+@ini_set('zlib.output_compression', false);
+
+// mime-type 결정
+$file_ext = strtolower(substr(strrchr($filename,'.'), 1));
+$is_image = false;
+if (isset($_GET['mode']) && ($_GET['mode'] == 'image' || $_GET['mode'] == 'thumbnail' || $_GET['mode'] == 'mainimage')) {
+	$is_image = true;
+	if (in_array($file_ext, ['jpg', 'jpeg', 'gif', 'png', 'bmp'])) {
+		switch($file_ext){
+			case 'jpg':
+			case 'jpeg': header('Content-type: image/jpeg'); break;
+			case 'gif': header('Content-type: image/gif'); break;
+			case 'png': header('Content-type: image/png'); break;
+			case 'bmp': header('Content-type: image/bmp'); break;
+		}
+	} else {
+		header('Content-type: image/jpeg');
+	}
+} else {
+	header('Content-type: application/octet-stream');
+}
+
 header('Content-length:'.(string)(filesize($filepath)));
 if($_GET['mode'] == "download"){
 	header("Content-Disposition: attachment; filename=\"{$filename}\"");
@@ -306,8 +341,50 @@ while(!feof($fd)){
 }
 fclose($fd);
 */
-$fd=fopen($filepath,'rb');
-fpassthru($fd);
+
+//==================================
+// JPEG 파일 앞에 개행(0x0A) 등 불필요한 바이트가 붙어 있는
+// 예전 데이터가 존재하여, 브라우저에서 X박스로 보이는 문제가 있어
+// 실제 전송 시에는 파일 내에서 JPEG SOI(0xFF 0xD8)를 찾아
+// 그 이전 바이트는 모두 무시하고 이후만 전송한다.
+// - 디스크의 원본 파일은 변경하지 않는다.
+// 2025/01/21 수정: 이미지 모드일 때만 SOI 앞 바이트 제거 적용
+//==================================
+if ($is_image && in_array($file_ext, ['jpg', 'jpeg'])) {
+	$fd = fopen($filepath, 'rb');
+	if ($fd) {
+		// 앞부분 버퍼를 읽어서 SOI 위치를 찾는다 (최대 4KB 내에서)
+		$buffer = '';
+		while (!feof($fd) && strlen($buffer) < 4096) {
+			$chunk = fread($fd, 512);
+			if ($chunk === false || $chunk === '') break;
+			$buffer .= $chunk;
+			// SOI를 찾으면 더 이상 읽지 않음
+			if (strpos($buffer, "\xFF\xD8") !== false) break;
+		}
+
+		$pos = strpos($buffer, "\xFF\xD8");
+		if ($pos === false) {
+			// SOI를 찾지 못하면 원본 그대로 전송
+			rewind($fd);
+			fpassthru($fd);
+		} else {
+			// SOI 이후부터 출력
+			echo substr($buffer, $pos);
+			// 나머지 전체 전송
+			while (!feof($fd)) {
+				$out = fread($fd, 8192);
+				if ($out === false || $out === '') break;
+				echo $out;
+			}
+		}
+		fclose($fd);
+	}
+} else {
+	// 이미지가 아니거나 JPEG가 아닌 경우 기존 방식대로
+	$fd=fopen($filepath,'rb');
+	fpassthru($fd);
+}
 
 // hitdownload 증가
 if($_GET['mode'] == "download"){
