@@ -28,36 +28,36 @@ $thisUrl	= "/Admin_basketball/sthis_player_teamhistory"; // 마지막 "/"이 빠
 include_once("./dbinfo.php"); // $dbinfo, $table 값 정의
 
 // 기본 URL QueryString
-$table_dbinfo	= $dbinfo['table'];
+$table_dbinfo	= isset($dbinfo['table']) ? $dbinfo['table'] : '';
 
 //===================================================
 // REQUEST 값 대입......2025-09-10
-$params = ['db', 'table', 'cateuid', 'pern', 'cut_length', 'row_pern', 'sql_where', 'sc_column', 'sc_string', 'page', 'mode', 'sup_bid', 'modify_uid', 'uid', 'goto', 'game', 'pid', 'gid', 'sid', 's_id', 'season', 'session_id', 'tid', 'rid', 'num', 'name', 'pback', 'search_text'];
+$params = ['db', 'table', 'cateuid', 'pern', 'cut_length', 'row_pern', 'sql_where', 'sc_column', 'sc_string', 'page', 'mode', 'sup_bid', 'modify_uid', 'uid', 'goto', 'game', 'pid', 'pname', 'gid', 'sid', 's_id', 'season', 'session_id', 'tid', 'rid', 'num', 'name', 'pback', 'search_text'];
 foreach ($params as $param) {
 	$$param = $_REQUEST[$param] ?? $$param ?? null;
 }
 //===================================================
 
-$qs_basic = "db={$db}".					//table 이름
-			"&mode=".					// mode값은 list.php에서는 당연히 빈값
-			"&cateuid={$cateuid}".		//cateuid
-			"&pern={$pern}" .				// 페이지당 표시될 게시물 수
-			"&sc_column={$sc_column}".	//search column
-			"&sc_string=" . urlencode(stripslashes($sc_string)). //search string
+$qs_basic = "db=".($db ?? '').					//table 이름
+			"&mode=".($mode ?? '').					// mode값은 list.php에서는 당연히 빈값
+			"&cateuid=".($cateuid ?? '').		//cateuid
+			"&pern=".($pern ?? '').				// 페이지당 표시될 게시물 수
+			"&sc_column=".($sc_column ?? '').	//search column
+			"&sc_string=" . urlencode(stripslashes($sc_string ?? '')). //search string
 			"&m_category=5".
 			"&m_bcode=1".
-			"&pid={$pid}".
-			"&pname=".urlencode($_GET['pname'] ?? '').
-			"&page={$page}";				//현재 페이지
+			"&pid=".($pid ?? '').
+			"&pname=".urlencode($pname ?? '').
+			"&page=".($page ?? '');				//현재 페이지
 
 $qs_basic		= href_qs($qs_basic); // 해당값 초기화
 
-if (empty($_GET['pid']) || empty($_GET['pname'])) back_close("선수정보가 넘어오지 않았습니다.");
+if (empty($pid) || empty($pname)) back_close("선수정보가 넘어오지 않았습니다.");
 
 //해당 선수정보만 가져오기............davej............2007-04-11
-if (isset($_GET['pid'])){
-	$dbinfo['pid'] = $_GET['pid'];
-	$dbinfo['pname'] = $_GET['pname'];
+if (isset($pid)){
+	$dbinfo['pid'] = $pid;
+	$dbinfo['pname'] = $pname;
 }
 //===================
 // SQL문 where절 정리
@@ -72,7 +72,7 @@ if($mode === "modify" || $mode === "reply"){
 	//			이 변수는 신뢰할 수 있는 소스에서만 생성되어야 합니다.
 	$uid = db_escape($uid ?? '');
 	$num = db_escape($_GET['num'] ?? '');
-	$sql = "SELECT *, password(rdate) as private_key FROM {$table} WHERE $sql_where and uid='{$uid}' and num='{$num}'";
+	$sql = "SELECT *, password(rdate) as private_key FROM {$dbinfo['table']} WHERE $sql_where and uid='{$uid}' and num='{$num}'";
 	$list = db_arrayone($sql);
 	if(!$list) back("게시물의 정보가 없습니다");
 
@@ -86,7 +86,7 @@ if($mode === "modify" || $mode === "reply"){
 	/////////////////////////////////
 	// 추가되어 있는 테이블 필드 포함
 	$skip_fields = array('uid', 'bid', 'userid', 'email', 'passwd', 'db', 'cateuid', 'num', 're', 'title', 'content', 'upfiles', 'upfiles_totalsize', 'docu_type', 'type', 'priv_level', 'ip', 'hit', 'hitip', 'hitdownload', 'vote', 'voteip' ,	'rdate');
-	if($fieldlist = userGetAppendFields($table, $skip_fields)){
+	if($fieldlist = userGetAppendFields($dbinfo['table'], $skip_fields)){
 		foreach($fieldlist as $value){
 			$value	= htmlspecialchars($value,ENT_QUOTES, 'UTF-8');
 		}
@@ -182,7 +182,7 @@ if (isset($list['pposition'])) {
 //===================================
 // 카테고리 테이블과{$sql_where_cate}구함
 if(($dbinfo['enable_cate'] ?? 'N') === 'Y' and empty($list['re'])){
-	$table_cate	= (($dbinfo['enable_type'] ?? 'N') === 'Y') ? $table : $table . "_cate";
+	$table_cate	= (($dbinfo['enable_type'] ?? 'N') === 'Y') ? $dbinfo['table'] : $dbinfo['table'] . "_cate";
 
 	// 카테고리정보구함 (dbinfo, table_cate, cateuid, $enable_catelist='Y', sw_topcatetitles, sw_notitems, sw_itemcount,string_firsttotal)
 	// highcate[], samecate[], subcate[], subsubcate[], subcateuid[], catelist
@@ -215,6 +215,7 @@ if(($dbinfo['enable_getinfo'] ?? 'N') === 'Y'){
 //=======================================================
 // 템플릿 기반 웹 페이지 제작
 $tpl = new phemplate("","remove_nonjs");
+$dbinfo['skin'] = isset($dbinfo['skin']) ? $dbinfo['skin'] : 'basic';
 if( !is_file("{$thisPath}/stpl/{$dbinfo['skin']}/write.htm") ) $dbinfo['skin']="board_basic";
 $tpl->set_file('html',"{$thisPath}/stpl/{$dbinfo['skin']}/write.htm",TPL_BLOCK);
 
