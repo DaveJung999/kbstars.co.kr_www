@@ -61,7 +61,7 @@ require($_SERVER['DOCUMENT_ROOT'].'/sinc/header.php');
 						<tr>
 							<td><table width="100%" border="0" cellspacing="0" cellpadding="0">
 							<tr>
-								<td width="450" align="center" valign="top"><img src="http://savers-secret.kbstars.co.kr/sthis/sthis_player/download.php?uid=<?php echo $player['uid']; ?>&amp;upfile=upfile1&amp;mode=image&amp;notfound=any" width="420" height="690" /></td>
+								<td width="450" align="center" valign="top"><img src="/sthis/sthis_player/download.php?uid=<?php echo $player['uid']; ?>&amp;upfile=upfile1&amp;mode=image&amp;notfound=any" width="420" height="690" /></td>
 								<td align="right" valign="top"><table width="500" border="0" cellspacing="0" cellpadding="0">
 								<tr>
 									<td><img src="/images/2016/new/sub_player/gray_top.jpg" width="500" height="16" /></td>

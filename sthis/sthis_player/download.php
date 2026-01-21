@@ -115,11 +115,14 @@ if($dbinfo['enable_upload'] != 'N' and $list['upfiles']){
 			else back("해당 파일이 없습니다 . errno: 6");
 		}
 	}
-
+	
 	// 파일이 있는지 체크
 	if( isset($upfiles[$upfile]['name']) ){
 		$filename = $upfiles[$upfile]['name'];
 		$filepath = $dbinfo['upload_dir'] . "/{$list['bid']}/" . $filename;
+		
+		if(strlen($upfiles[$upfile]['type'])) $mime_type = $upfiles[$upfile]['type'];
+		
 		if( is_file($filepath) ) $_GET['notfound']="";
 		else {
 			// 한단계 위에 파일이 있다면 그것으로..
@@ -150,18 +153,21 @@ if($dbinfo['enable_upload'] != 'N' and $list['upfiles']){
 				elseif( $_GET['notfound'] == "any" ){
 					$filepath = $value['filepath'];
 					$filename = $value['name'];
+					if(strlen($value['type'])) $mime_type = $value['type'];
 					break;
 				}
 				elseif( $_GET['notfound'] == "small" ) { //가장 작은 파일을 찾는 거라면
 					if( $tmp_filesize == 0 or $tmp_filesize>filesize($value['filename']) ){
 						$filepath = $value['filepath'];
 						$filename = $value['name'];
+						if(strlen($value['type'])) $mime_type = $value['type'];
 					}
 				}
 				elseif( $_GET['notfound'] == "large" ){
 					if( $tmp_filesize == 0 or $tmp_filesize<filesize($value['filename']) ){
 						$filepath = $value['filepath'];
 						$filename = $value['name'];
+						if(strlen($value['type'])) $mime_type = $value['type'];
 					}
 				}
 			} // end if
@@ -183,6 +189,16 @@ if($_GET['mode'] == "" or $_GET['mode'] == "origin") { // 파일이거나 이미
 	if(!is_file($filepath)){
 		if($_GET['mode']) go_url("/scommon/noimage.gif");
 		else back("해당 파일이 없습니다 . errno: 6");
+	}
+	// 웹드렉토리 아래에 있다면.. 바로 해당 파일로 이동
+	if(strpos($filepath,$_SERVER['DOCUMENT_ROOT']) !==false and (isset($_GET['mode']) && $_GET['mode'] != 'download')){
+		$url = substr($filepath,strlen($_SERVER['DOCUMENT_ROOT']));
+		//davej..................추가............2011-12-28
+		$url = str_replace("%2F", "/", rawurlencode($url)); // url encode 해버려서
+
+		$url = dirname($url) . '/' . basename($url);
+		header('Location: '.$url);
+		exit;
 	}
 }
 elseif($_GET['mode'] == "allimages") { // 이미지들을 html문서로 모두 보여줌
@@ -264,13 +280,29 @@ else { // 이미지 파일 요청이면
 
 	// 여기까지 왔으면 아래 fpassthru()로
 }
+
 //================== //
 //================================== 
 // 파일 읽어서 브라우저에 바로 보내기
 //================================== 
 unset($dbinfo);
 unset($list);
-header('Content-type: application/octet-stream');
+
+// mime-type 결정
+if(isset($mime_type)) header('Content-type: '.$mime_type);
+elseif(function_exists('mime_content_type')) header('Content-type: '.mime_content_type($filepath));
+else {
+	$file_ext = strtolower(substr(strrchr($filename,'.'), 1));
+	switch($file_ext){
+		case 'jpg':
+		case 'jpeg': header('Content-type: image/jpeg'); break;
+		case 'gif': header('Content-type: image/gif'); break;
+		case 'png': header('Content-type: image/png'); break;
+		case 'bmp': header('Content-type: image/bmp'); break;
+		default :
+			header('Content-type: application/octet-stream');
+	}
+}
 header('Content-length:'.(string)(filesize($filepath)));
 if($_GET['mode'] == "download"){
 	header("Content-Disposition: attachment; filename=\"{$filename}\"");

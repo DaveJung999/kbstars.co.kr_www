@@ -16,7 +16,7 @@
 	$dbinfo['html_skin'] = "d03";
 //	$dbinfo['html_headtpl'] = "main";
 	$dbinfo['orderby'] = "tid, p_name ";
-	$dbinfo['enable_cate'] = "Y";
+	//$dbinfo['enable_cate'] = "Y";
 //	$dbinfo['enable_type'] = "Y";
 	$dbinfo['enable_getinfo'] = "Y";
 	$dbinfo['enable_level'] = "Y";

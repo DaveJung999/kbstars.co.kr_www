@@ -54,7 +54,6 @@ include_once("{$_SERVER['DOCUMENT_ROOT']}/sthis/sthis_player/dbinfo.php"); // $d
 
 // 인증 체크
 if(!privAuth($dbinfo, "priv_list",1)) back("이용이 제한되었습니다.(레벨부족)");
-
 //===================
 // 카테고리 정보 구함
 //===================
@@ -68,6 +67,7 @@ if(($dbinfo['enable_cate'] ?? null) == 'Y'){
 	$tmp_itemcount = trim($sc_string) ? 0 : 1;
 	$sw_catelist = CATELIST_VIEW | CATELIST_VIEW_TOPCATE_TITLE | CATELIST_NOVIEW_NODATA;
 	if($tmp_itemcount) $sw_catelist |= CATELIST_VIEW_DATACOUNT;
+	
 	$cateinfo=board2CateInfo(($dbinfo ?? null), $_GET['cateuid'] ?? null, $sw_catelist, "(종합)");
 
 	if(!($cateuid ?? null)){
