@@ -1,0 +1,306 @@
+
+
+<script LANGUAGE="JavaScript" src="/scommon/js/chkform.js" type="Text/JavaScript"></script>
+
+<link href="/css/basic_text.css" rel="stylesheet" type="text/css">
+<link href="/css/link01.css" rel="stylesheet" type="text/css">
+
+<script>
+function pop_Player_teamhistory(uid, pname){
+	window.open('/sthis/sthis_player_teamhistory/list.php?pid='+uid+'&pname='+pname, 'player_teamhistory', 'status=no,menubar=no,width=600,height=500');
+}
+</script>
+
+<style type="text/css">
+<!--
+.style1 {color: #FF0000}
+.style4 {color: #CC3300;
+	font-weight: bold;
+}
+-->
+</style>
+
+<br />
+<table width="95%" border="0" align="center" cellpadding="1" cellspacing="1" bgcolor="#999999">
+<tr>
+	<td height="40" align="center" bgcolor="#FFFFFF"><span class="style4">선수정보</span></td>
+</tr>
+</table>
+<br>
+<form style='margin : 0px' onSubmit="return chkForm(this)" {form_write}>
+<table width="95%"	border="0" align="center" cellpadding="2" cellspacing="1" bordercolorlight="#cccccc" bgcolor="999999">
+<tr>
+	<td width="20%" height="22" align="center" bgcolor="efefef"><font color="#666666"> 이 름 </font></td>
+	<td bgcolor="#FFFFFF">
+		&nbsp;&nbsp;
+		<input name="p_name" type="text" size="10" value="{list.p_name}" required hname="이름을 입력 해 주세요." />
+	</td>
+</tr>
+<tr>
+	<td height="22" align="center" bgcolor="efefef"><font color="#666666">포 지 션</font></td>
+	<td bgcolor="#FFFFFF">
+		&nbsp;&nbsp;
+		<select name="p_position">
+		<option value="G" {G_selected}>가드</option>
+		<option value="F" {F_selected}>포워드</option>
+		<option value="C" {C_selected}>센터</option>
+		</select>
+	</td>
+</tr>
+<tr>
+	<td height="22" align="center" bgcolor="efefef"><font color="#666666">백 넘 버</font></td>
+	<td bgcolor="#FFFFFF">
+		&nbsp;&nbsp;
+		<input name="p_num" type="text" size="3" maxlength="3" value="{list.p_num}" required hname="백넘버를 입력 해 주세요."/>
+	</td>
+</tr>
+<tr>
+	<td height="22" align="center" bgcolor="efefef"><font color="#666666">소 속 팀</font></td>
+	<td bgcolor="#FFFFFF">
+		&nbsp;&nbsp;
+		<select name="tid">
+		{tselect}
+		</select>
+	</td>
+</tr>
+<tr>
+	<td height="22" align="center" bgcolor="efefef"><font color="#666666">선수구분</font></td>
+	<td bgcolor="#FFFFFF">
+		&nbsp;&nbsp;
+		<select name="p_gubun">
+		<option {현역_selected}>현역</option>
+		<option {은퇴_selected}>은퇴</option>
+		<option {기타_selected}>기타</option>
+		</select>
+	</td>
+</tr>
+<tr>
+	<td height="22" align="center" bgcolor="#EDE1F7" >생년월일</td>
+	<td width="80%" bgcolor="#FFFFFF"><input type="text" name="p_bdate" size="20"	value="{list.p_bdate}" /></td>
+</tr>
+<tr class="base">
+	<td height="22" align="center" bgcolor="#EDE1F7" >졸업년도</td>
+	<td width="80%" bgcolor="#FFFFFF"><input type="text" name="p_ddate" size="20"	value="{list.p_ddate}" /></td>
+</tr>
+<tr class="base">
+	<td height="22" align="center" bgcolor="#EDE1F7" >출신학교</td>
+	<td width="80%" bgcolor="#FFFFFF"><input type="text" name="p_school" size="45"	value="{list.p_school}" style="width:95%" /></td>
+</tr>
+<tr class="base">
+	<td height="22" align="center" bgcolor="#EDE1F7" >프로입단</td>
+	<td width="80%" bgcolor="#FFFFFF">
+		<input type="text" name="p_pro" size="10"	value="{list.p_pro}" />
+		년 
+	</td>
+</tr>
+<tr class="base">
+	<td height="22" align="center" bgcolor="#EDE1F7" >신장</td>
+	<td bgcolor="#FFFFFF"><input type="text" name="p_height" size="10"	value="{list.p_height}" /></td>
+</tr>
+<tr class="base">
+	<td height="22" align="center" bgcolor="#EDE1F7" >몸무게</td>
+	<td bgcolor="#FFFFFF"><input type="text" name="p_weight" size="10"	value="{list.p_weight}" /></td>
+</tr>
+<tr class="base">
+	<td height="22" align="center" bgcolor="#EDE1F7" >혈핵형</td>
+	<td width="80%" bgcolor="#FFFFFF"><input type="text" name="p_oab" size="10"	value="{list.p_oab}" /></td>
+</tr>
+<tr class="base">
+	<td height="22" align="center" bgcolor="#EDE1F7" >신발크기</td>
+	<td width="80%" bgcolor="#FFFFFF"><input type="text" name="p_sin" size="10"	value="{list.p_sin}" /></td>
+</tr>
+<tr class="base">
+	<td height="22" align="center" bgcolor="#EDE1F7" >이메일</td>
+	<td bgcolor="#FFFFFF"><input type="text" name="p_email" size="45"	value="{list.p_email}" /></td>
+</tr>
+<tr class="base">
+	<td height="22" align="center" bgcolor="#EDE1F7" >홈페이지(까페)</td>
+	<td width="80%" bgcolor="#FFFFFF"><input type="text" name="p_homepage" size="45"	value="{list.p_homepage}" style="width:95%" /></td>
+</tr>
+<tr class="base">
+	<td height="22" align="center" bgcolor="#EDE1F7" >가족관계</td>
+	<td width="80%" bgcolor="#FFFFFF"><input type="text" name="p_family" size="45"	value="{list.p_family}" /></td>
+</tr>
+<tr class="base">
+	<td height="22" align="center" bgcolor="#EDE1F7" >별명</td>
+	<td width="80%" bgcolor="#FFFFFF"><input type="text" name="p_nickname" size="20"	value="{list.p_nickname}" /></td>
+</tr>
+<tr class="base">
+	<td height="22" align="center" bgcolor="#EDE1F7" >나의 이상형</td>
+	<td width="80%" bgcolor="#FFFFFF"><input type="text" name="p_lee" size="45"	value="{list.p_lee}"	style="width:95%"/></td>
+</tr>
+<tr class="base">
+	<td height="22" align="center" bgcolor="#EDE1F7" >평소 취미 활동</td>
+	<td width="80%" bgcolor="#FFFFFF"><input type="text" name="p_hobby" size="45"	value="{list.p_hobby}"	style="width:95%"/></td>
+</tr>
+<tr class="base">
+	<td height="22" align="center" bgcolor="#EDE1F7" >스트레스 해소법</td>
+	<td width="80%" bgcolor="#FFFFFF"><input type="text" name="p_stress" size="45"	value="{list.p_stress}"	style="width:95%"/></td>
+</tr>
+<tr class="base">
+	<td height="22" align="center" bgcolor="#EDE1F7" >가수 및 음악장르</td>
+	<td width="80%" bgcolor="#FFFFFF"><input type="text" name="p_music" size="45"	value="{list.p_music}" /></td>
+</tr>
+<tr class="base">
+	<td height="22" align="center" bgcolor="#EDE1F7" >좋아하는 음식</td>
+	<td width="80%" bgcolor="#FFFFFF"><input type="text" name="p_food" size="45"	value="{list.p_food}" /></td>
+</tr>
+<tr class="base">
+	<td height="22" align="center" bgcolor="#EDE1F7" >좋아하는 스포츠 </td>
+	<td width="80%" bgcolor="#FFFFFF"><input type="text" name="p_spo" size="45"	value="{list.p_spo}" /></td>
+</tr>
+<tr class="base">
+	<td height="22" align="center" bgcolor="#EDE1F7" >농구시작은 언제</td>
+	<td width="80%" bgcolor="#FFFFFF"><input type="text" name="p_start" size="45"	value="{list.p_start}" /></td>
+</tr>
+<tr class="base">
+	<td height="22" align="center" bgcolor="#EDE1F7" >마음에 드는 선수</td>
+	<td bgcolor="#FFFFFF"><input type="text" name="p_mplayer" size="45"	value="{list.p_mplayer}" /></td>
+</tr>
+<tr class="base">
+	<td height="22" align="center" bgcolor="#EDE1F7" >소속팀 변경</td>
+	<td width="80%" bgcolor="#FFFFFF">
+		<input name="teamhistory" type="button" class="CCbox03" id="teamhistory" value="		소속팀 변경사항 보기	"	onclick="pop_Player_teamhistory('{list.uid}', '{list.p_name}')"/>
+		&nbsp; (등록시에는 <span class="style1">먼저 등록하신 후</span> 수정 클릭 후 변경사항 입력 해 주세요.)
+	</td>
+</tr>
+<tr class="base">
+	<td height="22" align="center" bgcolor="#EDE1F7" >Player Life</td>
+	<td width="80%" bgcolor="#FFFFFF">
+		<textarea name="p_life" cols="50" rows="7" style="width:98%">{list.p_life}
+		</textarea>
+	</td>
+</tr>
+<tr class="base">
+	<td height="22" align="center" bgcolor="#EDE1F7" >은퇴후 계획</td>
+	<td width="80%" bgcolor="#FFFFFF"><input type="text" name="p_end" size="45"	value="{list.p_end}"	style="width:95%"/></td>
+</tr>
+<tr class="base">
+	<td height="30" colspan="2" align="center" bgcolor="efefef" ><strong>선수 사진 이미지</strong> </td>
+</tr>
+<tr class="base">
+	<td height="22" align="center" bgcolor="#EDE1F7" >선수사진 </td>
+	<td bgcolor="#FFFFFF">
+		<input name="upfile" type="file" id="upfile" size="40" />
+		&nbsp;&nbsp; (90 X 110) =&gt; Savers Secret 용
+		<table width="500"	border="0" cellspacing="0" cellpadding="0">
+		<tr>
+			<td width="60%">
+				파일명 :
+				{list.upfiles.upfile.name}
+			</td>
+			<td width="40%">
+				<input name="del_upfile" type="checkbox" id="del_upfile" value="checkbox" />
+				삭제 
+			</td>
+		</tr>
+		</table>
+	</td>
+</tr>
+<tr class="base">
+	<td height="22" align="center" bgcolor="#EDE1F7" >선수소개 1 </td>
+	<td bgcolor="#FFFFFF">
+		<input type="file" name="upfile1" size="40" />
+		&nbsp;&nbsp; (138 X 244) =&gt; 사각 회색 명함사진
+		<table width="500"	border="0" cellspacing="0" cellpadding="0">
+		<tr>
+			<td width="60%">
+				파일명 :
+				{list.upfiles.upfile1.name}
+			</td>
+			<td width="40%">
+				<input name="del_upfile1" type="checkbox" id="del_upfile1" value="checkbox" />
+				삭제 
+			</td>
+		</tr>
+		</table>
+	</td>
+</tr>
+<tr class="base">
+	<td height="22" align="center" bgcolor="#EDE1F7" >선수소개 2 </td>
+	<td bgcolor="#FFFFFF">
+		<input type="file" name="upfile2" size="40" />
+		&nbsp;&nbsp; (169 X 249) =&gt;	분홍색 안쪽 사진
+		<table width="500"	border="0" cellspacing="0" cellpadding="0">
+		<tr>
+			<td width="60%">
+				파일명 :
+				{list.upfiles.upfile2.name}
+			</td>
+			<td width="40%">
+				<input name="del_upfile2" type="checkbox" id="del_upfile2" value="checkbox" />
+				삭제 
+			</td>
+		</tr>
+		</table>
+	</td>
+</tr>
+<tr class="base">
+	<td height="22" align="center" bgcolor="#EDE1F7" >선수소개 3 </td>
+	<td bgcolor="#FFFFFF">
+		<input type="file" name="upfile3" size="40" />
+		&nbsp;&nbsp; (154 X 636) =&gt; 아래로 길죽한 사진
+		<table width="500"	border="0" cellspacing="0" cellpadding="0">
+		<tr>
+			<td width="60%">
+				파일명 :
+				{list.upfiles.upfile3.name}
+			</td>
+			<td width="40%">
+				<input name="del_upfile3" type="checkbox" id="del_upfile3" value="checkbox" />
+				삭제 
+			</td>
+		</tr>
+		</table>
+	</td>
+</tr>
+<tr class="base">
+	<td height="22" align="center" bgcolor="#EDE1F7" >선수종합기록 1 </td>
+	<td bgcolor="#FFFFFF">
+		<input type="file" name="upfile4" size="40" />
+		&nbsp;&nbsp; (131 X 178) =&gt; 손잡이 거울같은 사진
+		<table width="500"	border="0" cellspacing="0" cellpadding="0">
+		<tr>
+			<td width="60%">
+				파일명 :
+				{list.upfiles.upfile4.name}
+			</td>
+			<td width="40%">
+				<input name="del_upfile4" type="checkbox" id="del_upfile4" value="checkbox" />
+				삭제 
+			</td>
+		</tr>
+		</table>
+	</td>
+</tr>
+<tr class="base">
+	<td height="22" align="center" bgcolor="#EDE1F7" >선수종합기록 2 </td>
+	<td bgcolor="#FFFFFF">
+		<input type="file" name="upfile5" size="40" />
+		&nbsp;&nbsp; (654 X 214) =&gt; 검정색 붓터치 + 농구공
+		<table width="500"	border="0" cellspacing="0" cellpadding="0">
+		<tr>
+			<td width="60%">
+				파일명 :
+				{list.upfiles.upfile5.name}
+			</td>
+			<td width="40%">
+				<input name="del_upfile5" type="checkbox" id="del_upfile5" value="checkbox" />
+				삭제 
+			</td>
+		</tr>
+		</table>
+	</td>
+</tr>
+</table>
+
+<br>
+<table width="522" align="center" cellpadding="0" style="border-collapse:collapse;">
+<tr>
+	<td width="547" height="30" align="center">
+		<input name="imageField" type="image" src="images/botton_ok.gif" width="46" height="20" border="0">
+		&nbsp; <a href="#" onClick="javascript:history.go(-1);"><img src="images/botton_no.gif" width="46" height="20" border="0" > </a>
+	</td>
+</tr>
+</table>
+</form>
