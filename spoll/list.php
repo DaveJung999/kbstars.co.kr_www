@@ -58,7 +58,7 @@ $qs_basic = "db={$db}".					//table 이름
 include_once("./dbinfo.php"); // $dbinfo, $table 값 정의
 
 // 인증 체크
-if(!privAuth((isset($dbinfo) ? $dbinfo : null), "priv_list",1)) back("이용이 제한되었습니다.(레벨부족)");
+if(!privAuth($dbinfo, "priv_list",1)) back("이용이 제한되었습니다.(레벨부족)");
 
 //===================
 // 카테고리 정보 구함

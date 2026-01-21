@@ -1,23 +1,28 @@
 <?php
-	$table				= "basket_player"; // new21_slist_event
+// 데이터베이스 테이블 설정
+$table = "player"; 
 
-	$dbinfo['title']		= "선수 기본 정보";
-	$dbinfo['skin']		= "sthis_player";
-	$dbinfo['pern']		= 40;
-	$dbinfo['row_pern']		= 8;	 
-	$dbinfo['cut_length']	= 50;
-	$dbinfo['priv_list']	= 70; // 본 list.php 볼 권한 설정
-	$dbinfo['priv_write']	='운영자'; // write.php 글 올릴 권한 설정
-	$dbinfo['priv_read']	= 70; // 본 read.php 볼 권한 설정
-	$dbinfo['priv_delete']='운영자'; // 무조건 삭제권한
-	$dbinfo['enable_upload']="multi"; // 업로드지원 
-	$dbinfo['html_headpattern'] = "no";
-	$dbinfo['html_headtpl'] = "main";
-	$dbinfo['orderby'] = "p_seq, p_name";
-	$dbinfo['enable_cate'] = "Y";
-	$dbinfo['upload_dir'] = "{$_SERVER['DOCUMENT_ROOT']}/images/upload";
-	$dbinfo['enable_getinfo'] = "Y";
-	$dbinfo['enable_level'] = "Y";
-	$dbinfo['default_docu_type'] = "text";
-
+// dbinfo 배열 정의
+$dbinfo = array(
+	"table" => "player",
+	"title" => "선수 기본 정보",
+	"skin" => "sthis_player",
+	"pern" => 40,
+	"row_pern" => 8,	
+	"cut_length" => 50,
+	"priv_list" => "운영자,뉴스관리자", 
+	"priv_write" => "운영자,뉴스관리자", 
+	"priv_read" => "운영자,뉴스관리자", 
+	"priv_delete" => "운영자,뉴스관리자", 
+	"enable_upload" => "multi", 
+	"html_headpattern" => "no",
+	"html_headtpl" => "main",
+	"orderby" => "p_seq, p_name",
+	"enable_cate" => "Y",
+	"upload_dir" => "{$_SERVER['DOCUMENT_ROOT']}/sthis/sthis_player/upload",
+	"enable_getinfo" => "Y",
+	"enable_level" => "Y",
+	"default_docu_type" => "text",
+	'enable_userid' => ""
+);
 ?>

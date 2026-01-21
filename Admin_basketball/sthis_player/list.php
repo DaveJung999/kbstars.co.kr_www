@@ -50,8 +50,8 @@ $qs_basic = "db={$db}".					//table 이름
 if(isset($_GET['skin']) && $_GET['skin'] == ""){	
 	include_once("./dbinfo.php"); // $dbinfo, $table 값 정의
 } else {
-	$table = isset($_REQUEST['db']) ? $_REQUEST['db'] : '';
-	$dbinfo['skin'] = isset($_GET['skin']) ? $_GET['skin'] : '';
+	$table = isset($_REQUEST['db']) ? $_REQUEST['db'] : $dbinfo['table'];
+	$dbinfo['skin'] = isset($_GET['skin']) ? $_GET['skin'] : $dbinfo['skin'];
 	$dbinfo['orderby'] = "win_go ";	
 }
 
@@ -150,13 +150,15 @@ $href['nextblock']= ($count['totalpage'] > $count['lastpage'])? "{$_SERVER['PHP_
 //=======================================================
 // 템플릿 기반 웹 페이지 제작
 $tpl = new phemplate("","remove_nonjs");
+
 if( !is_file("{$thisPath}/stpl/{$dbinfo['skin']}/list.htm") ) $dbinfo['skin']="board_basic";
+
 $tpl->set_file('html',"{$thisPath}/stpl/{$dbinfo['skin']}/list.htm",TPL_BLOCK);
 // Limit로 필요한 게시물만 읽음.
 $limitno	= isset($_GET['limitno']) ? $_GET['limitno'] : $count['firstno'];
 $limitrows	= isset($_GET['limitrows']) ? $_GET['limitrows'] : $count['pern'];
 $sql = "SELECT A.* FROM {$table} as A, {$table_season} as B WHERE $sql_where and A.sid = B.sid ORDER BY	B.s_start desc LIMIT {$limitno},{$limitrows}";
-
+	
 $rs_list = db_query($sql);
 
 if(!$total=db_count($rs_list)) {	// 게시물이 하나도 없다면...
