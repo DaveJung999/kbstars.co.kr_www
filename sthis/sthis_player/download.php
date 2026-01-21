@@ -72,9 +72,10 @@ require("{$_SERVER['DOCUMENT_ROOT']}/sinc/header.php");
 
 	// 업로드 디렉토리 설정
 	// - 관리자(Admin_basketball/sthis_player/ok.php)와 동일한 물리 경로를 사용한다.
-	// - 최종 경로: {DOCROOT}/sthis/sthis_player/upload/{bid}/{파일}
+	// - 실제 파일 저장 구조:
+	//   {DOCROOT}/sthis/sthis_player/upload/player/{bid}/{파일명}
 	if (empty($dbinfo['upload_dir'])) {
-		$dbinfo['upload_dir'] = rtrim("{$_SERVER['DOCUMENT_ROOT']}/sthis/sthis_player/upload", "/");
+		$dbinfo['upload_dir'] = rtrim("{$_SERVER['DOCUMENT_ROOT']}/sthis/sthis_player/upload/player", "/");
 	} else {
 		$dbinfo['upload_dir'] = rtrim($dbinfo['upload_dir'], "/");
 	}
@@ -372,35 +373,63 @@ fclose($fd);
 // 실제 전송 시에는 파일 내에서 JPEG SOI(0xFF 0xD8)를 찾아
 // 그 이전 바이트는 모두 무시하고 이후만 전송한다.
 // - 디스크의 원본 파일은 변경하지 않는다.
+// - JPEG 파일(jpg, jpeg)에만 적용
 //==================================
-$fd = fopen($filepath, 'rb');
-if ($fd) {
-	// 앞부분 버퍼를 읽어서 SOI 위치를 찾는다 (최대 4KB 내에서)
-	$buffer = '';
-	while (!feof($fd) && strlen($buffer) < 4096) {
-		$chunk = fread($fd, 512);
-		if ($chunk === false || $chunk === '') break;
-		$buffer .= $chunk;
-		// SOI를 찾으면 더 이상 읽지 않음
-		if (strpos($buffer, "\xFF\xD8") !== false) break;
-	}
+if (!is_file($filepath)) {
+	// 파일이 없으면 에러
+	if(isset($_GET['mode']) && $_GET['mode']) go_url("/scommon/noimage.gif");
+	else back("해당 파일이 없습니다 . errno: 9");
+}
 
-	$pos = strpos($buffer, "\xFF\xD8");
-	if ($pos === false) {
-		// SOI를 찾지 못하면 원본 그대로 전송
-		rewind($fd);
-		fpassthru($fd);
-	} else {
-		// SOI 이후부터 출력
-		echo substr($buffer, $pos);
-		// 나머지 전체 전송
-		while (!feof($fd)) {
-			$out = fread($fd, 8192);
-			if ($out === false || $out === '') break;
-			echo $out;
+$file_ext = strtolower(substr(strrchr($filename,'.'), 1));
+$is_jpeg = in_array($file_ext, ['jpg', 'jpeg']);
+
+if ($is_jpeg) {
+	// JPEG 파일인 경우 SOI 바이트 제거 로직 적용
+	$fd = fopen($filepath, 'rb');
+	if ($fd) {
+		// 앞부분 버퍼를 읽어서 SOI 위치를 찾는다 (최대 4KB 내에서)
+		$buffer = '';
+		while (!feof($fd) && strlen($buffer) < 4096) {
+			$chunk = fread($fd, 512);
+			if ($chunk === false || $chunk === '') break;
+			$buffer .= $chunk;
+			// SOI를 찾으면 더 이상 읽지 않음
+			if (strpos($buffer, "\xFF\xD8") !== false) break;
 		}
+
+		$pos = strpos($buffer, "\xFF\xD8");
+		if ($pos === false) {
+			// SOI를 찾지 못하면 원본 그대로 전송
+			rewind($fd);
+			fpassthru($fd);
+		} else {
+			// SOI 이후부터 출력
+			echo substr($buffer, $pos);
+			// 나머지 전체 전송
+			while (!feof($fd)) {
+				$out = fread($fd, 8192);
+				if ($out === false || $out === '') break;
+				echo $out;
+			}
+		}
+		fclose($fd);
+	} else {
+		// 파일 열기 실패 시 에러
+		if(isset($_GET['mode']) && $_GET['mode']) go_url("/scommon/noimage.gif");
+		else back("파일을 읽을 수 없습니다 . errno: 10");
 	}
-	fclose($fd);
+} else {
+	// JPEG가 아닌 경우 기존 방식대로 전송
+	$fd = fopen($filepath, 'rb');
+	if ($fd) {
+		fpassthru($fd);
+		fclose($fd);
+	} else {
+		// 파일 열기 실패 시 에러
+		if(isset($_GET['mode']) && $_GET['mode']) go_url("/scommon/noimage.gif");
+		else back("파일을 읽을 수 없습니다 . errno: 11");
+	}
 }
 
 // hitdownload 증가

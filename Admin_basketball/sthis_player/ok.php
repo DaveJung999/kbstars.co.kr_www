@@ -57,11 +57,11 @@ $qs_basic = "db=" . ($_REQUEST['db'] ?? $table) .			//table 이름
 $qs_basic		= href_qs($qs_basic); // 해당값 초기화
 
 // 업로드 디렉토리 설정
-// - 프론트 모듈(sthis/sthis_player)과 동일한 물리 경로를 사용해야
-//   다운로드/이미지 표시가 일관되게 동작한다.
-// - 최종 경로: {DOCROOT}/sthis/sthis_player/upload/{bid}/{파일}
+// - 실제 저장 경로는 다음과 같아야 한다.
+//   {DOCROOT}/sthis/sthis_player/upload/player/{bid}/{파일명}
+// - 여기서는 base 디렉토리까지만 설정하고, 아래에서 bid를 붙인다.
 if (empty($dbinfo['upload_dir'])) {
-	$dbinfo['upload_dir'] = rtrim("{$_SERVER['DOCUMENT_ROOT']}/sthis/sthis_player/upload", "/");
+	$dbinfo['upload_dir'] = rtrim("{$_SERVER['DOCUMENT_ROOT']}/sthis/sthis_player/upload/player", "/");
 } else {
 	$dbinfo['upload_dir'] = rtrim($dbinfo['upload_dir'], "/");
 }

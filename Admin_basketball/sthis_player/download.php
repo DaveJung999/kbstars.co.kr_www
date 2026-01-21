@@ -89,9 +89,9 @@ $qs_basic		= href_qs($qs_basic); // 해당값 초기화
 // 업로드 디렉토리 설정
 // - 관리자(Admin_basketball/sthis_player/ok.php)와 프론트(sthis/sthis_player/download.php)가
 //   모두 동일한 물리 경로를 바라보도록 맞춘다.
-// - 최종 경로: {DOCROOT}/sthis/sthis_player/upload/{bid}/{파일}
+// - 최종 경로: {DOCROOT}/sthis/sthis_player/upload/player/{bid}/{파일}
 if (empty($dbinfo['upload_dir'])) {
-	$dbinfo['upload_dir'] = rtrim("{$_SERVER['DOCUMENT_ROOT']}/sthis/sthis_player/upload", "/");
+	$dbinfo['upload_dir'] = rtrim("{$_SERVER['DOCUMENT_ROOT']}/sthis/sthis_player/upload/player", "/");
 } else {
 	$dbinfo['upload_dir'] = rtrim($dbinfo['upload_dir'], "/");
 }
