@@ -479,6 +479,7 @@ function modify_ok($table, $qs, $field){
 						if (($dbinfo['enable_upload'] ?? '') == 'image' && !is_array(@getimagesize($value['tmp_name']))) {
 							continue;
 						}
+	
 						$upfiles_tmp = file_upload($key, $updir);
 						if (isset($upfiles[$key]['name'])) {
 							// *** 원본 오류 수정: $upfiles[{$key}] -> $upfiles[$key] ***

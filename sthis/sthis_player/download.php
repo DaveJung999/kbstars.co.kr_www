@@ -247,8 +247,15 @@ elseif($_GET['mode'] == "watermark"){
 } // end if
 else { // 이미지 파일 요청이면
 	// 이미지 사이즈 구함
-	if(!is_array($imagesize=@getimagesize($filepath)) )
-		go_url("/scommon/noimage.gif");
+	// - 과거에는 getimagesize() 실패 시 무조건 noimage.gif로 리다이렉트했지만,
+	//   실제 파일이 존재하면서도 getimagesize()가 false를 반환하는 경우가 있어
+	//   (특정 JPEG 포맷, 손상/특수 메타 등) 원본 이미지를 그대로 보내도록 완화한다.
+	$imagesize = @getimagesize($filepath);
+	if(!is_array($imagesize)){
+		// 리사이즈/썸네일 계산에만 쓰이므로 0,0 기본값으로 두고,
+		// 아래 로직에서 추가 축소가 필요 없으면 fpassthru()로 원본 전송.
+		$imagesize = array(0, 0);
+	}
 
 	// thumbnail이미지 크기 조정
 	$thumbimagesize=explode("x", $dbinfo['imagesize_thumbnail']);
