@@ -342,12 +342,6 @@ function modify_ok($table,$qs,$field){
 	//팀 정보
 	$team_name = db_resultone( " SELECT t_name from team WHERE tid='{$qs['tid']}' ", 0, 't_name');
 	
-/*	if($_SERVER['REMOTE_ADDR'] == '59.27.126.160'){
-		echo $team_name." ===";
-		print_r($qs);
-		exit;
-	}*/
-	
 	if(isset($qs['docu_type']) && strtolower($qs['docu_type']) != "html") $qs['docu_type']="text";
 	$qs['priv_level']=(int)$qs['priv_level'];
 

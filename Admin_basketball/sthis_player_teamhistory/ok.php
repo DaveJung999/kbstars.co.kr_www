@@ -36,7 +36,7 @@ $table_dbinfo	= $dbinfo['table'];
 
 //===================================================
 // REQUEST 값 대입......2025-09-10
-$params = ['db', 'table', 'cateuid', 'pern', 'cut_length', 'row_pern', 'sql_where', 'sc_column', 'sc_string', 'page', 'mode', 'sup_bid', 'modify_uid', 'uid', 'goto', 'game', 'pid', 'gid', 'sid', 's_id', 'season', 'session_id', 'tid', 'rid', 'num', 'name', 'pback', 'search_text'];
+$params = ['db', 'table', 'cateuid', 'pern', 'cut_length', 'row_pern', 'sql_where', 'sc_column', 'sc_string', 'page', 'mode', 'sup_bid', 'modify_uid', 'uid', 'goto', 'game', 'pid', 'pname', 'gid', 'sid', 's_id', 'season', 'session_id', 'tid', 'rid', 'num', 'name', 'pback', 'search_text'];
 foreach ($params as $param) {
 	$$param = $_REQUEST[$param] ?? $$param ?? null;
 }
@@ -147,7 +147,7 @@ function write_ok($table, $qs){
 	}
 	$qs['ip']		= remote_addr();
 	// - num의 최대값 구함
-	if($dbinfo['table_name'] != $dbinfo['db']) $sql_where=" db='{$dbinfo['db']}' "; // $sql_where 사용 시작
+	if(isset($dbinfo['table_name']) && isset($dbinfo['db']) && $dbinfo['table_name'] != $dbinfo['db']) $sql_where=" db='{$dbinfo['db']}' "; // $sql_where 사용 시작
 	if(empty($sql_where)) $sql_where= " 1 ";
 	$sql = "SELECT max(num) FROM {$table} WHERE  $sql_where ";
 	$qs['num'] = db_resultone($sql,0,"max(num)") + 1;
@@ -156,13 +156,13 @@ function write_ok($table, $qs){
 	// 파일업로드 처리-추가(03/10/20)
 	/////////////////////////////////
 	$sql_set_file = ''; // 변수 초기화
-	if($dbinfo['enable_upload'] != 'N' and isset($_FILES)){
+	if(isset($dbinfo['enable_upload']) && $dbinfo['enable_upload'] != 'N' and isset($_FILES)){
 		$updir = $dbinfo['upload_dir'] . "/" . (int)$_SESSION['seUid'];
 
 		// 사용변수 초기화
 		$upfiles=array();
 		$upfiles_totalsize=0;
-		if($dbinfo['enable_upload'] == 'Y'){
+		if(isset($dbinfo['enable_upload']) && $dbinfo['enable_upload'] == 'Y'){
 			if(isset($_FILES['upfile']['name'])) { // 파일이 업로드 되었다면
 				$upfiles['upfile']=file_upload("upfile",$updir);
 				$upfiles_totalsize = $upfiles['upfile']['size'];
@@ -170,7 +170,7 @@ function write_ok($table, $qs){
 		} else {
 			foreach($_FILES as $key =>	$value){
 				if(isset($_FILES[$key]['name'])) { // 파일이 업로드 되었다면
-					if( $dbinfo['enable_upload'] == 'image'
+					if( isset($dbinfo['enable_upload']) && $dbinfo['enable_upload'] == 'image'
 						AND !is_array(getimagesize($_FILES[$key]['tmp_name'])) )
 						continue;
 					$upfiles[$key]=file_upload($key,$updir);
@@ -178,8 +178,8 @@ function write_ok($table, $qs){
 				}
 			} // end foreach
 		} // end if .. esle ..
-		if($dbinfo['enable_uploadmust'] == 'Y' and sizeof($upfiles) == 0){
-			if( $dbinfo['enable_upload'] == 'image')
+		if(isset($dbinfo['enable_uploadmust']) && $dbinfo['enable_uploadmust'] == 'Y' and sizeof($upfiles) == 0){
+			if( isset($dbinfo['enable_upload']) && $dbinfo['enable_upload'] == 'image')
 				back("이미지파일을 선택하여 업로드하여 주시기 바랍니다");
 			else back("파일이 업로드 되지 않았습니다");
 		}
@@ -200,7 +200,7 @@ function write_ok($table, $qs){
 	////////////////////////////////
 	
 	// sql문 완성
-	if($dbinfo['enable_type'] == 'Y' and $qs['writeinfo'] == "info") $sql_set	= ", type='info' ";// $sql_set 시작
+	if(isset($dbinfo['enable_type']) && $dbinfo['enable_type'] == 'Y' and isset($qs['writeinfo']) && $qs['writeinfo'] == "info") $sql_set	= ", type='info' ";// $sql_set 시작
 		$sql="INSERT
 			INTO
 				{$table}
@@ -274,13 +274,13 @@ function reply_ok($table,$qs){
 	// 파일업로드 처리-추가(03/10/20)
 	/////////////////////////////////
 	$sql_set_file = ''; // 변수 초기화
-	if($dbinfo['enable_upload'] != 'N' and isset($_FILES)){
+	if(isset($dbinfo['enable_upload']) && $dbinfo['enable_upload'] != 'N' and isset($_FILES)){
 		$updir = $dbinfo['upload_dir'] . "/" . (int)$_SESSION['seUid'];
 
 		// 사용변수 초기화
 		$upfiles=array();
 		$upfiles_totalsize=0;
-		if($dbinfo['enable_upload'] == 'Y'){
+		if(isset($dbinfo['enable_upload']) && $dbinfo['enable_upload'] == 'Y'){
 			if(isset($_FILES['upfile']['name'])) { // 파일이 업로드 되었다면
 				$upfiles['upfile']=file_upload("upfile",$updir);
 				$upfiles_totalsize = $upfiles['upfile']['size'];
@@ -288,7 +288,7 @@ function reply_ok($table,$qs){
 		} else {
 			foreach($_FILES as $key =>	$value){
 				if(isset($_FILES[$key]['name'])) { // 파일이 업로드 되었다면
-					if( $dbinfo['enable_upload'] == 'image'
+					if( isset($dbinfo['enable_upload']) && $dbinfo['enable_upload'] == 'image'
 						AND !is_array(getimagesize($_FILES[$key]['tmp_name'])) )
 						continue;
 					$upfiles[$key]=file_upload($key,$updir);
@@ -296,8 +296,8 @@ function reply_ok($table,$qs){
 				}
 			} // end foreach
 		} // end if .. esle ..
-		if($dbinfo['enable_uploadmust'] == 'Y' and sizeof($upfiles) == 0){
-			if( $dbinfo['enable_upload'] == 'image')
+		if(isset($dbinfo['enable_uploadmust']) && $dbinfo['enable_uploadmust'] == 'Y' and sizeof($upfiles) == 0){
+			if( isset($dbinfo['enable_upload']) && $dbinfo['enable_upload'] == 'image')
 				back("이미지파일을 선택하여 업로드하여 주시기 바랍니다");
 			else back("파일이 업로드 되지 않았습니다");
 		}
@@ -344,16 +344,16 @@ function reply_ok($table,$qs){
 	$uid = db_insert_id();
 
 	// E-Mail 전송
-	if( $dbinfo['enable_adm_mail'] == 'Y' or $dbinfo['enable_rec_mail'] == 'Y'){
+	if( (isset($dbinfo['enable_adm_mail']) && $dbinfo['enable_adm_mail'] == 'Y') or (isset($dbinfo['enable_rec_mail']) && $dbinfo['enable_rec_mail'] == 'Y')){
 		$mail = new mime_mail;
 
 		
-		if($dbinfo['enable_adm_mail'] == 'Y'){
+		if(isset($dbinfo['enable_adm_mail']) && $dbinfo['enable_adm_mail'] == 'Y'){
 			$sql = "select email from {$table_logon} where uid='{$dbinfo['bid']}'";
 			if($dbinfo['email'] = check_email(db_resultone($sql,0,"email")))
 				$mailfrom = $dbinfo['email'];
 		}
-		if($dbinfo['enable_rec_mail'] == 'Y'){
+		if(isset($dbinfo['enable_rec_mail']) && $dbinfo['enable_rec_mail'] == 'Y'){
 			if($_POST['rec_email'] = check_email($_POST['rec_email'])){
 				if(isset($mailform)) $mailform .= ",{$_POST['rec_email']}";
 				else $mailform = $_POST['rec_email'];
@@ -365,7 +365,7 @@ function reply_ok($table,$qs){
 			$mail->name		= "게시판 자동메일";
 			$mail->to		= $list['email'];
 			$mail->subject	= "[답변] {$qs['title']}";
-			if($qs['docu_type'] == "html"){
+			if(isset($qs['docu_type']) && $qs['docu_type'] == "html"){
 				$mail->body	= "[".$list['userid']."]님께서 다음과 같은 답변을 주었습니다.]<br><hr>{$list['content']}";
 				$mail->html	= 1;
 			} else {
@@ -416,7 +416,7 @@ function modify_ok($table,$qs,$field){
 	// 파일 업로드 - 변경(03/10/20)
 	///////////////////////////////
 	$sql_set_file = ''; // 변수 초기화
-	if( $dbinfo['enable_upload'] != 'N' and isset($_FILES) ){
+	if( isset($dbinfo['enable_upload']) && $dbinfo['enable_upload'] != 'N' and isset($_FILES) ){
 		// 파일 업로드 드렉토리
 		$updir = $dbinfo['upload_dir'] . "/" . (int)$list['bid'];
 
@@ -449,7 +449,7 @@ function modify_ok($table,$qs,$field){
 		}
 
 		// 업로드 파일 처리
-		if($dbinfo['enable_upload'] == 'Y') { // 파일 하나 업로드라면
+		if(isset($dbinfo['enable_upload']) && $dbinfo['enable_upload'] == 'Y') { // 파일 하나 업로드라면
 			if(isset($_FILES['upfile']['name'])) {	// 파일이 업로드 되었다면
 				$upfiles_tmp=file_upload("upfile",$updir);
 
@@ -470,7 +470,7 @@ function modify_ok($table,$qs,$field){
 		} else { // 복수 업로드라면,
 			foreach($_FILES as $key =>	$value){
 				if(isset($_FILES[$key]['name'])) { // 파일이 업로드 되었다면
-					if( $dbinfo['enable_upload'] == 'image'
+					if( isset($dbinfo['enable_upload']) && $dbinfo['enable_upload'] == 'image'
 						AND !is_array(getimagesize($_FILES[$key]['tmp_name'])) )
 						continue;
 					$upfiles_tmp=file_upload($key,$updir);
@@ -491,8 +491,8 @@ function modify_ok($table,$qs,$field){
 				}
 			} // end foreach
 		} // end if .. else ..
-		if($dbinfo['enable_uploadmust'] == 'Y' and sizeof($upfiles) == 0){
-			if( $dbinfo['enable_upload'] == 'image')
+		if(isset($dbinfo['enable_uploadmust']) && $dbinfo['enable_uploadmust'] == 'Y' and sizeof($upfiles) == 0){
+			if( isset($dbinfo['enable_upload']) && $dbinfo['enable_upload'] == 'image')
 				back("이미지파일을 선택하여 업로드하여 주시기 바랍니다");
 			else back("파일이 업로드 되지 않았습니다");
 		}
@@ -557,8 +557,8 @@ function delete_ok($table,$field,$goto){
 	if(!isset($sql_where)) $sql_where= " 1 ";
 	
 	// 한 table에 여러 게시판 생성의 경우
-	if($dbinfo['table_name'] != $dbinfo['db']) $sql_where .= " and db='{$table}' "; // $sql_where 사용 시작
-	if($dbinfo['enable_type'] == 'Y') $sql_where .= " and (type='docu' or type='info') ";
+	if(isset($dbinfo['table_name']) && isset($dbinfo['db']) && $dbinfo['table_name'] != $dbinfo['db']) $sql_where .= " and db='{$table}' "; // $sql_where 사용 시작
+	if(isset($dbinfo['enable_type']) && $dbinfo['enable_type'] == 'Y') $sql_where .= " and (type='docu' or type='info') ";
 	
 	// 삭제 권한 체크와 해당 게시물 읽어오기
 	$sql = "SELECT *,password('{$qs['passwd']}') as pass FROM {$table} WHERE uid='{$qs['uid']}' and  $sql_where ";
@@ -684,15 +684,15 @@ function memoWrite_ok(){
 	
 	// 추가 변수
 	$sql_set_memo = ''; // 변수 초기화
-	if($dbinfo['enable_memo'] == 'Y'){
+	if(isset($dbinfo['enable_memo']) && $dbinfo['enable_memo'] == 'Y'){
 		// 메모 테이블 구함
-		if($dbinfo['enable_type'] == "Y"){
+		if(isset($dbinfo['enable_type']) && $dbinfo['enable_type'] == "Y"){
 			$table_memo		= $table;
 			$sql_set_memo	= ", type='memo' "; // $sql_set_memo 사용 시작
 		} else {
 			$table_memo		= $table . "_memo";
 		} // end if
-		if($dbinfo['table_name'] != $dbinfo['db']){
+		if(isset($dbinfo['table_name']) && isset($dbinfo['db']) && $dbinfo['table_name'] != $dbinfo['db']){
 			$sql_set_memo	.=" , db='{$qs['db']}' ";
 		} // end if
 
@@ -726,11 +726,11 @@ function memodelete_ok(){
 
 	// 추가 변수
 	$sql_where_memo = ''; // 변수 초기화
-	if($dbinfo['enable_memo'] == 'Y'){
-		if($dbinfo['table_name'] != $dbinfo['db']){
+	if(isset($dbinfo['enable_memo']) && $dbinfo['enable_memo'] == 'Y'){
+		if(isset($dbinfo['table_name']) && isset($dbinfo['db']) && $dbinfo['table_name'] != $dbinfo['db']){
 			$sql_where_memo	.=" and db='{$qs['db']}' "; // $sql_set_memo 사용 시작
 		} // end if
-		if($dbinfo['enable_type'] == "Y"){
+		if(isset($dbinfo['enable_type']) && $dbinfo['enable_type'] == "Y"){
 			$table_memo		= $table; // 메모 테이블 구함
 			$sql_where_memo	= " type='memo' ";
 		} else {

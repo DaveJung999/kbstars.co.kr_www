@@ -283,7 +283,6 @@ body {
 		}		
 	
 		for($l=1;$l<=count($tmp_count);$l++){
-			//print_r($win_loss[$tid[$real_count2[$l]]]);
 			
 			$win_loss_count = count($win_loss[$tid[$real_count2[$l]]]);
 			$win_end = 1;
