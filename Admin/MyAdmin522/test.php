@@ -30,7 +30,16 @@ foreach ($optional as $ext) {
     echo "$ext: " . ($loaded ? "<span style='color:green'>✓</span>" : "<span style='color:orange'>⚠</span>") . "<br>";
 }
 
+// Define ROOT_PATH before using it
+if (!defined('ROOT_PATH')) {
+    define('ROOT_PATH', __DIR__ . DIRECTORY_SEPARATOR);
+}
+
 echo "<h2>4. File Checks</h2>";
+echo "ROOT_PATH: " . ROOT_PATH . "<br>";
+echo "__DIR__: " . __DIR__ . "<br>";
+echo "<br>";
+
 $files = [
     'vendor/autoload.php' => ROOT_PATH . 'vendor/autoload.php',
     'libraries/constants.php' => ROOT_PATH . 'libraries/constants.php',
@@ -38,16 +47,15 @@ $files = [
     'tmp directory' => ROOT_PATH . 'tmp',
 ];
 
-if (!defined('ROOT_PATH')) {
-    define('ROOT_PATH', __DIR__ . DIRECTORY_SEPARATOR);
-}
-
 foreach ($files as $name => $path) {
     $exists = file_exists($path);
     $readable = is_readable($path);
     echo "$name: " . ($exists ? "<span style='color:green'>✓</span>" : "<span style='color:red'>✗</span>");
     if ($exists && !$readable) {
         echo " <span style='color:orange'>(not readable)</span>";
+    }
+    if (!$exists) {
+        echo " <span style='color:orange'>(path: $path)</span>";
     }
     echo "<br>";
 }
