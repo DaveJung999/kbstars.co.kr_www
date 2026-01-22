@@ -12,7 +12,7 @@ declare(strict_types=1);
  * Needs to be a 32-bytes long string of random bytes. See FAQ 2.10.
  * If left empty, phpMyAdmin will auto-generate it.
  */
-$cfg['blowfish_secret'] = ''; /* Will be auto-generated if empty */
+$cfg['blowfish_secret'] = 'a8f5f167f44f4964e6c998dee827110c'; /* 32-byte random string for cookie encryption */
 
 /**
  * Servers configuration
